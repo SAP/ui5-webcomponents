@@ -1,11 +1,11 @@
 import type AiWritingAssistant from "./AITextArea.js";
-import AiWritingAssistantToolbar from "./AiWritingAssistantToolbar.js";
+import AITextAreaToolbar from "./AITextAreaToolbar.js";
 
 export default function AiWritingAssistantTemplate(this: AiWritingAssistant) {
 	return (
 		<div style={{ height: "100%", width: "100%" }}>
 			<div class="ui5-ai-writing-assistant-root">
-				<AiWritingAssistantToolbar
+				<AITextAreaToolbar
 					assistantState={this.assistantState}
 					currentVersionIndex={this.currentVersionIndex}
 					totalVersions={this.totalVersions}

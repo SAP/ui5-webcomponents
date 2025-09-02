@@ -20,20 +20,6 @@ enum AssistantState {
 	 * @public
 	 */
 	Loading = "Loading",
-
-	/**
-	 * The result state.
-	 * Displayed after a successful AI response is generated.
-	 * @public
-	 */
-	SingleResult = "SingleResult",
-
-	/**
-	 * The result state.
-	 * Displayed after a successful AI response is generated.
-	 * @public
-	 */
-	MultipleResults = "MultipleResults",
 }
 
 export default AssistantState;

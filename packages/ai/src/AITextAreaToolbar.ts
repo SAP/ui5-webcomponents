@@ -93,8 +93,8 @@ class AITextAreaToolbar extends UI5Element {
 	 * Available values are:
 	 * - `"Initial"`: Shows only the main toolbar button.
 	 * - `"Loading"`: Indicates that an action is in progress.
-	 * - `"SingleResult"`: A single result is displayed.
-	 * - `"MultipleResults"`: Multiple results are displayed.
+	 *
+	 * Single vs multiple results are determined internally based on totalVersions.
 	 *
 	 * @default "Initial"
 	 * @public

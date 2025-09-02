@@ -50,8 +50,8 @@ type VersionClickEventDetail = {
  * The `ui5-ai-textarea` supports multiple states:
  * - Initial: Shows only the AI button
  * - Loading: Indicates AI generation in progress
- * - SingleResult: Shows result with action label
- * - MultipleResults: Shows result with version navigation
+ * 
+ * Single vs multiple result display is determined internally based on totalVersions count.
  *
  * ### ES6 Module Import
  *
@@ -115,8 +115,8 @@ class AITextArea extends TextArea {
 	 * Available values are:
 	 * - `"Initial"`: Shows only the main toolbar button.
 	 * - `"Loading"`: Indicates that an action is in progress.
-	 * - `"SingleResult"`: A single result is displayed.
-	 * - `"MultipleResults"`: Multiple results are displayed.
+	 *
+	 * Single vs multiple results are determined internally based on totalVersions.
 	 *
 	 * @default "Initial"
 	 * @public
@@ -147,13 +147,11 @@ class AITextArea extends TextArea {
 	/**
 	 * Indicates the total number of result versions available.
 	 *
-	 * When not set or `0`, versioning UI will be hidden.
-	 *
-	 * @default 0
+	 * @default 1
 	 * @public
 	 */
 	@property({ type: Number })
-	totalVersions = 0;
+	totalVersions = 1;
 
 	@slot({ type: HTMLElement })
 	menu!: Array<HTMLElement>;
@@ -213,7 +211,7 @@ class AITextArea extends TextArea {
 			return;
 		}
 
-		if (this.assistantState === "MultipleResults") {
+		if (this.assistantState !== "Loading" && this.totalVersions > 1) {
 			if (isCtrlOrCmd && isShift && keyboardEvent.key.toLowerCase() === "z") {
 				keyboardEvent.preventDefault();
 				this._handlePreviousVersionClick();

@@ -266,11 +266,9 @@
 				editor.actionText = promptHistory[currentPage].endAction;
 			}
 
-			if (promptHistory.length > 1) {
-				editor.assistantState = "MultipleResults";
-			} else if (promptHistory.length > 0) {
-				editor.assistantState = "SingleResult";
-			} else {
+			// State is determined by Loading vs Initial only
+			// Results are determined by totalVersions > 0
+			if (editor.assistantState !== "Loading") {
 				editor.assistantState = "Initial";
 			}
 		}
@@ -386,7 +384,7 @@
 			stopTypingAnimation();
 			isGenerating = false;
 			currentActionInProgress = null;
-			editor.assistantState = promptHistory.length > 0 ? "SingleResult" : "Initial";
+			editor.assistantState = "Initial";
 		}
 
 		async function executeAction(action) {

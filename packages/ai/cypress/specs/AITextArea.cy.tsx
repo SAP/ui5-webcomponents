@@ -13,7 +13,7 @@ describe("AITextArea Component", () => {
 				.should("have.prop", "assistantState", "Initial")
 				.should("have.prop", "actionText", "")
 				.should("have.prop", "currentVersionIndex", 1)
-				.should("have.prop", "totalVersions", 0);
+				.should("have.prop", "totalVersions", 1);
 
 			cy.get("@textarea")
 				.shadow()
@@ -54,10 +54,10 @@ describe("AITextArea Component", () => {
 				.should("have.prop", "actionText", "Generating content...");
 		});
 
-		it("should display SingleResult state correctly", () => {
+		it("should display single result correctly", () => {
 			cy.mount(
 				<AITextArea
-					assistantState="SingleResult"
+					assistantState="Initial"
 					actionText="Generated text"
 					currentVersionIndex={1}
 					totalVersions={1}
@@ -67,16 +67,16 @@ describe("AITextArea Component", () => {
 			cy.get("[ui5-ai-textarea]")
 				.shadow()
 				.find("[ui5-ai-textarea-toolbar]")
-				.should("have.prop", "assistantState", "SingleResult")
+				.should("have.prop", "assistantState", "Initial")
 				.should("have.prop", "actionText", "Generated text")
 				.should("have.prop", "currentVersionIndex", 1)
 				.should("have.prop", "totalVersions", 1);
 		});
 
-		it("should display MultipleResults state correctly", () => {
+		it("should display multiple results correctly", () => {
 			cy.mount(
 				<AITextArea
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					actionText="Generated text"
 					currentVersionIndex={2}
 					totalVersions={3}
@@ -86,7 +86,7 @@ describe("AITextArea Component", () => {
 			cy.get("[ui5-ai-textarea]")
 				.shadow()
 				.find("[ui5-ai-textarea-toolbar]")
-				.should("have.prop", "assistantState", "MultipleResults")
+				.should("have.prop", "assistantState", "Initial")
 				.should("have.prop", "actionText", "Generated text")
 				.should("have.prop", "currentVersionIndex", 2)
 				.should("have.prop", "totalVersions", 3);
@@ -99,7 +99,7 @@ describe("AITextArea Component", () => {
 
 			cy.mount(
 				<AITextArea
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={2}
 					totalVersions={3}
 					onPreviousVersionClick={onPreviousVersionClick}
@@ -130,7 +130,7 @@ describe("AITextArea Component", () => {
 
 			cy.mount(
 				<AITextArea
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={1}
 					totalVersions={3}
 					onNextVersionClick={onNextVersionClick}
@@ -159,7 +159,7 @@ describe("AITextArea Component", () => {
 		it("should disable previous button when at first version", () => {
 			cy.mount(
 				<AITextArea
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={1}
 					totalVersions={3}
 				/>
@@ -178,7 +178,7 @@ describe("AITextArea Component", () => {
 		it("should disable next button when at last version", () => {
 			cy.mount(
 				<AITextArea
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={3}
 					totalVersions={3}
 				/>
@@ -201,7 +201,7 @@ describe("AITextArea Component", () => {
 			cy.mount(
 				<AITextArea
 					value={initialValue}
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={1}
 					totalVersions={2}
 				/>
@@ -308,12 +308,12 @@ describe("AITextArea Component", () => {
 				.should("be.focused");
 		});
 
-		it("should handle Ctrl+Shift+Z for previous version in MultipleResults state", () => {
+		it("should handle Ctrl+Shift+Z for previous version when multiple versions exist", () => {
 			const onPreviousVersionClick = cy.spy().as("onPreviousVersionClick");
 
 			cy.mount(
 				<AITextArea
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={2}
 					totalVersions={3}
 					onPreviousVersionClick={onPreviousVersionClick}
@@ -329,12 +329,12 @@ describe("AITextArea Component", () => {
 			cy.get("@onPreviousVersionClick").should("have.been.calledOnce");
 		});
 
-		it("should handle Ctrl+Shift+Y for next version in MultipleResults state", () => {
+		it("should handle Ctrl+Shift+Y for next version when multiple versions exist", () => {
 			const onNextVersionClick = cy.spy().as("onNextVersionClick");
 
 			cy.mount(
 				<AITextArea
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={1}
 					totalVersions={3}
 					onNextVersionClick={onNextVersionClick}
@@ -501,7 +501,7 @@ describe("AITextArea Component", () => {
 		it("should handle invalid version indices gracefully", () => {
 			cy.mount(
 				<AITextArea
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={-1}
 					totalVersions={3}
 				/>
@@ -519,7 +519,7 @@ describe("AITextArea Component", () => {
 		it("should handle zero total versions", () => {
 			cy.mount(
 				<AITextArea
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={1}
 					totalVersions={0}
 				/>
@@ -554,7 +554,7 @@ describe("AITextArea Component", () => {
 				.should("have.prop", "actionText", "Generating...");
 		});
 
-		it("should handle state transition from Loading to SingleResult", () => {
+		it("should handle state transition from Loading to single result", () => {
 			cy.mount(
 				<AITextArea
 					assistantState="Loading"
@@ -564,22 +564,22 @@ describe("AITextArea Component", () => {
 
 			cy.get("[ui5-ai-textarea]")
 				.as("textarea")
-				.invoke("prop", "assistantState", "SingleResult")
+				.invoke("prop", "assistantState", "Initial")
 				.invoke("prop", "actionText", "Generated text")
 				.invoke("prop", "currentVersionIndex", 1)
 				.invoke("prop", "totalVersions", 1);
 
 			cy.get("@textarea")
-				.should("have.prop", "assistantState", "SingleResult")
+				.should("have.prop", "assistantState", "Initial")
 				.should("have.prop", "actionText", "Generated text")
 				.should("have.prop", "currentVersionIndex", 1)
 				.should("have.prop", "totalVersions", 1);
 		});
 
-		it("should handle state transition from SingleResult to MultipleResults", () => {
+		it("should handle state transition from single to multiple results", () => {
 			cy.mount(
 				<AITextArea
-					assistantState="SingleResult"
+					assistantState="Initial"
 					actionText="Generated text"
 					currentVersionIndex={1}
 					totalVersions={1}
@@ -588,13 +588,13 @@ describe("AITextArea Component", () => {
 
 			cy.get("[ui5-ai-textarea]")
 				.as("textarea")
-				.invoke("prop", "assistantState", "MultipleResults")
+				.invoke("prop", "assistantState", "Initial")
 				.invoke("prop", "actionText", "Multiple results")
 				.invoke("prop", "currentVersionIndex", 2)
 				.invoke("prop", "totalVersions", 3);
 
 			cy.get("@textarea")
-				.should("have.prop", "assistantState", "MultipleResults")
+				.should("have.prop", "assistantState", "Initial")
 				.should("have.prop", "currentVersionIndex", 2)
 				.should("have.prop", "totalVersions", 3);
 
@@ -611,7 +611,7 @@ describe("AITextArea Component", () => {
 		it("should manage focus when navigating versions", () => {
 			cy.mount(
 				<AITextArea
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={2}
 					totalVersions={3}
 				/>
@@ -646,7 +646,7 @@ describe("AITextArea Component", () => {
 
 			cy.mount(
 				<AITextArea
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={1}
 					totalVersions={3}
 					onNextVersionClick={onNextVersionClick}

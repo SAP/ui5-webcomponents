@@ -10,7 +10,7 @@ describe("AITextAreaToolbar Component", () => {
 				.should("have.prop", "assistantState", "Initial")
 				.should("have.prop", "actionText", "")
 				.should("have.prop", "currentVersionIndex", 1)
-				.should("have.prop", "totalVersions", 0);
+				.should("have.prop", "totalVersions", 1);
 		});
 
 		it("should render with custom properties", () => {
@@ -179,10 +179,10 @@ describe("AITextAreaToolbar Component", () => {
 				.should("have.class", "ui5-ai-writing-assistant-footer-bar--with-border");
 		});
 
-		it("should display SingleResult state correctly", () => {
+		it("should display single result correctly", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="SingleResult"
+					assistantState="Initial"
 					actionText="Generated text"
 					currentVersionIndex={1}
 					totalVersions={1}
@@ -206,10 +206,10 @@ describe("AITextAreaToolbar Component", () => {
 				.should("have.attr", "state", "generate");
 		});
 
-		it("should display MultipleResults state correctly", () => {
+		it("should display multiple results correctly", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					actionText="Generated text"
 					currentVersionIndex={2}
 					totalVersions={3}
@@ -237,10 +237,10 @@ describe("AITextAreaToolbar Component", () => {
 	});
 
 	describe("Version Navigation", () => {
-		it("should show version component in MultipleResults state", () => {
+		it("should show version component when totalVersions > 1", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={2}
 					totalVersions={4}
 				/>
@@ -254,7 +254,7 @@ describe("AITextAreaToolbar Component", () => {
 				.should("have.prop", "totalSteps", 4);
 		});
 
-		it("should hide version component in Initial state", () => {
+		it("should hide version component in Initial state with no versions", () => {
 			cy.mount(
 				<AITextAreaToolbar
 					assistantState="Initial"
@@ -284,10 +284,10 @@ describe("AITextAreaToolbar Component", () => {
 				.should("not.exist");
 		});
 
-		it("should not show version component in SingleResult state", () => {
+		it("should not show version component with single version", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="SingleResult"
+					assistantState="Initial"
 					currentVersionIndex={1}
 					totalVersions={1}
 				/>
@@ -303,7 +303,7 @@ describe("AITextAreaToolbar Component", () => {
 			// Test with totalVersions = 1
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={1}
 					totalVersions={1}
 				/>
@@ -317,7 +317,7 @@ describe("AITextAreaToolbar Component", () => {
 			// Test with totalVersions > 1
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={1}
 					totalVersions={3}
 				/>
@@ -332,7 +332,7 @@ describe("AITextAreaToolbar Component", () => {
 		it("should fire previous-version-click event", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={3}
 					totalVersions={5}
 					onPreviousVersionClick={cy.stub().as("onPreviousVersionClick")}
@@ -352,7 +352,7 @@ describe("AITextAreaToolbar Component", () => {
 		it("should fire next-version-click event", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={1}
 					totalVersions={3}
 					onNextVersionClick={cy.stub().as("onNextVersionClick")}
@@ -371,11 +371,12 @@ describe("AITextAreaToolbar Component", () => {
 	});
 
 	describe("Action Text Display", () => {
-		it("should display action text in SingleResult state", () => {
+		it("should display action text with single result", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="SingleResult"
+					assistantState="Initial"
 					actionText="Generated content"
+					totalVersions={1}
 				/>
 			);
 
@@ -400,10 +401,10 @@ describe("AITextAreaToolbar Component", () => {
 				.should("contain.text", "Generating...");
 		});
 
-		it("should display action text in MultipleResults state", () => {
+		it("should display action text with multiple results", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					actionText="Multiple results generated"
 					currentVersionIndex={2}
 					totalVersions={3}
@@ -440,7 +441,7 @@ describe("AITextAreaToolbar Component", () => {
 
 			cy.get("[ui5-ai-textarea-toolbar]")
 				.as("toolbar")
-				.invoke("prop", "assistantState", "SingleResult")
+				.invoke("prop", "assistantState", "Initial")
 				.invoke("prop", "actionText", "Generated text")
 				.invoke("prop", "currentVersionIndex", 1)
 				.invoke("prop", "totalVersions", 1);
@@ -484,7 +485,7 @@ describe("AITextAreaToolbar Component", () => {
 	});
 
 	describe("Border Styling", () => {
-		it("should not have border class in Initial state", () => {
+		it("should not have border class in Initial state with no results", () => {
 			cy.mount(<AITextAreaToolbar assistantState="Initial" />);
 
 			cy.get("[ui5-ai-textarea-toolbar]")
@@ -494,18 +495,24 @@ describe("AITextAreaToolbar Component", () => {
 				.should("not.have.class", "ui5-ai-writing-assistant-footer-bar--with-border");
 		});
 
-		it("should have border class in non-Initial states", () => {
-			const states = ["Loading", "SingleResult", "MultipleResults"];
+		it("should have border class in Loading state", () => {
+			cy.mount(<AITextAreaToolbar assistantState="Loading" />);
 
-			states.forEach(state => {
-				cy.mount(<AITextAreaToolbar assistantState={state as any} />);
+			cy.get("[ui5-ai-textarea-toolbar]")
+				.shadow()
+				.find("ui5-toolbar")
+				.should("have.class", "ui5-ai-writing-assistant-footer-bar")
+				.should("have.class", "ui5-ai-writing-assistant-footer-bar--with-border");
+		});
 
-				cy.get("[ui5-ai-textarea-toolbar]")
-					.shadow()
-					.find("ui5-toolbar")
-					.should("have.class", "ui5-ai-writing-assistant-footer-bar")
-					.should("have.class", "ui5-ai-writing-assistant-footer-bar--with-border");
-			});
+		it("should have border class when results exist", () => {
+			cy.mount(<AITextAreaToolbar assistantState="Initial" totalVersions={1} actionText="Generated" />);
+
+			cy.get("[ui5-ai-textarea-toolbar]")
+				.shadow()
+				.find("ui5-toolbar")
+				.should("have.class", "ui5-ai-writing-assistant-footer-bar")
+				.should("have.class", "ui5-ai-writing-assistant-footer-bar--with-border");
 		});
 	});
 
@@ -555,7 +562,7 @@ describe("AITextAreaToolbar Component", () => {
 
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={2}
 					totalVersions={4}
 					onPreviousVersionClick={onPreviousVersionClick}
@@ -600,7 +607,7 @@ describe("AITextAreaToolbar Component", () => {
 				.should("have.prop", "actionText", "Generating...");
 		});
 
-		it("should handle state transition from Loading to SingleResult", () => {
+		it("should handle state transition from Loading to single result", () => {
 			cy.mount(
 				<AITextAreaToolbar
 					assistantState="Loading"
@@ -610,13 +617,13 @@ describe("AITextAreaToolbar Component", () => {
 
 			cy.get("[ui5-ai-textarea-toolbar]")
 				.as("toolbar")
-				.invoke("prop", "assistantState", "SingleResult")
+				.invoke("prop", "assistantState", "Initial")
 				.invoke("prop", "actionText", "Generated text")
 				.invoke("prop", "currentVersionIndex", 1)
 				.invoke("prop", "totalVersions", 1);
 
 			cy.get("@toolbar")
-				.should("have.prop", "assistantState", "SingleResult")
+				.should("have.prop", "assistantState", "Initial")
 				.should("have.prop", "actionText", "Generated text")
 				.should("have.prop", "currentVersionIndex", 1)
 				.should("have.prop", "totalVersions", 1);
@@ -627,10 +634,10 @@ describe("AITextAreaToolbar Component", () => {
 				.should("not.exist");
 		});
 
-		it("should handle state transition from SingleResult to MultipleResults", () => {
+		it("should handle state transition from single result to multiple results", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="SingleResult"
+					assistantState="Initial"
 					actionText="Generated text"
 					currentVersionIndex={1}
 					totalVersions={1}
@@ -639,13 +646,13 @@ describe("AITextAreaToolbar Component", () => {
 
 			cy.get("[ui5-ai-textarea-toolbar]")
 				.as("toolbar")
-				.invoke("prop", "assistantState", "MultipleResults")
+				.invoke("prop", "assistantState", "Initial")
 				.invoke("prop", "actionText", "Multiple results")
 				.invoke("prop", "currentVersionIndex", 2)
 				.invoke("prop", "totalVersions", 3);
 
 			cy.get("@toolbar")
-				.should("have.prop", "assistantState", "MultipleResults")
+				.should("have.prop", "assistantState", "Initial")
 				.should("have.prop", "currentVersionIndex", 2)
 				.should("have.prop", "totalVersions", 3);
 
@@ -662,7 +669,7 @@ describe("AITextAreaToolbar Component", () => {
 		it("should handle zero total versions", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={1}
 					totalVersions={0}
 				/>
@@ -680,7 +687,7 @@ describe("AITextAreaToolbar Component", () => {
 		it("should handle single version", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="SingleResult"
+					assistantState="Initial"
 					currentVersionIndex={1}
 					totalVersions={1}
 				/>
@@ -707,7 +714,7 @@ describe("AITextAreaToolbar Component", () => {
 		it("should handle negative version indices", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={-1}
 					totalVersions={3}
 				/>
@@ -736,7 +743,7 @@ describe("AITextAreaToolbar Component", () => {
 		it("should have proper ARIA attributes for version navigation", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={2}
 					totalVersions={5}
 				/>
@@ -763,7 +770,7 @@ describe("AITextAreaToolbar Component", () => {
 		it("should provide keyboard navigation support", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={2}
 					totalVersions={3}
 					onPreviousVersionClick={cy.stub().as("onPreviousVersionClick")}
@@ -820,7 +827,7 @@ describe("AITextAreaToolbar Component", () => {
 		it("should properly integrate with Versioning component", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					currentVersionIndex={3}
 					totalVersions={5}
 				/>
@@ -844,7 +851,7 @@ describe("AITextAreaToolbar Component", () => {
 		it("should maintain proper layout with all elements", () => {
 			cy.mount(
 				<AITextAreaToolbar
-					assistantState="MultipleResults"
+					assistantState="Initial"
 					actionText="Generated multiple results"
 					currentVersionIndex={2}
 					totalVersions={4}
@@ -887,7 +894,7 @@ describe("AITextAreaToolbar Component", () => {
 			cy.get("[ui5-ai-textarea-toolbar]")
 				.as("toolbar");
 
-			const states = ["Initial", "Loading", "SingleResult", "MultipleResults"];
+			const states = ["Initial", "Loading"];
 			
 			// Rapidly change states
 			states.forEach((state, index) => {
@@ -896,7 +903,7 @@ describe("AITextAreaToolbar Component", () => {
 			});
 
 			cy.get("@toolbar")
-				.should("have.prop", "assistantState", "MultipleResults");
+				.should("have.prop", "assistantState", "Loading");
 		});
 
 		it("should not cause memory leaks with event handlers", () => {

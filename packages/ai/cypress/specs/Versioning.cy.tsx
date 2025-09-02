@@ -8,7 +8,7 @@ describe("Versioning Component", () => {
 			cy.get("[ui5-ai-textarea-versioning]")
 				.should("exist")
 				.should("have.prop", "currentStep", 1)
-				.should("have.prop", "totalSteps", 0);
+				.should("have.prop", "totalSteps", 1);
 		});
 
 		it("should render with custom properties", () => {
