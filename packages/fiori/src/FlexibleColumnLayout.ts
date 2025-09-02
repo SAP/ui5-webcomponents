@@ -966,18 +966,20 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	getColumnProportionsAboveMinWidth(columnPxWidths: number[]) {
-		const redistributableWidths = columnPxWidths.map(width => 
-			// Only widths that are above minimum AND were originally non-zero can contribute
-			(width > COLUMN_MIN_WIDTH && width > 0) ? width - COLUMN_MIN_WIDTH : 0
-		);
+		const widthsAboveMinWidth = columnPxWidths.map(width => {
+			if (width > COLUMN_MIN_WIDTH) {
+				return width - COLUMN_MIN_WIDTH;
+			}
+			return 0;
+		});
 
-		const sumOfRedistributableWidths = redistributableWidths.reduce((sum, width) => sum + width, 0);
+		const total = widthsAboveMinWidth.reduce((sum, width) => sum + width, 0);
 
-		if (sumOfRedistributableWidths === 0) {
-			return redistributableWidths;
+		if (total === 0) {
+			return widthsAboveMinWidth;
 		}
 
-		return redistributableWidths.map(width => width / sumOfRedistributableWidths);
+		return widthsAboveMinWidth.map(width => width / total);
 	}
 
 	/**
