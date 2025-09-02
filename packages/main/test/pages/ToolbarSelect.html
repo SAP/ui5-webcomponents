@@ -37,21 +37,27 @@
 
             <!-- with label -->
 
+        </ui5-toolbar>
+        <ui5-toolbar align-content="Start">
             <ui5-toolbar-select id="labeledSelect" value="15pt">
                 <span slot="label" id="labeledSelectLabel">18pt</span>
                 <ui5-option>12pt</ui5-option>
                 <ui5-option>15pt</ui5-option>
                 <ui5-option>21pt</ui5-option>
             </ui5-toolbar-select>
+            <ui5-label>Select with value:</ui5-label>
+            <input type="text" id="labeledSelectValue">
         </ui5-toolbar>
 
         <script>
             const select = document.querySelector("ui5-toolbar-select");
-            
+
             const opened = document.querySelector("input[placeholder='Opened']");
             const closed = document.querySelector("input[placeholder='Closed']");
             const changed = document.querySelector("input[placeholder='Changed']");
             const clicked = document.querySelector("input[placeholder='Clicked']");
+
+            labeledSelectValue.value = labeledSelect.getAttribute("value");
 
             select.addEventListener("ui5-change", (event) => {
                 changed.value++;
@@ -69,8 +75,9 @@
                 clicked.value++;
             });
             labeledSelect.addEventListener("ui5-change", (event) => {
-                labeledSelectLabel.textContent = event.detail.selectedOption.textContent
-            })
+                labeledSelectLabel.textContent = event.detail.selectedOption.textContent;
+                labeledSelectValue.value = event.detail.selectedOption.textContent;
+            });
         </script>
     </body>
 </html>
