@@ -813,14 +813,24 @@ describe("Events", () => {
 				</ShellBar>
 			);
 
-			cy.get("[ui5-shellbar]").should("have.prop", "showSearchField", true);
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-search-field")
+				.should("exist");
 
 			cy.get("[ui5-shellbar]").invoke("prop", "showSearchField", false);
 
-			cy.get("[ui5-shellbar]").should("have.prop", "showSearchField", false);
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-search-field")
+				.should("not.exist");
 
 			cy.get("[ui5-shellbar]").invoke("prop", "showSearchField", true);
-			cy.get("[ui5-shellbar]").should("have.prop", "showSearchField", true);
+
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-search-field")
+				.should("exist");
 		});
 	});
 
@@ -1267,10 +1277,12 @@ describe("Component Behavior", () => {
 				};
 			});
 
-			cy.get("[ui5-shellbar]").then(($shellbar) => {
-				const accAttrs = ($shellbar[0] as any).accInfo;
-				expect(accAttrs.notifications.accessibilityAttributes.hasPopup).to.equal(NOTIFICATIONS_BTN_ARIA_HASPOPUP);
-			});
+			cy.get("[ui5-shellbar]")
+				.shadow()
+				.find(".ui5-shellbar-bell-button")
+				.shadow()
+				.find("button")
+				.should("have.attr", "aria-haspopup", NOTIFICATIONS_BTN_ARIA_HASPOPUP);
 		});
 	});
 
