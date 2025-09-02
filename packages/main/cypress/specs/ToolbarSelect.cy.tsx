@@ -42,7 +42,7 @@ describe("Toolbar general interaction", () => {
 	it("Should render accessible name correctly", () => {
 		cy.mount(
 			<Toolbar>
-				<ToolbarSelect 
+				<ToolbarSelect
 					accessibleName="Add"
 					accessibleNameRef="title"
 				>
@@ -109,5 +109,105 @@ describe("Toolbar general interaction", () => {
 		cy.get("[data-testid='selectResult']").should("have.prop", "value", "1");
 
 		cy.get("@changeStub").should("have.been.called");
+	});
+
+	describe("value and label properties", () => {
+		it("Should verify the initial value of the ToolbarSelect", () => {
+			// Mount the Toolbar with a ToolbarSelect component
+			cy.mount(
+				<Toolbar>
+					<ToolbarSelect value="Option 2">
+						<span slot="label">Select an Option:</span>
+						<ToolbarSelectOption>Option 1</ToolbarSelectOption>
+						<ToolbarSelectOption>Option 2</ToolbarSelectOption>
+						<ToolbarSelectOption>Option 3</ToolbarSelectOption>
+					</ToolbarSelect>
+				</Toolbar>
+			);
+
+			// Verify the initial value of the ToolbarSelect
+			cy.get("ui5-select", { includeShadowDom: true })
+				.should("have.attr", "value", "Option 2");
+		});
+
+		it("Should verify the label slot content", () => {
+			// Mount the Toolbar with a ToolbarSelect component
+			cy.mount(
+				<Toolbar>
+					<ToolbarSelect value="Option 2">
+						<span slot="label">Select an Option:</span>
+						<ToolbarSelectOption>Option 1</ToolbarSelectOption>
+						<ToolbarSelectOption>Option 2</ToolbarSelectOption>
+						<ToolbarSelectOption>Option 3</ToolbarSelectOption>
+					</ToolbarSelect>
+				</Toolbar>
+			);
+
+			// Verify the label slot content
+			cy.get("ui5-toolbar-select")
+				.find("span[slot='label']")
+				.should("contain.text", "Select an Option:");
+		});
+
+		it("Should change the value and update the selection", () => {
+			// Mount the Toolbar with a ToolbarSelect component
+			cy.mount(
+				<Toolbar>
+					<ToolbarSelect value="Option 2">
+						<ToolbarSelectOption>Option 1</ToolbarSelectOption>
+						<ToolbarSelectOption>Option 2</ToolbarSelectOption>
+						<ToolbarSelectOption>Option 3</ToolbarSelectOption>
+					</ToolbarSelect>
+				</Toolbar>
+			);
+
+			// Change the value of the ToolbarSelect
+			cy.get("ui5-select", { includeShadowDom: true })
+				.realClick()
+				.find("ui5-option")
+				.contains("Option 3")
+				.realClick();
+
+			// Verify the updated value of the ToolbarSelect
+			cy.get("ui5-select", { includeShadowDom: true })
+				.should("have.attr", "value", "Option 3");
+		});
+
+		it("Should handle a value with no corresponding option", () => {
+			// Mount the Toolbar with a ToolbarSelect component
+			cy.mount(
+				<Toolbar>
+					<ToolbarSelect value="NonExistentOption">
+						<ToolbarSelectOption>Option 1</ToolbarSelectOption>
+						<ToolbarSelectOption>Option 2</ToolbarSelectOption>
+						<ToolbarSelectOption>Option 3</ToolbarSelectOption>
+					</ToolbarSelect>
+				</Toolbar>
+			);
+
+			// Verify that no option is selected when the value does not match any option
+			cy.get("ui5-select", { includeShadowDom: true })
+				.should("have.attr", "value", "NonExistentOption");
+		});
+
+		it("Should update the value programmatically and reflect the selection", () => {
+			// Mount the Toolbar with a ToolbarSelect component
+			cy.mount(
+				<Toolbar>
+					<ToolbarSelect value="Option 1">
+						<ToolbarSelectOption>Option 1</ToolbarSelectOption>
+						<ToolbarSelectOption>Option 2</ToolbarSelectOption>
+						<ToolbarSelectOption>Option 3</ToolbarSelectOption>
+					</ToolbarSelect>
+				</Toolbar>
+			);
+
+			// Update the value programmatically
+			cy.get("ui5-toolbar-select").invoke("attr", "value", "Option 3");
+
+			// Verify the updated value and selection
+			cy.get("ui5-select", { includeShadowDom: true })
+				.should("have.attr", "value", "Option 3");
+		});
 	});
 });

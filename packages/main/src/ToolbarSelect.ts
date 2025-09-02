@@ -91,7 +91,6 @@ class ToolbarSelect extends ToolbarItem {
 	@slot({
 		"default": true,
 		type: HTMLElement,
-		invalidateOnChildChange: true,
 	})
 	options!: Array<ToolbarSelectOption>;
 
@@ -148,9 +147,7 @@ class ToolbarSelect extends ToolbarItem {
 	@property()
 	set value(newValue: string) {
 		if (this.select && this.select.value !== newValue) {
-			const selectedOption = this.select.options.find(option => option.textContent === newValue);
 			this.select.value = newValue;
-			selectedOption && this.fireDecoratorEvent("change", { targetRef: this.select, selectedOption });
 		}
 		this._value = newValue;
 	}
