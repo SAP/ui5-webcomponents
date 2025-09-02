@@ -494,6 +494,54 @@ describe("TabContainer general interaction", () => {
 		});
 	});
 
+	it("tests start and end overflow behavior - tabs don't move to the right if there is enough space", () => {
+		cy.mount(
+			<TabContainer id="tabContainerStartAndEndOverflow" overflowMode="StartAndEnd">
+				<Tab text="One">Tab 1</Tab>
+				<Tab text="Two">Tab 2</Tab>
+				<Tab text="Three">Tab 3</Tab>
+				<Tab text="Four">Tab 4</Tab>
+				<Tab text="Five">Tab 5</Tab>
+				<Tab text="Six">Tab 6</Tab>
+				<Tab text="Seven">Tab 7</Tab>
+				<Tab text="Eight">Tab 8</Tab>
+				<Tab text="Nine">Tab 9</Tab>
+				<Tab text="Ten" selected>Tab 10</Tab>
+				<Tab text="Eleven">Tab 11</Tab>
+				<Tab text="Twelve">Tab 12</Tab>
+				<Tab text="Thirteen">Tab 13</Tab>
+				<Tab text="Fourteen">Tab 14</Tab>
+				<Tab text="Fifteen">Tab 15</Tab>
+				<Tab text="Sixteen">Tab 16</Tab>
+				<Tab text="Seventeen">Tab 17</Tab>
+				<Tab text="Eighteen">Tab 18</Tab>
+				<Tab text="Nineteen">Tab 19</Tab>
+				<Tab text="Twenty">Twenty</Tab>
+				<Tab text="Twenty One">Twenty One</Tab>
+				<Tab text="Twenty Two">Twenty Two</Tab>
+				<Tab text="Twenty Three">Twenty Three</Tab>
+				<Tab text="Twenty Four">Twenty Four</Tab>
+				<Tab text="Twenty Five">Twenty Five</Tab>
+				<Tab text="Twenty Six">Twenty Six</Tab>
+				<Tab text="Twenty Seven">Twenty Seven</Tab>
+				<Tab text="Twenty Eight">Twenty Eight</Tab>
+				<Tab text="Twenty Nine">Twenty Nine</Tab>
+				<Tab text="Thirty">Thirty</Tab>
+			</TabContainer>
+		);
+
+		cy.viewport(600, 1080);
+
+		cy.get("#tabContainerStartAndEndOverflow").shadow().find(".ui5-tc__overflow--start").as("startOverflow");
+		cy.get("#tabContainerStartAndEndOverflow").should("have.attr", "overflow-mode", "StartAndEnd");
+		cy.get("@startOverflow").should("have.text", "+4");
+
+		cy.get("#tabContainerStartAndEndOverflow").shadow().find(".ui5-tab-strip-item:nth-child(5)").as("tab5");
+		cy.get("@tab5").click();
+
+		cy.get("@startOverflow").should("have.text", "+4");
+	});
+
 	it("tests end overflow behavior", () => {
 		cy.mount(tabContainerEndOverflow);
 		cy.viewport(1000, 1080);
@@ -702,7 +750,7 @@ describe("TabContainer general interaction", () => {
 		cy.get("@list").find("ui5-li-custom").eq(0).click();
 		cy.get("#tabContainerCustomOverflowButtons").then((tc) => {
 			const tabContainer = tc.get(0) as TabContainer;
-			const SELECTED_TAB_TEXT = "Thirteen";
+			const SELECTED_TAB_TEXT = "Twelve";
 			const selectedTab = tabContainer._selectedTab;
 			cy.wrap(selectedTab).should("have.attr", "text", SELECTED_TAB_TEXT);
 		});

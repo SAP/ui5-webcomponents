@@ -26,7 +26,6 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import ButtonBadge from "@ui5/webcomponents/dist/ButtonBadge.js";
 import Menu from "@ui5/webcomponents/dist/Menu.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import type Input from "@ui5/webcomponents/dist/Input.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -124,6 +123,13 @@ type ShellBarSearchButtonEventDetail = {
 type ShellBarSearchFieldToggleEventDetail = {
 	expanded: boolean;
 };
+
+interface IShellBarSearchField extends HTMLElement {
+	focused: boolean;
+	value: string;
+	collapsed?: boolean;
+	open?: boolean;
+}
 
 interface IShellBarHidableItem {
 	classes: string,
@@ -521,7 +527,7 @@ class ShellBar extends UI5Element {
 		type: HTMLElement,
 		invalidateOnChildChange: true,
 	})
-	searchField!: Array<Input>;
+	searchField!: Array<IShellBarSearchField>;
 
 	/**
 	 * Defines a `ui5-button` in the bar that will be placed in the beginning.
@@ -553,7 +559,7 @@ class ShellBar extends UI5Element {
 	 * @since 2.7.0
 	 */
 	@slot({ type: HTMLElement, individualSlots: true })
-	content!: Array<UI5Element>;
+	content!: Array<HTMLElement>;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
@@ -1768,4 +1774,5 @@ export type {
 	ShellBarSearchButtonEventDetail,
 	ShellBarSearchFieldToggleEventDetail,
 	IShellBarSelfCollapsibleSearch,
+	IShellBarSearchField,
 };
