@@ -197,7 +197,6 @@ class MultiInput extends Input implements IFormInputElement {
 	_tokenizerFocusOut(e: FocusEvent) {
 		if (!this.contains(e.relatedTarget as HTMLElement) && !this.shadowRoot!.contains(e.relatedTarget as HTMLElement)) {
 			this.tokenizer._tokens.forEach(token => { token.selected = false; });
-			// this.tokenizer.scrollToStart();
 		}
 	}
 

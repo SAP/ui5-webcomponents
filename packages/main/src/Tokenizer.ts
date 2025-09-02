@@ -492,7 +492,7 @@ class Tokenizer extends UI5Element {
 		const expandedNow = this.expanded && !this._lastExpanded;
 
 		if (tokenAdded || expandedNow) {
-			renderFinished().then(() => this.scrollToEnd());
+			this.scrollToEnd();
 		}
 
 		this._lastTokenCount = tokenCount;
