@@ -23,20 +23,20 @@
 }
 
 .ui5-breadcrumbs-current-location {
-    min-width: 1%;
     flex: 1 1 auto;
     /* Fix extra height in ul -> li element */
     font-size: 0;
     align-self: center;
 }
 
+.ui5-breadcrumbs-current-location,
+.ui5-breadcrumbs-link-wrapper:last-child {
+	min-width: 1%;
+}
+
 .ui5-breadcrumbs-current-location > span:focus {
     outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
     border-radius: var(--_ui5_breadcrumbs_current_location_focus_border_radius);
-}
-
-.ui5-breadcrumbs-link-wrapper {
-    min-width: 0;
 }
 
 .ui5-breadcrumbs-dropdown-arrow-link-wrapper[hidden] {
