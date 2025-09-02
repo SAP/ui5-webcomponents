@@ -242,6 +242,8 @@ class Search extends SearchField {
 			if (item) {
 				this._handleTypeAhead(item);
 				this._selectMatchingItem(item);
+			} else {
+				this._deselectItems();
 			}
 		}
 
@@ -311,8 +313,6 @@ class Search extends SearchField {
 		this._innerValue = originalValue;
 		this._performTextSelection = true;
 		this.value = originalValue;
-
-		this._shouldAutocomplete = false;
 	}
 
 	_startsWithMatchingItems(str: string): Array<ISearchSuggestionItem> {
@@ -466,6 +466,8 @@ class Search extends SearchField {
 		this.value = item.text;
 		this._innerValue = this.value;
 		this._typedInValue = this.value;
+		this._shouldAutocomplete = false;
+		this._performTextSelection = true;
 		this.open = false;
 		this.focus();
 	}
