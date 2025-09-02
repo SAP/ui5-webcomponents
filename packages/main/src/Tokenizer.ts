@@ -352,6 +352,8 @@ class Tokenizer extends UI5Element {
 	_previousToken: Token | null = null;
 	_focusedElementBeforeOpen?: HTMLElement | null;
 	_deletedDialogItems!: Token[];
+	_lastTokenCount?: number;
+	_lastExpanded?: boolean;
 
 	_handleResize() {
 		this._nMoreCount = this.overflownTokens.length;
@@ -405,7 +407,6 @@ class Tokenizer extends UI5Element {
 
 		if (!this.preventPopoverOpen) {
 			this.open = true;
-			this.scrollToEnd();
 		}
 
 		this._tokens.forEach(token => {
@@ -476,7 +477,28 @@ class Tokenizer extends UI5Element {
 			this._expandedScrollWidth = this.contentDom.scrollWidth;
 		}
 
+		this._scrollToEndIfNeeded();
 		this._tokenDeleting = false;
+	}
+
+	_scrollToEndIfNeeded() {
+		const tokenCount = this.tokens.length;
+		if (this._lastTokenCount === undefined) {
+			this._lastTokenCount = tokenCount;
+		}
+		if (this._lastExpanded === undefined) {
+			this._lastExpanded = this.expanded;
+		}
+
+		const tokenAdded = tokenCount > this._lastTokenCount;
+		const expandedNow = this.expanded && !this._lastExpanded;
+
+		if (tokenAdded || expandedNow) {
+			renderFinished().then(() => this.scrollToEnd());
+		}
+
+		this._lastTokenCount = tokenCount;
+		this._lastExpanded = this.expanded;
 	}
 
 	_delete(e: CustomEvent<TokenDeleteEventDetail>) {
@@ -1006,7 +1028,8 @@ class Tokenizer extends UI5Element {
 
 	/**
 	 * Scrolls token to the visible area of the container.
-	 * Adds 4 pixels to the scroll position to ensure padding and border visibility on both ends
+	 * Adds 5 pixels to the scroll position to ensure padding and border visibility on both ends
+	 * For the last token, if its width is more than the needed space, scroll to the end without offset
 	 * @protected
 	 */
 	_scrollToToken(token: IToken) {
@@ -1016,11 +1039,18 @@ class Tokenizer extends UI5Element {
 
 		const tokenRect = token.getBoundingClientRect();
 		const tokenContainerRect = this.contentDom.getBoundingClientRect();
+		const oneSideBborderAndPaddingOffset = 5;
+
+		const isLastToken = this._tokens.indexOf(token as Token) === this._tokens.length - 1;
+		if (isLastToken) {
+			this.scrollToEnd();
+			return;
+		}
 
 		if (tokenRect.left < tokenContainerRect.left) {
-			this._scrollEnablement?.scrollTo(this.contentDom.scrollLeft - (tokenContainerRect.left - tokenRect.left + 5), 0);
+			this._scrollEnablement?.scrollTo(this.contentDom.scrollLeft - (tokenContainerRect.left - tokenRect.left + oneSideBborderAndPaddingOffset), 0);
 		} else if (tokenRect.right > tokenContainerRect.right) {
-			this._scrollEnablement?.scrollTo(this.contentDom.scrollLeft + (tokenRect.right - tokenContainerRect.right + 5), 0);
+			this._scrollEnablement?.scrollTo(this.contentDom.scrollLeft + (tokenRect.right - tokenContainerRect.right + oneSideBborderAndPaddingOffset), 0);
 		}
 	}
 
