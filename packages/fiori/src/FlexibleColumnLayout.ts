@@ -309,7 +309,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* Allows to customize the proportions of the column widts per screen size and layout.
 	* If no custom proportion provided for a specific layout, the default will be used.
 	*
- 	* **Notes:**
+	* **Notes:**
 	*
 	* - The proportions should be given in percentages. For example ["30%", "40%", "30%"], ["70%", "30%", 0], etc.
 	* - The proportions should add up to 100%.
@@ -526,23 +526,26 @@ class FlexibleColumnLayout extends UI5Element {
 		return this.getCustomColumnLayout(layout) || this.getDefaultColumnLayout(layout);
 	}
 
+	/**
+	 * Gets custom column layout configuration if available and valid.
+	 * Ensures all visible columns meet minimum width requirements.
+	 * @param layout The FCL layout to get configuration for
+	 * @returns Normalized column layout or undefined if invalid/unavailable
+	 */
 	getCustomColumnLayout(layout: `${FCLLayout}`) {
-		if (this.mediaAllowsCustomConfiguration(this.media)) {
-			const customLayout = this.layoutsConfiguration[this.media]?.[layout]?.layout;
-			if (customLayout) {
-				const normalizedWidths = this.normalizeColumnWidths(customLayout); // satisfy min-width constraint
-				if (this.isValidColumnLayout(normalizedWidths)) { // satisfy layout-specific contraints
-					return normalizedWidths;
-				}
-			}
+		// Only allow custom configuration for tablet and desktop (not phone)
+		if (!this.mediaAllowsCustomConfiguration(this.media)) {
+			return undefined;
 		}
-	}
 
-	setCustomColumnLayout(layout: `${FCLLayout}`, columnLayout: string[]) {
-		if (this.mediaAllowsCustomConfiguration(this.media)) {
-			this.layoutsConfiguration[this.media] ??= {};
-			this.layoutsConfiguration[this.media]![layout] ??= { layout: columnLayout };
-			this.layoutsConfiguration[this.media]![layout]!.layout = columnLayout;
+		const customLayout = this.layoutsConfiguration[this.media]?.[layout]?.layout;
+		if (!customLayout) {
+			return undefined;
+		}
+
+		const constraintCompliantLayout = this.applyMinimumWidthConstraints(customLayout);
+		if (this.isValidColumnLayout(constraintCompliantLayout)) { // satisfy layout-specific contraints
+			return constraintCompliantLayout;
 		}
 	}
 
@@ -552,6 +555,14 @@ class FlexibleColumnLayout extends UI5Element {
 
 	mediaAllowsCustomConfiguration(media: MEDIA) {
 		return media !== MEDIA.PHONE;
+	}
+
+	updateLayoutsConfiguration(layout: `${FCLLayout}`, columnLayout: string[]) {
+		if (this.mediaAllowsCustomConfiguration(this.media)) {
+			this.layoutsConfiguration[this.media] ??= {};
+			this.layoutsConfiguration[this.media]![layout] ??= { layout: columnLayout };
+			this.layoutsConfiguration[this.media]![layout]!.layout = columnLayout;
+		}
 	}
 
 	calcVisibleColumns(colLayout: FlexibleColumnLayoutColumnLayout) {
@@ -673,7 +684,7 @@ class FlexibleColumnLayout extends UI5Element {
 			this.fireLayoutChange(true, false);
 		}
 		if (oldColumnLayout?.join() !== newColumnLayout.join()) { // compare arrays' content
-			this.setCustomColumnLayout(newLayout, newColumnLayout);
+			this.updateLayoutsConfiguration(newLayout, newColumnLayout);
 			this.fireLayoutConfigurationChange();
 		}
 	}
@@ -767,13 +778,13 @@ class FlexibleColumnLayout extends UI5Element {
 
 	_onArrowKeydown(e: KeyboardEvent) {
 		if (isEnter(e) || isSpace(e)) {
-		  e.preventDefault();
-		  const focusedElement = e.target as HTMLElement;
-		  if (focusedElement === this.startArrowDOM) {
+			e.preventDefault();
+			const focusedElement = e.target as HTMLElement;
+			if (focusedElement === this.startArrowDOM) {
 				this.switchLayoutOnArrowPress();
-		  }
+			}
 		}
-	  }
+	}
 
 	async _onSeparatorKeydown(e: KeyboardEvent) {
 		const separator = e.target as HTMLElement;
@@ -904,89 +915,126 @@ class FlexibleColumnLayout extends UI5Element {
 		return this.verifyColumnWidthsMatchLayout(pxWidths);
 	}
 
-	normalizeColumnWidths(columnLayout: (string | 0)[]) {
-		// convert to pixel numbers
-		const pxWidths = columnLayout.map(w => this.convertColumnWidthToPixels(w));
-
-		this.adjustWidthsToMinWidth(pxWidths);
-
-		// back to percent widths
-		return pxWidths.map(w => this.convertToRelativeColumnWidth(w));
+	/**
+	 * Applies minimum width constraints to column layout configuration.
+	 * Ensures all visible columns meet the minimum width requirement by transferring
+	 * space from the wider columns to undersized columns.
+	 * @param columnLayout Original column layout (percentages or pixels)
+	 * @returns Constraint-compliant column layout in same format as input
+	 */
+	applyMinimumWidthConstraints(columnLayout: (string | 0)[]) {
+		return this.withPixelConversion(columnLayout, (pxWidths) => {
+			return this.adjustColumnsToMinimumWidth(pxWidths);
+		});
 	}
 
-	adjustWidthsToMinWidth(pxWidths: number[]) {
-		const indicesOfColumnsToAdjust = this.getIndicesOfColumnsBelowMinWidth(pxWidths);
+	/**
+	 * Adjusts column widths to ensure minimum width constraints.
+	 * Takes width from the widest column to bring undersized columns up to minimum.
+	 * @param pxWidths Array of column widths in pixels (modified in place)
+	 */
+	adjustColumnsToMinimumWidth(pxWidths: number[]) {
+		const adjustedWidths = [...pxWidths];
 
-		if (!indicesOfColumnsToAdjust.length) {
-			return;
+		let totalDeficit = 0;
+		for (let i = 0; i < adjustedWidths.length; i++) {
+			const width = adjustedWidths[i];
+			const isBelowMinimum = Math.ceil(width) < COLUMN_MIN_WIDTH; // ceil to avoid floating point precision issues
+
+			if (!this._isColumnHidden(width) && isBelowMinimum) {
+				totalDeficit += COLUMN_MIN_WIDTH - width;
+				adjustedWidths[i] = COLUMN_MIN_WIDTH;
+			}
+		}
+		
+		if (totalDeficit === 0) {
+			return adjustedWidths; // no adjustments were needed
 		}
 
-		const indexOfWidestColumn = this.getIndexOfWidestColumn(pxWidths);
-		let deficit = 0;
+		// Create proportions for redistribution of the deficit based on available space above COLUMN_MIN_WIDTH
+		const columnProportions = this.getColumnProportionsAboveMinWidth(pxWidths);
 
-		indicesOfColumnsToAdjust.forEach(indexOfColumnBelowMinWith => {
-			deficit = COLUMN_MIN_WIDTH - pxWidths[indexOfColumnBelowMinWith];
-
-			// enlarge the column by transfering from the widest column
-			pxWidths[indexOfColumnBelowMinWith] += deficit;
-			pxWidths[indexOfWidestColumn] -= deficit;
-		});
+		// Redistribute the deficit proportionally among columns that can contribute
+		for (let i = 0; i < adjustedWidths.length; i++) {
+			const isVisible = adjustedWidths[i] > 0;
+			if (isVisible && columnProportions[i] > 0) {
+				adjustedWidths[i] -= totalDeficit * columnProportions[i];
+			}
+		}
+		
+		return adjustedWidths;
 	}
 
-	getIndicesOfColumnsBelowMinWidth(columnLayout: number[]) {
-		const indices: number[] = [];
-		columnLayout.forEach((pxWidth, i) => {
-			// ceil before comparing to avoid floating point precision issues
-			if ((pxWidth > 0) && (Math.ceil(pxWidth) < COLUMN_MIN_WIDTH)) {
-				indices.push(i);
-			}
-		});
-		return indices;
+	
+	getColumnProportionsAboveMinWidth(columnPxWidths: number[]) {
+		const redistributableWidths = columnPxWidths.map(width => 
+			// Only widths that are above minimum AND were originally non-zero can contribute
+			(width > COLUMN_MIN_WIDTH && width > 0) ? width - COLUMN_MIN_WIDTH : 0
+		);
+
+		const sumOfRedistributableWidths = redistributableWidths.reduce((sum, width) => sum + width, 0);
+
+		if (sumOfRedistributableWidths === 0) {
+			return redistributableWidths;
+		}
+		
+		return redistributableWidths.map(width => width / sumOfRedistributableWidths);
 	}
 
-	getIndexOfWidestColumn(columnLayout: number[]) {
-		let maxIndex = 0;
-		columnLayout.forEach((pxWidth, i) => {
-			if (pxWidth > columnLayout[maxIndex]) {
-				maxIndex = i;
-			}
-		});
-		return maxIndex;
+	/**
+	 * Helper that handles pixel conversion for column width operations.
+	 * Converts input to pixels, applies the operation, then converts back to relative widths.
+	 * @param columnLayout Column layout in mixed formats
+	 * @param operation Function that operates on pixel widths
+	 * @returns Column layout in percentage format
+	 */
+	private withPixelConversion(
+		columnLayout: (string | 0)[],
+		operation: (pxWidths: number[]) => number[]
+	) {
+		// Convert to pixels for calculations
+		const pxWidths = columnLayout.map(width => this.convertColumnWidthToPixels(width));
+
+		// Apply the operation
+		const adjustedPxWidths = operation(pxWidths);
+
+		// Convert back to percentage-based widths
+		return adjustedPxWidths.map(width => this.convertToRelativeColumnWidth(width));
 	}
 
 	verifyColumnWidthsMatchLayout(pxWidths: number[]) {
 		const columnWidths = {
-				start: pxWidths[0],
-				mid: pxWidths[1],
-				end: pxWidths[2],
-			},
+			start: pxWidths[0],
+			mid: pxWidths[1],
+			end: pxWidths[2],
+		},
 			startWidth = columnWidths.start,
 			startPercentWidth = parseInt(this.convertToRelativeColumnWidth(startWidth));
 
 		switch (this.layout) {
-		case FCLLayout.TwoColumnsStartExpanded: {
-			return columnWidths.start >= columnWidths.mid;
-		}
-		case FCLLayout.TwoColumnsMidExpanded: {
-			return columnWidths.mid > columnWidths.start;
-		}
-		case FCLLayout.ThreeColumnsEndExpanded: {
-			return (columnWidths.end > columnWidths.mid) && (startPercentWidth < 33);
-		}
-		case FCLLayout.ThreeColumnsStartExpandedEndHidden: {
-			return (columnWidths.start >= columnWidths.mid) && columnWidths.end === 0;
-		}
-		case FCLLayout.ThreeColumnsMidExpanded: {
-			return (columnWidths.mid >= columnWidths.end)
-			&& ((this.media === MEDIA.DESKTOP && startPercentWidth < 33) // desktop
-				|| (this.media === MEDIA.TABLET && startPercentWidth === 0)); // tablet
-		}
-		case FCLLayout.ThreeColumnsMidExpandedEndHidden: {
-			return (columnWidths.mid > columnWidths.start)
-				&& columnWidths.end === 0
-				&& ((this.media === MEDIA.DESKTOP && startPercentWidth >= 33)
-					|| (this.media === MEDIA.TABLET && startWidth >= COLUMN_MIN_WIDTH));
-		}
+			case FCLLayout.TwoColumnsStartExpanded: {
+				return columnWidths.start >= columnWidths.mid;
+			}
+			case FCLLayout.TwoColumnsMidExpanded: {
+				return columnWidths.mid > columnWidths.start;
+			}
+			case FCLLayout.ThreeColumnsEndExpanded: {
+				return (columnWidths.end > columnWidths.mid) && (startPercentWidth < 33);
+			}
+			case FCLLayout.ThreeColumnsStartExpandedEndHidden: {
+				return (columnWidths.start >= columnWidths.mid) && columnWidths.end === 0;
+			}
+			case FCLLayout.ThreeColumnsMidExpanded: {
+				return (columnWidths.mid >= columnWidths.end)
+					&& ((this.media === MEDIA.DESKTOP && startPercentWidth < 33) // desktop
+						|| (this.media === MEDIA.TABLET && startPercentWidth === 0)); // tablet
+			}
+			case FCLLayout.ThreeColumnsMidExpandedEndHidden: {
+				return (columnWidths.mid > columnWidths.start)
+					&& columnWidths.end === 0
+					&& ((this.media === MEDIA.DESKTOP && startPercentWidth >= 33)
+						|| (this.media === MEDIA.TABLET && startWidth >= COLUMN_MIN_WIDTH));
+			}
 		}
 
 		return false;
@@ -995,10 +1043,10 @@ class FlexibleColumnLayout extends UI5Element {
 	getNextLayoutOnSeparatorMovement(separator: HTMLElement, isStartToEndDirection: boolean, fclLayoutBeforeMove: FCLLayout, columnLayoutAfterMove: FlexibleColumnLayoutColumnLayout) {
 		const isStartSeparator = separator === this.startSeparatorDOM,
 			separatorName = isStartSeparator ? "start" : "end",
-			moved = (options: {separator: "start" | "end", from: FCLLayout, forward: boolean}) => {
+			moved = (options: { separator: "start" | "end", from: FCLLayout, forward: boolean }) => {
 				return options.from === fclLayoutBeforeMove
-				&& options.separator === separatorName
-				&& options.forward === isStartToEndDirection;
+					&& options.separator === separatorName
+					&& options.forward === isStartToEndDirection;
 			},
 			newColumnLayout = columnLayoutAfterMove.map(x => this.convertColumnWidthToPixels(x)),
 			newColumnWidths = {
