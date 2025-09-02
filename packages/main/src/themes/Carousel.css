@@ -144,9 +144,9 @@
     box-shadow: var(--ui5_carousel_navigation_button_active_box_shadow);
 }
 
-.ui5-carousel-navigation-button[active] {
-    --_ui5_button_focused_border: none;
-    --_ui5_button_pressed_focused_border_color: transparent;
+.ui5-carousel-navigation-button::part(button)::after,
+.ui5-carousel-navigation-button::part(button)::before {
+    display: none;
 }
 
 .ui5-carousel-navigation-button--hidden {
