@@ -52,7 +52,7 @@ Cypress.Commands.add("ui5CheckA11y", (context?: string | Node | undefined, optio
     if (Cypress.env('ui5AccTasksRegistered') === "axe") {
         return cy.checkA11y(context, options, checkA11TerminalLog, false)
     } else if (Cypress.env('ui5AccTasksRegistered') === "continuum") {
-        return cy.runAllTestsForAssertions();
+        return context ? cy.runAllTestsForAssertionsForNode(context) : cy.runAllTestsForAssertions()
     }
 })
 
