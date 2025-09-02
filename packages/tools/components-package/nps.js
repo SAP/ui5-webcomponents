@@ -36,7 +36,7 @@ const getScripts = (options) => {
 	const createIllustrationsJSImportsScript = illustrations.join(" && ");
 
 	// The script creates the "src/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
-	const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.set} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
+	const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.path} ${illustrations.dynamicImports.outputFile} ${illustrations.set} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
 
 	const tsOption = !options.legacy || options.jsx;
 	const tsCommandOld = tsOption ? "tsc" : "";
@@ -78,7 +78,7 @@ const getScripts = (options) => {
 	}
 
 	const scripts = {
-		clean: 'rimraf src/generated && rimraf dist && rimraf .port && ui5nps "scope.testPages.clean"',
+		clean: 'rimraf src/generated && rimraf dist && ui5nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig} --fix`,
 		generate: {
@@ -87,7 +87,7 @@ const getScripts = (options) => {
 			styleRelated: "ui5nps build.styles build.jsonImports build.jsImports",
 		},
 		prepare: {
-			default: `${tsCrossEnv} ui5nps clean prepare.all ${options.legacy ? "copy" : ""} copyProps prepare.typescript generateAPI`,
+			default: `${tsCrossEnv} ui5nps clean prepare.all copy copyProps prepare.typescript generateAPI`,
 			all: `ui5nps  build.templates build.i18n prepare.styleRelated build.illustrations --parallel`,
 			styleRelated: "ui5nps build.styles build.jsonImports build.jsImports",
 			typescript: tsCommandOld,
@@ -107,8 +107,8 @@ const getScripts = (options) => {
 			},
 			jsonImports: {
 				default: "ui5nps build.jsonImports.themes build.jsonImports.i18n",
-				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes src/generated/json-imports`,
-				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n src/generated/json-imports`,
+				themes: `node "${LIB}/generate-json-imports/themes.js" src/themes src/generated/json-imports`,
+				i18n: `node "${LIB}/generate-json-imports/i18n.js" src/i18n src/generated/json-imports`,
 			},
 			jsImports: {
 				default: "ui5nps build.jsImports.illustrationsLoaders",
@@ -120,14 +120,14 @@ const getScripts = (options) => {
 		},
 		copyProps: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
 		copy: {
-			default: "ui5nps copy.src copy.props",
-			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.{js,json}" dist/`,
-			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
+			default: options.legacy ? "ui5nps copy.src copy.props" : "",
+			src: options.legacy ? `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.{js,json}" dist/` : "",
+			props: options.legacy ? `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/` : "",
 		},
 		watch: {
-			default: `${tsCrossEnv} ui5nps watch.templates watch.typescript ${options.legacy ? 'watch.src' : ""} watch.styles watch.i18n watch.props --parallel`,
+			default: `${tsCrossEnv} ui5nps watch.templates watch.typescript watch.src watch.styles watch.i18n watch.props --parallel`,
 			devServer: 'ui5nps watch.default watch.bundle --parallel',
-			src: 'ui5nps "copy.src --watch --safe --skip-initial-copy"',
+			src: options.legacy ? 'ui5nps "copy.src --watch --safe --skip-initial-copy"' : "",
 			typescript: tsWatchCommandStandalone,
 			props: 'ui5nps "copyProps --watch --safe --skip-initial-copy"',
 			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,

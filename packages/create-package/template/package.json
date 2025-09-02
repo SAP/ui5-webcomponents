@@ -6,11 +6,11 @@
     },
     "type": "module",
     "scripts": {
-        "clean": "ui5nps clean",
-        "lint": "ui5nps lint",
-        "start": "ui5nps start",
-        "watch": "ui5nps watch",
-        "build": "ui5nps build",
+        "clean": "wc-dev clean",
+        "lint": "wc-dev lint",
+        "start": "wc-dev start",
+        "watch": "wc-dev watch",
+        "build": "wc-dev build",
         {{INIT_PACKAGE_CYPRESS_TEST_COMMANDS}}
         "create-ui5-element": "wc-create-ui5-element",
         "prepublishOnly": "npm run build"

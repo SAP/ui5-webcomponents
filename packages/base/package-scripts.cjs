@@ -14,7 +14,7 @@ const LIB = path.join(__dirname, `../tools/lib/`);
 const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.js")}"`;
 
 const scripts = {
-	clean: "rimraf src/generated && rimraf dist && rimraf .port",
+	clean: "rimraf src/generated && rimraf dist",
 	lint: `eslint .`,
 	generate: "cross-env UI5_TS=true ui5nps clean build.i18n integrate copy generateAssetParameters generateVersionInfo generateStyles generateFontFace generateTemplates build.jsonImports",
 	prepare: "cross-env UI5_TS=true ui5nps clean build.i18n integrate copy generateAssetParameters generateVersionInfo generateStyles generateFontFace generateTemplates typescript integrate.no-remaining-require build.jsonImports",
@@ -26,7 +26,7 @@ const scripts = {
 		"no-remaining-require": `node "${noRequire}" dist/`,
 		"third-party": {
 			default: "ui5nps integrate.third-party.copy integrate.third-party.fix",
-			copy: "mkdirp dist/sap/ui/thirdparty/ && copy-and-watch ../../node_modules/@openui5/sap.ui.core/src/sap/ui/thirdparty/caja-html-sanitizer.js dist/sap/ui/thirdparty/",
+			copy: "copy-and-watch ../../node_modules/@openui5/sap.ui.core/src/sap/ui/thirdparty/caja-html-sanitizer.js dist/sap/ui/thirdparty/",
 			fix: "replace-in-file 240 xA0 dist/sap/ui/thirdparty/caja-html-sanitizer.js"
 		},
 	},
@@ -52,7 +52,7 @@ const scripts = {
 	generateStyles: `node "${stylesScript}"`,
 	generateFontFace: `node "${fontFaceScript}"`,
 	generateTemplates: ``,
-	generateTestTemplates: `mkdirp test/test-elements/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/test-elements -o test/test-elements/generated/templates`,
+	generateTestTemplates: `cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/test-elements -o test/test-elements/generated/templates`,
 	generateProd: {
 		"default": "ui5nps generateProd.remove-dev-mode generateProd.copy-prod",
 		"remove-dev-mode": `node "${LIB}/remove-dev-mode/remove-dev-mode.mjs"`,
