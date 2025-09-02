@@ -12,79 +12,83 @@
 <body style="background-color: var(--sapBackgroundColor)">
     <!-- playground-fold-end -->
 
-    <ui5-label show-colon>Select layout</ui5-label>
-	<ui5-select id="selectLayout">
-		<ui5-option>TwoColumnsStartExpanded</ui5-option>
-		<ui5-option selected>TwoColumnsMidExpanded</ui5-option>
-		<ui5-option>ThreeColumnsMidExpanded</ui5-option>
-        <ui5-option>ThreeColumnsEndExpanded</ui5-option>
-        <ui5-option>ThreeColumnsStartExpandedEndHidden</ui5-option>
-        <ui5-option>ThreeColumnsMidExpandedEndHidden</ui5-option>
-	</ui5-select>
+    <div class="layout-grid">
+        <ui5-label show-colon>Current layout</ui5-label>
+        <ui5-select id="selectLayout">
+            <ui5-option>TwoColumnsStartExpanded</ui5-option>
+            <ui5-option selected>TwoColumnsMidExpanded</ui5-option>
+            <ui5-option>ThreeColumnsMidExpanded</ui5-option>
+            <ui5-option>ThreeColumnsEndExpanded</ui5-option>
+            <ui5-option>ThreeColumnsStartExpandedEndHidden</ui5-option>
+            <ui5-option>ThreeColumnsMidExpandedEndHidden</ui5-option>
+        </ui5-select>
+        <ui5-label show-colon>Custom configuration for current layout</ui5-label>
+        <ui5-text id="configurationInfo" class="configurationInfo"></ui5-text>
+    </div>
     <ui5-flexible-column-layout id="fcl" class="fcl" layout="TwoColumnsMidExpanded">
         <div class="col" slot="startColumn">
             <div class="colHeader">
-				<ui5-title>Column 1</ui5-title>
-			</div>
-			<ui5-list>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
+                <ui5-title>Column 1</ui5-title>
+            </div>
+            <ui5-list>
                 <ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
                 <ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
                 <ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-			</ui5-list>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+            </ui5-list>
         </div>
         <div class="col" slot="midColumn">
             <div class="colHeader">
-				<ui5-title>Column 2</ui5-title>
-			</div>
-			<ui5-list>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
+                <ui5-title>Column 2</ui5-title>
+            </div>
+            <ui5-list>
                 <ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
                 <ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
                 <ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-			</ui5-list>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+            </ui5-list>
         </div>
         <div class="col" slot="endColumn">
             <div class="colHeader">
-				<ui5-title>Column 3</ui5-title>
-			</div>
-			<ui5-list>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-				<ui5-li>Hello worild!</ui5-li>
-			</ui5-list>
+                <ui5-title>Column 3</ui5-title>
+            </div>
+            <ui5-list>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+                <ui5-li>Hello worild!</ui5-li>
+            </ui5-list>
         </div>
     </ui5-flexible-column-layout>
     <!-- playground-fold -->

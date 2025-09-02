@@ -543,7 +543,7 @@ class FlexibleColumnLayout extends UI5Element {
 			return undefined;
 		}
 
-		// apply minimum column-width constraints relative to the current fcl total width
+		// ensure visible columns are above min-width given the current fcl total width
 		const constraintCompliantLayout = this.applyMinimumWidthConstraints(customLayout);
 		if (this.isValidColumnLayout(constraintCompliantLayout)) { // satisfy layout-specific contraints
 			return constraintCompliantLayout;
@@ -573,7 +573,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 	/**
 	 * Adjusts column widths to ensure minimum width constraints.
-	 * Takes width from the widest column to bring undersized columns up to minimum.
+	 * Takes width from the widest columns to bring undersized columns up to minimum.
 	 * @param pxWidths Array of column widths in pixels (modified in place)
 	 */
 	adjustColumnsToMinimumWidth(pxWidths: number[]) {
@@ -632,7 +632,7 @@ class FlexibleColumnLayout extends UI5Element {
 	 * @param operation Function that operates on pixel widths
 	 * @returns Column layout in percentage format
 	 */
-	private doWithPixelConversion(
+	doWithPixelConversion(
 		columnLayout: (string | 0)[],
 		operation: (pxWidths: number[]) => number[],
 	) {
@@ -644,6 +644,55 @@ class FlexibleColumnLayout extends UI5Element {
 
 		// Convert back to percentage-based widths
 		return adjustedPxWidths.map(width => this.convertToRelativeColumnWidth(width));
+	}
+
+	isValidColumnLayout(columnLayout: (string | 0)[]) {
+		const pxWidths = columnLayout?.map(w => this.convertColumnWidthToPixels(w));
+		const totalWidth = pxWidths.reduce((i, sum) => i + sum);
+
+		if (Math.round(totalWidth) !== Math.round(this._availableWidthForColumns)) {
+			return false;
+		}
+
+		return this.verifyColumnWidthsMatchLayout(pxWidths);
+	}
+
+	verifyColumnWidthsMatchLayout(pxWidths: number[]) {
+		const columnWidths = {
+				start: pxWidths[0],
+				mid: pxWidths[1],
+				end: pxWidths[2],
+			},
+			startWidth = columnWidths.start,
+			startPercentWidth = parseInt(this.convertToRelativeColumnWidth(startWidth));
+
+		switch (this.layout) {
+		case FCLLayout.TwoColumnsStartExpanded: {
+			return columnWidths.start >= columnWidths.mid;
+		}
+		case FCLLayout.TwoColumnsMidExpanded: {
+			return columnWidths.mid > columnWidths.start;
+		}
+		case FCLLayout.ThreeColumnsEndExpanded: {
+			return (columnWidths.end > columnWidths.mid) && (startPercentWidth < 33);
+		}
+		case FCLLayout.ThreeColumnsStartExpandedEndHidden: {
+			return (columnWidths.start >= columnWidths.mid) && columnWidths.end === 0;
+		}
+		case FCLLayout.ThreeColumnsMidExpanded: {
+			return (columnWidths.mid >= columnWidths.end)
+			&& ((this.media === MEDIA.DESKTOP && startPercentWidth < 33) // desktop
+				|| (this.media === MEDIA.TABLET && startPercentWidth === 0)); // tablet
+		}
+		case FCLLayout.ThreeColumnsMidExpandedEndHidden: {
+			return (columnWidths.mid > columnWidths.start)
+				&& columnWidths.end === 0
+				&& ((this.media === MEDIA.DESKTOP && startPercentWidth >= 33)
+					|| (this.media === MEDIA.TABLET && startWidth >= COLUMN_MIN_WIDTH));
+		}
+		}
+
+		return false;
 	}
 
 	calcVisibleColumns(colLayout: FlexibleColumnLayoutColumnLayout) {
@@ -991,55 +1040,6 @@ class FlexibleColumnLayout extends UI5Element {
 			return "0px";
 		}
 		return `${(pxWidth / this._availableWidthForColumns) * 100}%`;
-	}
-
-	isValidColumnLayout(columnLayout: (string | 0)[]) {
-		const pxWidths = columnLayout?.map(w => this.convertColumnWidthToPixels(w));
-		const totalWidth = pxWidths.reduce((i, sum) => i + sum);
-
-		if (Math.round(totalWidth) !== Math.round(this._availableWidthForColumns)) {
-			return false;
-		}
-
-		return this.verifyColumnWidthsMatchLayout(pxWidths);
-	}
-
-	verifyColumnWidthsMatchLayout(pxWidths: number[]) {
-		const columnWidths = {
-				start: pxWidths[0],
-				mid: pxWidths[1],
-				end: pxWidths[2],
-			},
-			startWidth = columnWidths.start,
-			startPercentWidth = parseInt(this.convertToRelativeColumnWidth(startWidth));
-
-		switch (this.layout) {
-		case FCLLayout.TwoColumnsStartExpanded: {
-			return columnWidths.start >= columnWidths.mid;
-		}
-		case FCLLayout.TwoColumnsMidExpanded: {
-			return columnWidths.mid > columnWidths.start;
-		}
-		case FCLLayout.ThreeColumnsEndExpanded: {
-			return (columnWidths.end > columnWidths.mid) && (startPercentWidth < 33);
-		}
-		case FCLLayout.ThreeColumnsStartExpandedEndHidden: {
-			return (columnWidths.start >= columnWidths.mid) && columnWidths.end === 0;
-		}
-		case FCLLayout.ThreeColumnsMidExpanded: {
-			return (columnWidths.mid >= columnWidths.end)
-			&& ((this.media === MEDIA.DESKTOP && startPercentWidth < 33) // desktop
-				|| (this.media === MEDIA.TABLET && startPercentWidth === 0)); // tablet
-		}
-		case FCLLayout.ThreeColumnsMidExpandedEndHidden: {
-			return (columnWidths.mid > columnWidths.start)
-				&& columnWidths.end === 0
-				&& ((this.media === MEDIA.DESKTOP && startPercentWidth >= 33)
-					|| (this.media === MEDIA.TABLET && startWidth >= COLUMN_MIN_WIDTH));
-		}
-		}
-
-		return false;
 	}
 
 	getNextLayoutOnSeparatorMovement(separator: HTMLElement, isStartToEndDirection: boolean, fclLayoutBeforeMove: FCLLayout, columnLayoutAfterMove: FlexibleColumnLayoutColumnLayout) {

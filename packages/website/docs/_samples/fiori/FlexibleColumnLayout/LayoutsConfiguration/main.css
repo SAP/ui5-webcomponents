@@ -1,3 +1,18 @@
+.layout-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 0.5rem 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.layout-grid ui5-label:first-child,
+.layout-grid ui5-label:nth-child(3) {
+    text-align: right;
+    justify-self: end;
+}
+
 .fcl {
     height: 600px;
 }
@@ -8,4 +23,8 @@
 
 .colHeader {
     padding: 1rem;
+}
+
+.configurationInfo {
+    color: var(--sapPositiveColor);
 }

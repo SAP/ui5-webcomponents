@@ -4,6 +4,7 @@ import "@ui5/webcomponents/dist/Label.js";
 import "@ui5/webcomponents/dist/List.js";
 import "@ui5/webcomponents/dist/ListItemStandard.js";
 import "@ui5/webcomponents/dist/Title.js";
+import "@ui5/webcomponents/dist/Text.js";
 import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";
 
 fcl.layoutsConfiguration = {
@@ -49,11 +50,31 @@ fcl.layoutsConfiguration = {
     },
 };
 
+function displayCustomLayoutConfigurationInfo() {
+    const configurationPerMedia = fcl.layoutsConfiguration[fcl.media];
+    const layoutConfiguration = configurationPerMedia ? configurationPerMedia[fcl.layout] : undefined;
+    if (layoutConfiguration) {
+        configurationInfo.innerText = `[${layoutConfiguration.layout.join(", ")}]`;
+    } else {
+        configurationInfo.innerText = `none`;
+    }
+}
+
 selectLayout.addEventListener("ui5-change", (e) => {
     fcl.layout = e.detail.selectedOption.textContent;
+    displayCustomLayoutConfigurationInfo();
 });
 
 fcl.addEventListener("layout-configuration-change", (e) => {
-    console.log("Layout configuration change:", e.detail);
-    console.log("Layout configuration object:", fcl.layoutsConfiguration);
+    displayCustomLayoutConfigurationInfo();
 });
+
+fcl.addEventListener("layout-change", (e) => {
+    selectLayout.value = e.detail.layout;
+});
+
+window.addEventListener("resize", () => {
+    displayCustomLayoutConfigurationInfo();
+});
+
+displayCustomLayoutConfigurationInfo();
