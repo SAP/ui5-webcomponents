@@ -74,8 +74,16 @@ const scripts = {
 		default: 'ui5nps test.ssr test.ssr2 test.test-cy-ci --parallel',
 		ssr: `mocha test/ssr`,
 		ssr2: "node -e \"import('./dist/Device.js')\"",
-		"test-cy-ci": `ui5nps generateTestTemplates && cross-env UI5_BASE=true yarn cypress run --component --browser chrome`,
-		"test-cy-open": `ui5nps generateTestTemplates && cross-env UI5_BASE=true yarn cypress open --component --browser chrome`,
+		"test-cy-ci": {
+			default: "ui5nps test.test-cy-ci.prepare test.test-cy-ci.cypress",
+			prepare: `ui5nps generateTestTemplates`,
+			cypress: `cross-env UI5_BASE=true yarn cypress run --component --browser chrome`
+		},
+		"test-cy-open": {
+			default: "ui5nps test.test-cy-ci.prepare test.test-cy-ci.cypress",
+			prepare: `ui5nps generateTestTemplates`,
+			cypress: `cross-env UI5_BASE=true yarn cypress open --component --browser chrome`
+		}
 	},
 };
 
