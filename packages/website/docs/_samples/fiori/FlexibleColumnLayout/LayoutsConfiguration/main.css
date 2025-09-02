@@ -23,8 +23,32 @@
 
 .colHeader {
     padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--sapList_BorderColor);
+}
+
+.colSubHeader {
+    display: flex;
+    gap: 0.5rem;
 }
 
 .configurationInfo {
-    color: var(--sapPositiveColor);
+    color: var(--sapInformativeColor);
+}
+
+.product-details {
+    padding: 1rem;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.product-info ui5-label {
+    font-weight: bold;
+    margin-top: 0.5rem;
 }
