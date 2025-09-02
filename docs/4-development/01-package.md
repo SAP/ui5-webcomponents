@@ -4,7 +4,7 @@ sidebar_label: Create Web Components Project
 
 # Create UI5 Web Components Project (Package)
 
-This tutorial explains how to create web components project, ready to be published as NPM package, on top of the  UI5 Web Components framework (`@ui5/webcomponents-base`) and tools (`@ui5/webcomponents-tools`) to make use of development server, theming, HBS template support, i18n, test setup, etc.
+This tutorial explains how to create web components project, ready to be published as NPM package, on top of the  UI5 Web Components framework (`@ui5/webcomponents-base`) and tools (`@ui5/webcomponents-tools`) to make use of development server, theming, JSX template support, i18n, test setup, etc.
 
 ## Initialize New Project
 
@@ -91,6 +91,13 @@ The initialization script will create several NPM scripts for you in `package.js
 | test               | Run the dev server and execute the specs from the `test/specs/` directory.   |
 | create-ui5-element | Create an empty Web Component with the given name.                           |
 
+
+**Note**: The `create-ui5-element` command supports two optional environment variables that customize the output when used in a specific component package:
+
+* **UI5_TAG_NAME_PREFIX** - sets the tag name prefix for the generated Web Component. The resulting tag will follow the format: `{UI5_TAG_NAME_PREFIX}-component-name`. Defaults to `my` if not specified.
+
+* **UI5_TEMPLATE_FILENAME_SUFFIX** - sets the suffix for the generated template filename. The resulting filename will follow the format: `ComponentName{UI5_TEMPLATE_FILENAME_SUFFIX}.tsx`. Defaults to `Template` if not specified.
+
 ### Files in the main directory
 
 The initialization script will create several files in your package's main directory.
@@ -169,7 +176,7 @@ The main files describing a Web Component are:
 | File                       | Purpose        |
 |----------------------------|----------------|
 | `src/MyComponent.js`  | Web Component class |
-| `src/MyComponent.hbs` | Handlebars template |
+| `src/MyComponentTemplate.tsx` | JSX template |
 
 In order to understand how a UI5 Web Component works and what lies behind these two files, read the next articles
 to understand more about [Developing web components](./02-component.md).
