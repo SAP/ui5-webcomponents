@@ -923,7 +923,7 @@ class FlexibleColumnLayout extends UI5Element {
 	 * @returns Constraint-compliant column layout in same format as input
 	 */
 	applyMinimumWidthConstraints(columnLayout: (string | 0)[]) {
-		return this.withPixelConversion(columnLayout, (pxWidths) => {
+		return this.withPixelConversion(columnLayout, pxWidths => {
 			return this.adjustColumnsToMinimumWidth(pxWidths);
 		});
 	}
@@ -946,7 +946,7 @@ class FlexibleColumnLayout extends UI5Element {
 				adjustedWidths[i] = COLUMN_MIN_WIDTH;
 			}
 		}
-		
+
 		if (totalDeficit === 0) {
 			return adjustedWidths; // no adjustments were needed
 		}
@@ -961,11 +961,10 @@ class FlexibleColumnLayout extends UI5Element {
 				adjustedWidths[i] -= totalDeficit * columnProportions[i];
 			}
 		}
-		
+
 		return adjustedWidths;
 	}
 
-	
 	getColumnProportionsAboveMinWidth(columnPxWidths: number[]) {
 		const redistributableWidths = columnPxWidths.map(width => 
 			// Only widths that are above minimum AND were originally non-zero can contribute
@@ -977,7 +976,7 @@ class FlexibleColumnLayout extends UI5Element {
 		if (sumOfRedistributableWidths === 0) {
 			return redistributableWidths;
 		}
-		
+
 		return redistributableWidths.map(width => width / sumOfRedistributableWidths);
 	}
 
@@ -990,7 +989,7 @@ class FlexibleColumnLayout extends UI5Element {
 	 */
 	private withPixelConversion(
 		columnLayout: (string | 0)[],
-		operation: (pxWidths: number[]) => number[]
+		operation: (pxWidths: number[]) => number[],
 	) {
 		// Convert to pixels for calculations
 		const pxWidths = columnLayout.map(width => this.convertColumnWidthToPixels(width));
@@ -1004,37 +1003,37 @@ class FlexibleColumnLayout extends UI5Element {
 
 	verifyColumnWidthsMatchLayout(pxWidths: number[]) {
 		const columnWidths = {
-			start: pxWidths[0],
-			mid: pxWidths[1],
-			end: pxWidths[2],
-		},
+				start: pxWidths[0],
+				mid: pxWidths[1],
+				end: pxWidths[2],
+			},
 			startWidth = columnWidths.start,
 			startPercentWidth = parseInt(this.convertToRelativeColumnWidth(startWidth));
 
 		switch (this.layout) {
-			case FCLLayout.TwoColumnsStartExpanded: {
-				return columnWidths.start >= columnWidths.mid;
-			}
-			case FCLLayout.TwoColumnsMidExpanded: {
-				return columnWidths.mid > columnWidths.start;
-			}
-			case FCLLayout.ThreeColumnsEndExpanded: {
-				return (columnWidths.end > columnWidths.mid) && (startPercentWidth < 33);
-			}
-			case FCLLayout.ThreeColumnsStartExpandedEndHidden: {
-				return (columnWidths.start >= columnWidths.mid) && columnWidths.end === 0;
-			}
-			case FCLLayout.ThreeColumnsMidExpanded: {
-				return (columnWidths.mid >= columnWidths.end)
-					&& ((this.media === MEDIA.DESKTOP && startPercentWidth < 33) // desktop
-						|| (this.media === MEDIA.TABLET && startPercentWidth === 0)); // tablet
-			}
-			case FCLLayout.ThreeColumnsMidExpandedEndHidden: {
-				return (columnWidths.mid > columnWidths.start)
-					&& columnWidths.end === 0
-					&& ((this.media === MEDIA.DESKTOP && startPercentWidth >= 33)
-						|| (this.media === MEDIA.TABLET && startWidth >= COLUMN_MIN_WIDTH));
-			}
+		case FCLLayout.TwoColumnsStartExpanded: {
+			return columnWidths.start >= columnWidths.mid;
+		}
+		case FCLLayout.TwoColumnsMidExpanded: {
+			return columnWidths.mid > columnWidths.start;
+		}
+		case FCLLayout.ThreeColumnsEndExpanded: {
+			return (columnWidths.end > columnWidths.mid) && (startPercentWidth < 33);
+		}
+		case FCLLayout.ThreeColumnsStartExpandedEndHidden: {
+			return (columnWidths.start >= columnWidths.mid) && columnWidths.end === 0;
+		}
+		case FCLLayout.ThreeColumnsMidExpanded: {
+			return (columnWidths.mid >= columnWidths.end)
+			&& ((this.media === MEDIA.DESKTOP && startPercentWidth < 33) // desktop
+				|| (this.media === MEDIA.TABLET && startPercentWidth === 0)); // tablet
+		}
+		case FCLLayout.ThreeColumnsMidExpandedEndHidden: {
+			return (columnWidths.mid > columnWidths.start)
+				&& columnWidths.end === 0
+				&& ((this.media === MEDIA.DESKTOP && startPercentWidth >= 33)
+					|| (this.media === MEDIA.TABLET && startWidth >= COLUMN_MIN_WIDTH));
+		}
 		}
 
 		return false;
@@ -1043,10 +1042,10 @@ class FlexibleColumnLayout extends UI5Element {
 	getNextLayoutOnSeparatorMovement(separator: HTMLElement, isStartToEndDirection: boolean, fclLayoutBeforeMove: FCLLayout, columnLayoutAfterMove: FlexibleColumnLayoutColumnLayout) {
 		const isStartSeparator = separator === this.startSeparatorDOM,
 			separatorName = isStartSeparator ? "start" : "end",
-			moved = (options: { separator: "start" | "end", from: FCLLayout, forward: boolean }) => {
+			moved = (options: {separator: "start" | "end", from: FCLLayout, forward: boolean}) => {
 				return options.from === fclLayoutBeforeMove
-					&& options.separator === separatorName
-					&& options.forward === isStartToEndDirection;
+				&& options.separator === separatorName
+				&& options.forward === isStartToEndDirection;
 			},
 			newColumnLayout = columnLayoutAfterMove.map(x => this.convertColumnWidthToPixels(x)),
 			newColumnWidths = {
