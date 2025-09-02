@@ -22,7 +22,6 @@ import {
 	isDown,
 	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import DragAndDropHandler from "./delegate/DragAndDropHandler.js";
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import { findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
@@ -36,7 +35,6 @@ import {
 	getAllAccessibleNameRefTexts,
 } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
-import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -181,7 +179,6 @@ type ListAccessibilityAttributes = {
 	template: ListTemplate,
 	styles: [
 		listCss,
-		getEffectiveScrollbarStyle(),
 	],
 })
 /**
@@ -599,7 +596,6 @@ class List extends UI5Element {
 
 	onEnterDOM() {
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
-		DragRegistry.subscribe(this);
 		ResizeHandler.register(this.getDomRef()!, this._handleResizeCallback);
 	}
 
@@ -607,7 +603,6 @@ class List extends UI5Element {
 		deregisterUI5Element(this);
 		this.unobserveListEnd();
 		ResizeHandler.deregister(this.getDomRef()!, this._handleResizeCallback);
-		DragRegistry.unsubscribe(this);
 	}
 
 	onBeforeRendering() {
