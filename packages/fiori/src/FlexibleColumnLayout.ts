@@ -543,6 +543,7 @@ class FlexibleColumnLayout extends UI5Element {
 			return undefined;
 		}
 
+		// apply minimum column-width constraints relative to the current fcl total width
 		const constraintCompliantLayout = this.applyMinimumWidthConstraints(customLayout);
 		if (this.isValidColumnLayout(constraintCompliantLayout)) { // satisfy layout-specific contraints
 			return constraintCompliantLayout;
@@ -557,12 +558,92 @@ class FlexibleColumnLayout extends UI5Element {
 		return media !== MEDIA.PHONE;
 	}
 
-	updateLayoutsConfiguration(layout: `${FCLLayout}`, columnLayout: string[]) {
-		if (this.mediaAllowsCustomConfiguration(this.media)) {
-			this.layoutsConfiguration[this.media] ??= {};
-			this.layoutsConfiguration[this.media]![layout] ??= { layout: columnLayout };
-			this.layoutsConfiguration[this.media]![layout]!.layout = columnLayout;
+	/**
+	 * Applies minimum width constraints to column layout configuration.
+	 * Ensures all visible columns meet the minimum width requirement by transferring
+	 * space from the wider columns to the undersized columns.
+	 * @param columnLayout Original column layout (percentages or pixels)
+	 * @returns Constraint-compliant column layout in same format as input
+	 */
+	applyMinimumWidthConstraints(columnLayout: (string | 0)[]) {
+		return this.doWithPixelConversion(columnLayout, pxWidths => {
+			return this.adjustColumnsToMinimumWidth(pxWidths);
+		});
+	}
+
+	/**
+	 * Adjusts column widths to ensure minimum width constraints.
+	 * Takes width from the widest column to bring undersized columns up to minimum.
+	 * @param pxWidths Array of column widths in pixels (modified in place)
+	 */
+	adjustColumnsToMinimumWidth(pxWidths: number[]) {
+		const adjustedWidths = [...pxWidths];
+
+		let totalDeficit = 0;
+		for (let i = 0; i < adjustedWidths.length; i++) {
+			const width = adjustedWidths[i];
+			const isBelowMinimum = Math.ceil(width) < COLUMN_MIN_WIDTH; // ceil to avoid floating point precision issues
+
+			if (!this._isColumnHidden(width) && isBelowMinimum) {
+				totalDeficit += COLUMN_MIN_WIDTH - width;
+				adjustedWidths[i] = COLUMN_MIN_WIDTH;
+			}
 		}
+
+		if (totalDeficit === 0) {
+			return adjustedWidths; // no adjustments were needed
+		}
+
+		// Create proportions for redistribution of the deficit based on available space above COLUMN_MIN_WIDTH
+		const columnProportions = this.getColumnProportionsAboveMinWidth(pxWidths);
+
+		// Redistribute the deficit proportionally among columns that can contribute
+		for (let i = 0; i < adjustedWidths.length; i++) {
+			const isVisible = adjustedWidths[i] > 0;
+			if (isVisible && columnProportions[i] > 0) {
+				adjustedWidths[i] -= totalDeficit * columnProportions[i];
+			}
+		}
+
+		return adjustedWidths;
+	}
+
+	getColumnProportionsAboveMinWidth(columnPxWidths: number[]) {
+		const widthsAboveMinWidth = columnPxWidths.map(width => {
+			if (width > COLUMN_MIN_WIDTH) {
+				return width - COLUMN_MIN_WIDTH;
+			}
+			return 0;
+		});
+
+		const total = widthsAboveMinWidth.reduce((sum, width) => sum + width, 0);
+
+		if (total === 0) {
+			return widthsAboveMinWidth;
+		}
+
+		return widthsAboveMinWidth.map(width => width / total);
+	}
+
+	/**
+	 * Helper that handles pixel conversion for column width operations.
+	 * Converts input to pixels, applies the operation, then converts back to relative widths.
+	 * @param columnLayout Column layout in mixed formats
+	 * @param operation Function that operates on pixel widths
+	 * @returns Column layout in percentage format
+	 */
+	private doWithPixelConversion(
+		columnLayout: (string | 0)[],
+		operation: (pxWidths: number[]) => number[],
+	) {
+		// Convert to pixels for calculations
+		const pxWidths = columnLayout.map(width => this.convertColumnWidthToPixels(width));
+
+		// Apply the operation
+		const adjustedPxWidths = operation(pxWidths);
+
+		// Convert back to percentage-based widths
+		return adjustedPxWidths.map(width => this.convertToRelativeColumnWidth(width));
 	}
 
 	calcVisibleColumns(colLayout: FlexibleColumnLayoutColumnLayout) {
@@ -686,6 +767,14 @@ class FlexibleColumnLayout extends UI5Element {
 		if (oldColumnLayout?.join() !== newColumnLayout.join()) { // compare arrays' content
 			this.updateLayoutsConfiguration(newLayout, newColumnLayout);
 			this.fireLayoutConfigurationChange();
+		}
+	}
+
+	updateLayoutsConfiguration(layout: `${FCLLayout}`, columnLayout: string[]) {
+		if (this.mediaAllowsCustomConfiguration(this.media)) {
+			this.layoutsConfiguration[this.media] ??= {};
+			this.layoutsConfiguration[this.media]![layout] ??= { layout: columnLayout };
+			this.layoutsConfiguration[this.media]![layout]!.layout = columnLayout;
 		}
 	}
 
@@ -913,94 +1002,6 @@ class FlexibleColumnLayout extends UI5Element {
 		}
 
 		return this.verifyColumnWidthsMatchLayout(pxWidths);
-	}
-
-	/**
-	 * Applies minimum width constraints to column layout configuration.
-	 * Ensures all visible columns meet the minimum width requirement by transferring
-	 * space from the wider columns to undersized columns.
-	 * @param columnLayout Original column layout (percentages or pixels)
-	 * @returns Constraint-compliant column layout in same format as input
-	 */
-	applyMinimumWidthConstraints(columnLayout: (string | 0)[]) {
-		return this.withPixelConversion(columnLayout, pxWidths => {
-			return this.adjustColumnsToMinimumWidth(pxWidths);
-		});
-	}
-
-	/**
-	 * Adjusts column widths to ensure minimum width constraints.
-	 * Takes width from the widest column to bring undersized columns up to minimum.
-	 * @param pxWidths Array of column widths in pixels (modified in place)
-	 */
-	adjustColumnsToMinimumWidth(pxWidths: number[]) {
-		const adjustedWidths = [...pxWidths];
-
-		let totalDeficit = 0;
-		for (let i = 0; i < adjustedWidths.length; i++) {
-			const width = adjustedWidths[i];
-			const isBelowMinimum = Math.ceil(width) < COLUMN_MIN_WIDTH; // ceil to avoid floating point precision issues
-
-			if (!this._isColumnHidden(width) && isBelowMinimum) {
-				totalDeficit += COLUMN_MIN_WIDTH - width;
-				adjustedWidths[i] = COLUMN_MIN_WIDTH;
-			}
-		}
-
-		if (totalDeficit === 0) {
-			return adjustedWidths; // no adjustments were needed
-		}
-
-		// Create proportions for redistribution of the deficit based on available space above COLUMN_MIN_WIDTH
-		const columnProportions = this.getColumnProportionsAboveMinWidth(pxWidths);
-
-		// Redistribute the deficit proportionally among columns that can contribute
-		for (let i = 0; i < adjustedWidths.length; i++) {
-			const isVisible = adjustedWidths[i] > 0;
-			if (isVisible && columnProportions[i] > 0) {
-				adjustedWidths[i] -= totalDeficit * columnProportions[i];
-			}
-		}
-
-		return adjustedWidths;
-	}
-
-	getColumnProportionsAboveMinWidth(columnPxWidths: number[]) {
-		const widthsAboveMinWidth = columnPxWidths.map(width => {
-			if (width > COLUMN_MIN_WIDTH) {
-				return width - COLUMN_MIN_WIDTH;
-			}
-			return 0;
-		});
-
-		const total = widthsAboveMinWidth.reduce((sum, width) => sum + width, 0);
-
-		if (total === 0) {
-			return widthsAboveMinWidth;
-		}
-
-		return widthsAboveMinWidth.map(width => width / total);
-	}
-
-	/**
-	 * Helper that handles pixel conversion for column width operations.
-	 * Converts input to pixels, applies the operation, then converts back to relative widths.
-	 * @param columnLayout Column layout in mixed formats
-	 * @param operation Function that operates on pixel widths
-	 * @returns Column layout in percentage format
-	 */
-	private withPixelConversion(
-		columnLayout: (string | 0)[],
-		operation: (pxWidths: number[]) => number[],
-	) {
-		// Convert to pixels for calculations
-		const pxWidths = columnLayout.map(width => this.convertColumnWidthToPixels(width));
-
-		// Apply the operation
-		const adjustedPxWidths = operation(pxWidths);
-
-		// Convert back to percentage-based widths
-		return adjustedPxWidths.map(width => this.convertToRelativeColumnWidth(width));
 	}
 
 	verifyColumnWidthsMatchLayout(pxWidths: number[]) {
