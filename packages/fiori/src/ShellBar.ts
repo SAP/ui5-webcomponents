@@ -680,9 +680,16 @@ class ShellBar extends UI5Element {
 			this._detachSearchFieldListeners(e.target as HTMLElement);
 			return;
 		}
-		if (!isPhone()) {
-			this.setSearchState(!this.showSearchField);
+
+		// Decide when to toggle the search field:
+		// - On mobile, the search opens on its own (we don’t interfere).
+		// - If there’s already a value, onSearch is responsible for triggering the search (we don’t interfere)
+		// - If the field is closed, we must open it regardless.
+		if (isPhone() || (this.search?.value && this.showSearchField)) {
+			return;
 		}
+
+		this.setSearchState(!this.showSearchField);
 	}
 
 	_updateSearchFieldState() {
