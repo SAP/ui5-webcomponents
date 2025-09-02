@@ -290,13 +290,17 @@ abstract class Popup extends UI5Element {
 
 		this.tabIndex = -1;
 
-		if (this.open && !this.onPhone) {
-			this.showPopover();
-			this.openPopup();
-		}
+		this.onEnterDOMOpen();
 
 		this.setAttribute("data-sap-ui-fastnavgroup-container", "true");
 		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
+	}
+
+	onEnterDOMOpen() {
+		if (this.open) {
+			this.showPopover();
+			this.openPopup();
+		}
 	}
 
 	onExitDOM() {
