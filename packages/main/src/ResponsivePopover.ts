@@ -89,7 +89,7 @@ class ResponsivePopover extends Popover {
 		}
 	}
 
-	onEnterDOMOpen() {
+	handleOpenOnEnterDOM() {
 		if (this.open && !isPhone()) {
 			this.showPopover();
 			this.openPopup();
