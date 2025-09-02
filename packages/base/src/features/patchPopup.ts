@@ -1,3 +1,4 @@
+// @ts-nocheck
 // OpenUI5's Control.js subset
 import getSharedResource from "../getSharedResource.js";
 
@@ -92,14 +93,24 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 };
 
 const patchFocusEvent = (Popup: OpenUI5Popup) => {
-	const origFocusEvent = Popup.prototype.onFocusEvent;
-	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
-		// If the popup is the topmost one, we call the original focus event handler from the OpenUI5 Popup,
-		// otherwise the focus event is handled by the Web Component Popup.
-		if (this === getTopmostPopup()) {
-			origFocusEvent.call(this, e);
-		}
+
+	// START PATCH ONLY isTopmost
+	const origIsTopmost = Popup.prototype.isTopmost;
+	Popup.prototype.isTopmost = function() {
+		return origIsTopmost.apply(this, arguments) && this === getTopmostPopup();
 	};
+	// END PATCH ONLY isTopmost
+
+
+	// DO NOT PATCH onFocusEvent
+	// const origFocusEvent = Popup.prototype.onFocusEvent;
+	// Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
+	// 	// If the popup is the topmost one, we call the original focus event handler from the OpenUI5 Popup,
+	// 	// otherwise the focus event is handled by the Web Component Popup.
+	// 	if (this === getTopmostPopup()) {
+	// 		origFocusEvent.call(this, e);
+	// 	}
+	// };
 };
 
 const createGlobalStyles = () => {
