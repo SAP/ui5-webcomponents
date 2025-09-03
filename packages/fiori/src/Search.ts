@@ -227,6 +227,12 @@ class Search extends SearchField {
 	onBeforeRendering() {
 		super.onBeforeRendering();
 
+		// Do not perform autocomplete for collapsed search
+		if (this.collapsed) {
+			this.open = false; 
+			return;
+		}
+
 		const innerInput = this.nativeInput;
 		const autoCompletedChars = innerInput && (innerInput.selectionEnd! - innerInput.selectionStart!);
 
@@ -412,6 +418,15 @@ class Search extends SearchField {
 		}
 
 		this.open = ((e.currentTarget as HTMLInputElement).value.length > 0) && this._popoupHasAnyContent();
+	}
+
+	_handleClear(): void {
+		super._handleClear();
+
+		this._typedInValue = "";
+		this._innerValue = "";
+		this._shouldAutocomplete = false;
+		this.open = false;
 	}
 
 	_popoupHasAnyContent() {
