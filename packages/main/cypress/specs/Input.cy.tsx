@@ -198,7 +198,7 @@ describe("Input Tests", () => {
 		cy.get("@change").should("have.been.calledOnce");
 	});
 
-	it("should not fire a submit event if there is more than one input field in a form", () => {
+	it("should not submit form on enter if submit event is prevented when there is more than one input field in a form", () => {
 		cy.mount(
 			<form>
 				<Input id="first-input" onChange={cy.stub().as("change")}></Input>
@@ -209,7 +209,6 @@ describe("Input Tests", () => {
 		// spy submit event and prevent it
 		cy.get("form")
 			.then($form => {
-				$form.get(0).addEventListener("submit", e => e.preventDefault());
 				$form.get(0).addEventListener("submit", cy.spy().as("submit"));
 			});
 
