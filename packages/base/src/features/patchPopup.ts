@@ -94,12 +94,12 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 
 const patchFocusEvent = (Popup: OpenUI5Popup) => {
 
-	// START PATCH ONLY isTopmost
-	const origIsTopmost = Popup.prototype.isTopmost;
-	Popup.prototype.isTopmost = function() {
-		return origIsTopmost.apply(this, arguments) && this === getTopmostPopup();
+	// START PATCH ONLY isTopmostInStack
+	const origisTopmostInStack = Popup.prototype.isTopmostInStack;
+	Popup.prototype.isTopmostInStack = function() {
+		return origisTopmostInStack.apply(this, arguments) && this === getTopmostPopup();
 	};
-	// END PATCH ONLY isTopmost
+	// END PATCH ONLY isTopmostInStack
 
 
 	// DO NOT PATCH onFocusEvent
