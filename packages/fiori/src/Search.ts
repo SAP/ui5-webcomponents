@@ -227,8 +227,7 @@ class Search extends SearchField {
 	onBeforeRendering() {
 		super.onBeforeRendering();
 
-		// Do not perform autocomplete for collapsed search
-		if (this.collapsed) {
+		if (this.collapsed && !isPhone()) {
 			this.open = false; 
 			return;
 		}

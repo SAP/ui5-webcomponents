@@ -959,6 +959,123 @@ describe("Events", () => {
 		cy.get("ui5-search-item").eq(0)
 			.should("not.have.attr", "selected");
 	});
+
+	it("should reset suggestions highlight on pressing 'clear' button", () => {
+		cy.mount(
+			<Search showClearIcon>
+				<SearchItem text="Item 1" />
+			</Search>
+		);
+
+		cy.get("[ui5-search]").as("search");
+
+		cy.get("@search")
+			.shadow()
+			.find("input")
+			.as("input");
+		
+		cy.get("@input")
+			.realClick();
+
+		cy.get("@search")
+			.should("be.focused");
+
+		cy.get("@input")
+			.realPress("I");
+
+		cy.get("@search")
+			.should("have.value", "Item 1");
+		
+		cy.get("[ui5-search-item]").eq(0)
+			.should("have.attr", "highlight-text", "I");
+
+		cy.get("@search")
+			.shadow()
+			.find("[ui5-icon][name='decline']")
+			.realClick();
+
+		cy.get("@search")
+			.should("have.value", "");
+
+		cy.get("@search")
+			.should("not.have.attr", "open");
+
+		cy.get("@search")
+			.invoke("prop", "open", true);
+
+		cy.get("ui5-search-item").eq(0)
+			.should("have.attr", "highlight-text", "");
+	});
+
+	it.skip("should close the popover on search if no suggestion is selected", () => {
+		cy.mount(
+			<Search showClearIcon>
+				<SearchItem text="Item 1" />
+			</Search>
+		);
+
+		cy.get("[ui5-search]").as("search");
+
+		cy.get("@search")
+			.shadow()
+			.find("input")
+			.as("input");
+		
+		cy.get("@input")
+			.realClick();
+
+		cy.get("@search")
+			.should("be.focused");
+
+		cy.get("@input")
+			.realPress("P"); // no matching suggestion
+
+		cy.get("@search")
+			.should("have.value", "P");
+
+		cy.get("@search")
+			.shadow()
+			.find("[ui5-icon][name='search']")
+			.realClick();
+
+		cy.get("@search")
+			.should("not.have.attr", "open");
+	});
+
+	it("should close the popover on 'search' if suggestion is selected", () => {
+		cy.mount(
+			<Search showClearIcon>
+				<SearchItem text="Item 1" />
+			</Search>
+		);
+
+		cy.get("[ui5-search]").as("search");
+
+		cy.get("@search")
+			.shadow()
+			.find("input")
+			.as("input");
+		
+		cy.get("@input")
+			.realClick();
+
+		cy.get("@search")
+			.should("be.focused");
+
+		cy.get("@input")
+			.realPress("I"); // no matching suggestion
+
+		cy.get("@search")
+			.should("have.value", "Item 1");
+
+		cy.get("@search")
+			.shadow()
+			.find("[ui5-icon][name='search']")
+			.realClick();
+
+		cy.get("@search")
+			.should("not.have.attr", "open");
+	});
 });
 
 describe("Accessibility", () => {
