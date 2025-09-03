@@ -420,7 +420,7 @@ describe("Interaction", () => {
 			.should("have.length", 1);
 	});
 
-	it.only("tokenizer collapses when n-More popover loses focus", () => {
+	it("tokenizer collapses when n-More popover loses focus", () => {
 		cy.mount(
 			<FileUploader id="uploader" style="width: 200px;"></FileUploader>
 		);
