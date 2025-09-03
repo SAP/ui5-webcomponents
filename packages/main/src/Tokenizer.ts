@@ -13,6 +13,7 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Acc
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getFocusedElement } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -140,6 +141,7 @@ enum ClipboardDataOperation {
 @customElement({
 	tag: "ui5-tokenizer",
 	languageAware: true,
+	formAssociated: true,
 	renderer: jsxRenderer,
 	template: TokenizerTemplate,
 	styles: [
@@ -186,7 +188,7 @@ enum ClipboardDataOperation {
 	bubbles: true,
 })
 
-class Tokenizer extends UI5Element {
+class Tokenizer extends UI5Element implements IFormInputElement {
 	eventDetails!: {
 		"token-delete": TokenizerTokenDeleteEventDetail,
 		"selection-change": TokenizerSelectionChangeEventDetail,
@@ -215,6 +217,9 @@ class Tokenizer extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	multiLine = false;
+
+	@property({type: String})
+	declare name?: string;
 
 	/**
 	 * Defines whether "Clear All" button is present. Ensure `multiLine` is enabled, otherwise `showClearAll` will have no effect.
@@ -355,6 +360,26 @@ class Tokenizer extends UI5Element {
 
 	_handleResize() {
 		this._nMoreCount = this.overflownTokens.length;
+	}
+
+	get formFormattedValue(): FormData | null | string {
+		const tokens = this.tokens || [];
+
+		console.log(this.tokens);
+
+		if (this.name && tokens.length) {
+			const formData = new FormData();
+
+
+			for(let i = 0; i < this.tokens.length; i++) {
+				formData.append(this.name, this.tokens[i].text || "");
+			}
+
+			return formData;
+		}
+
+		return null;
+
 	}
 
 	constructor() {
