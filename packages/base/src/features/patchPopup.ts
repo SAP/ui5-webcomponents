@@ -40,11 +40,11 @@ const getTopmostPopup = () => {
 };
 
 /**
- * Original OpenUI5 popup focus event is called
- * only if there are no Web Component popups opened on top of it.
+ * Original OpenUI5 popup focus event is triggered only
+ * if there are no Web Component popups opened on top of it.
  *
  * @param {object} popup - The popup instance to check.
- * @returns {boolean} True if the focus event should be called, false otherwise.
+ * @returns {boolean} True if the focus event should be triggered, false otherwise.
  */
 const shouldCallOpenUI5FocusEvent = (popup: object) => {
 	for (let i = AllOpenedPopupsRegistry.openedRegistry.length - 1; i >= 0; i--) {
