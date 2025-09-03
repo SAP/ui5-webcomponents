@@ -14,6 +14,7 @@ export default function CalendarTemplate(this: Calendar) {
 					"ui5-calheader-arrowbtn": true,
 					"ui5-calheader-arrowbtn-disabled": this._previousButtonDisabled,
 				}}
+				part="calendar-header-arrow-button"
 				role="button"
 				tabindex={0}
 				onMouseDown={this.onPrevButtonClick}
@@ -96,6 +97,7 @@ export default function CalendarTemplate(this: Calendar) {
 					"ui5-calheader-arrowbtn": true,
 					"ui5-calheader-arrowbtn-disabled": this._nextButtonDisabled,
 				}}
+				part="calendar-header-arrow-button"
 				role="button"
 				tabindex={0}
 				onMouseDown={this.onNextButtonClick}
