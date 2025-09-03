@@ -10,6 +10,7 @@ const dialog = document.getElementById("dialog"),
 	acceptButton = document.getElementById("acceptButton"),
 	termsPanel = document.getElementById("termsPanel"),
 	checkbox = document.getElementById("termsCheck");
+
 let hasScrolledToBottom = false;
 
 dialog.open = true;
@@ -40,9 +41,6 @@ termsPanel.addEventListener("scroll", function () {
 		clientHeight = termsPanel.clientHeight,
 		scrollHeight = termsPanel.scrollHeight,
 		atBottom = scrollTop + clientHeight >= scrollHeight - 1;
-
-	hasScrolledToBottom = false;
-	acceptButton.disabled = true;
 
 	if (atBottom) {
 		hasScrolledToBottom = true;
