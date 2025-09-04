@@ -12,6 +12,7 @@ export default function SplitButtonTemplate(this: SplitButton) {
 			aria-haspopup={this._computedAccessibilityAttributes?.root?.hasPopup}
 			aria-roledescription={this._computedAccessibilityAttributes?.root?.roleDescription}
 			aria-label={this._hideArrowButton ? this._computedAccessibilityAttributes?.root?.title : undefined}
+			aria-keyshortcuts={this._computedAccessibilityAttributes?.root?.ariaKeyShortcuts}
 			onFocusOut={this._onFocusOut}
 			onKeyDown={this._onKeyDown}
 			onKeyUp={this._onKeyUp}

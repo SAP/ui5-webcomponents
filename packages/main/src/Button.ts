@@ -55,7 +55,7 @@ interface IButton extends HTMLElement, ITabbable {
 let isGlobalHandlerAttached = false;
 let activeButton: Button | null = null;
 
-type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "controls">;
+type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "controls" | "ariaKeyShortcuts" | "ariaLabel">;
 
 type ButtonClickEventDetail = {
 	originalEvent: MouseEvent,
@@ -573,10 +573,6 @@ class Button extends UI5Element implements IButton {
 		this.active = active;
 	}
 
-	get _hasPopup() {
-		return this.accessibilityAttributes.hasPopup;
-	}
-
 	get hasButtonType() {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
 	}
@@ -636,6 +632,16 @@ class Button extends UI5Element implements IButton {
 
 	get ariaDescriptionText() {
 		return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
+	}
+
+	get _computedAccessibilityAttributes(): ButtonAccessibilityAttributes {
+		return {
+			expanded: this.accessibilityAttributes.expanded,
+			hasPopup: this.accessibilityAttributes.hasPopup,
+			controls: this.accessibilityAttributes.controls,
+			ariaKeyShortcuts: this.accessibilityAttributes.ariaKeyShortcuts,
+			ariaLabel: this.accessibilityAttributes.ariaLabel || this.ariaLabelText
+		}
 	}
 
 	get effectiveBadgeDescriptionText() {

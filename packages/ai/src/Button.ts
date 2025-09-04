@@ -24,7 +24,7 @@ import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
-type AIButtonRootAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "roleDescription" | "title">;
+type AIButtonRootAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "roleDescription" | "title" | "ariaKeyShortcuts">;
 type AIButtonArrowButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded" | "title">;
 type AIButtonAccessibilityAttributes = { root?: AIButtonRootAccessibilityAttributes, arrowButton?: AIButtonArrowButtonAccessibilityAttributes}
 
@@ -357,6 +357,7 @@ class Button extends UI5Element {
 				hasPopup: this.accessibilityAttributes?.root?.hasPopup || "false",
 				roleDescription: this.accessibilityAttributes?.root?.roleDescription,
 				title: this.accessibilityAttributes?.root?.title || title,
+				ariaKeyShortcuts: this.accessibilityAttributes?.root?.ariaKeyShortcuts,
 			},
 			arrowButton: {
 				hasPopup: this.accessibilityAttributes?.arrowButton?.hasPopup,
