@@ -421,8 +421,8 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return {
 			valueMissing: this.required && !this.value,
 			patternMismatch: !this.isValidValue(this.value),
-			rangeUnderflow: this.isValidMin(this.value),
-			rangeOverflow: this.isValidMax(this.value),
+			rangeUnderflow: !this.isValidMin(this.value),
+			rangeOverflow: !this.isValidMax(this.value),
 		};
 	}
 
@@ -756,7 +756,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 			return false;
 		}
 
-		return calendarDate.valueOf() <= this._minDate.valueOf();
+		return calendarDate.valueOf() >= this._minDate.valueOf();
 	}
 
 	isValidMax(value: string): boolean {
@@ -770,7 +770,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 			return false;
 		}
 
-		return calendarDate.valueOf() >= this._maxDate.valueOf();
+		return calendarDate.valueOf() <= this._maxDate.valueOf();
 	}
 
 	isInValidRangeDisplayValue(value: string): boolean {

@@ -267,7 +267,7 @@ Cypress.Commands.add("ui5DatePickerValueHelpIconPress", { prevSubject: true }, s
 		.realClick();
 });
 
-Cypress.Commands.add("ui5DatePickerTypeDate", { prevSubject: true }, (subject: string, date: string) => {
+Cypress.Commands.add("ui5DatePickerTypeDate", { prevSubject: true }, (subject: string, date: string, delay: number = 0) => {
 	cy.wrap(subject)
 		.as("datePicker");
 
@@ -277,7 +277,7 @@ Cypress.Commands.add("ui5DatePickerTypeDate", { prevSubject: true }, (subject: s
 		.clear()
 		.should("be.focused");
 
-	cy.realType(date);
+	cy.realType(date, { delay });
 	cy.realPress("Enter");
 });
 
