@@ -226,6 +226,7 @@ class SplitButton extends UI5Element {
 	 *     Accepts any string value.
 	 *   - **title**: Specifies a tooltip or description for screen readers.
 	 *     Accepts any string value.
+	 * 	- **ariaKeyShortcuts**: Defines keyboard shortcuts that activate or give focus to the button.
 	 *
 	 * - **arrowButton**: Attributes applied specifically to the arrow (split) button.
 	 *   - **hasPopup**: Indicates the presence and type of popup triggered by the arrow button.
@@ -443,7 +444,7 @@ class SplitButton extends UI5Element {
 		return this.activeArrowButton || this._activeArrowButton;
 	}
 
-	get textButtonAccText() {
+	get buttonTextContent() {
 		return this.textContent;
 	}
 
