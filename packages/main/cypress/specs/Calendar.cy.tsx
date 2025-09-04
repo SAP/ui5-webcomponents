@@ -1210,4 +1210,47 @@ describe("Calendar accessibility", () => {
 			.should("have.attr", "title")
 			.and("contain", "(Shift + F4)");
 	});
+
+	it("Should have proper aria-labels for range selection dates (First, Between, Last)", () => {
+		// Mount calendar with predefined range selection (Jan 20-22, 2021) similar to Calendar.html
+		cy.mount(
+			<Calendar id="calendar1" selectionMode="Range" formatPattern="MMM dd, yyyy">
+				<CalendarDateRange startValue="Jan 20, 2021" endValue="Jan 22, 2021"></CalendarDateRange>
+			</Calendar>
+		);
+
+		// Find all selected day cells using the part attribute
+		cy.get<Calendar>("#calendar1")
+			.shadow()
+			.find("[ui5-daypicker]")
+			.shadow()
+			.find("[part*='day-cell-selected']")
+			.as("selectedDays");
+
+		// Should have exactly 3 selected days (Jan 20, 21, 22)
+		cy.get("@selectedDays")
+			.should("have.length", 3);
+
+		// Get the selected days and verify their aria-labels
+		cy.get("@selectedDays").each(($day, index) => {
+			cy.wrap($day).should("have.attr", "aria-label");
+			
+			if (index === 0) {
+				// First day should contain "First date of range"
+				cy.wrap($day)
+					.should("have.attr", "aria-label")
+					.and("contain", "First date of range");
+			} else if (index === 1) {
+				// Middle day should contain "in a selected range"
+				cy.wrap($day)
+					.should("have.attr", "aria-label")
+					.and("contain", "in a selected range");
+			} else if (index === 2) {
+				// Last day should contain "Last date of range"
+				cy.wrap($day)
+					.should("have.attr", "aria-label")
+					.and("contain", "Last date of range");
+			}
+		});
+	});
 });
