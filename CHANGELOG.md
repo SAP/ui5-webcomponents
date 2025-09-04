@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.7...v2.14.0) (2025-09-04)
+
+
+### Bug Fixes
+
+* **ui5-breadcrumbs:** enable current location text truncation ([#12220](https://github.com/SAP/ui5-webcomponents/issues/12220)) ([1014b34](https://github.com/SAP/ui5-webcomponents/commit/1014b344578b3aeda3264c6affccc192df28bcc0)), closes [#12219](https://github.com/SAP/ui5-webcomponents/issues/12219) [#12219](https://github.com/SAP/ui5-webcomponents/issues/12219)
+
+
+
+
+
 # [2.14.0-rc.7](https://github.com/SAP/ui5-webcomponents/compare/v2.14.0-rc.6...v2.14.0-rc.7) (2025-09-04)
 
 
