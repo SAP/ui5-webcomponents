@@ -132,6 +132,11 @@ describe("Component Behavior", () => {
 				const profileIcon = await browser.$("#shellbar").shadow$("[data-profile-btn]");
 				const input = await browser.$("#press-input");
 
+				await browser.waitUntil(() => profileIcon.shadow(".ui5-button-root"), {
+					timeout: 500,
+					timeoutMsg: "Profile button is ready to be clicked"
+				});
+
 				await profileIcon.click();
 				assert.strictEqual(await input.getValue(), "Profile", "Input value is set by click event of Profile");
 			});
@@ -230,6 +235,12 @@ describe("Component Behavior", () => {
 				const input = await browser.$("#press-input");
 
 				await profileIcon.click();
+
+				await browser.waitUntil(async () => (await input.getProperty("value")) === "Profile", {
+					timeout: 500,
+					timeoutMsg: "Input value ready to be asserted."
+				});
+
 				assert.strictEqual(await input.getValue(), "Profile", "Input value is set by click event of Profile");
 			});
 
