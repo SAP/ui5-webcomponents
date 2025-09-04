@@ -610,3 +610,202 @@ describe("Accessibility", () => {
 		cy.get("#descr").should("have.text", DESCRIPTION);
 	});
 });
+
+
+describe("Validation inside a form", () => {
+	it("has correct validity for valueMissing", () => {
+		cy.mount(
+			<form>
+				<DateTimePicker id="dateTimePicker" required={true} valueFormat="yyyy-MM-dd hh:mm:ss"></DateTimePicker>
+				<button type="submit" id="submitBtn" > Submits forms </button>
+			</form>
+		);
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("#submitBtn")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("[ui5-datetime-picker]")
+			.as("dateTimePicker")
+			.then($el => {
+				const dateTimePicker = $el[0] as DateTimePicker;
+				expect(dateTimePicker.formValidity.valueMissing, "Required DateTimePicker without value should have formValidity with valueMissing=true").to.be.true;
+				expect(dateTimePicker.validity.valueMissing, "Required DateTimePicker without value should have validity with valueMissing=true").to.be.true;
+				expect(dateTimePicker.validity.valid, "Required DateTimePicker without value should have validity with valid=false").to.be.false;
+				expect(dateTimePicker.checkValidity(), "Required DateTimePicker without value fail validity check").to.be.false;
+				expect(dateTimePicker.reportValidity(), "Required DateTimePicker without value should fail report validity").to.be.false;
+			});
+
+		cy.get("#dateTimePicker:invalid")
+			.should("exist", "Required DatePicker without value should have :invalid CSS class");
+
+		cy.get("@dateTimePicker")
+			.ui5DatePickerTypeDate("now");
+
+		cy.get("@dateTimePicker")
+			.then($el => {
+				const dateTimePicker = $el[0] as DateTimePicker;
+				expect(dateTimePicker.formValidity.valueMissing, "Required DateTimePicker with value should have formValidity with valueMissing=false").to.be.false;
+				expect(dateTimePicker.validity.valueMissing, "Required DateTimePicker with value should have validity with valueMissing=false").to.be.false;
+				expect(dateTimePicker.validity.valid, "Required DateTimePicker with value have validity with valid=true").to.be.true;
+				expect(dateTimePicker.checkValidity(), "Required DateTimePicker with value pass validity check").to.be.true;
+				expect(dateTimePicker.reportValidity(), "Required DateTimePicker with value pass report validity").to.be.true;
+			});
+
+		cy.get("#dateTimePicker:invalid").should("not.exist", "Required DatePicker with value should not have :invalid CSS class");
+	});
+
+	it("has correct validity for patternMismatch", () => {
+		cy.mount(
+			<form>
+				<DateTimePicker id="dateTimePicker" required={true} valueFormat="MMM d, y hh:mm:ss" formatPattern="MMM d, y hh:mm:ss"></DateTimePicker>
+				<button type="submit" id="submitBtn" > Submits forms </button>
+			</form>
+		);
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("#dateTimePicker")
+			.as("dateTimePicker")
+			.ui5DatePickerTypeDate("Test 33, 2024 ss:tt:tt");
+
+		cy.get("#submitBtn")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("@dateTimePicker")
+			.then($el => {
+				const dateTimePicker = $el[0] as DateTimePicker;
+				expect(dateTimePicker.formValidity.patternMismatch, "DateTimePicker without correct formatted value should have formValidity with patternMismatch=true").to.be.true;
+				expect(dateTimePicker.validity.patternMismatch, "DateTimePicker without correct formatted value should have validity with patternMismatch=true").to.be.true;
+				expect(dateTimePicker.validity.valid, "DateTimePicker without correct formatted value should have validity with valid=false").to.be.false;
+				expect(dateTimePicker.checkValidity(), "DateTimePicker without correct formatted value fail validity check").to.be.false;
+				expect(dateTimePicker.reportValidity(), "DateTimePicker without correct formatted value should fail report validity").to.be.false;
+			});
+
+		cy.get("#dateTimePicker:invalid")
+			.should("exist", "DateTimePicker without correct formatted value should have :invalid CSS class");
+
+		cy.get("@dateTimePicker")
+			.ui5DatePickerTypeDate("Apr 12, 2024 12:00:00");
+
+		cy.get("@dateTimePicker")
+			.then($el => {
+				const dateTimePicker = $el[0] as DateTimePicker;
+				expect(dateTimePicker.formValidity.patternMismatch, "DateTimePicker with correct formatted value should have formValidity with patternMismatch=false").to.be.false;
+				expect(dateTimePicker.validity.patternMismatch, "DateTimePicker with correct formatted value should have validity with patternMismatch=false").to.be.false;
+				expect(dateTimePicker.validity.valid, "DateTimePicker with correct formatted value have validity with valid=true").to.be.true;
+				expect(dateTimePicker.checkValidity(), "DateTimePicker with correct formatted value pass validity check").to.be.true;
+				expect(dateTimePicker.reportValidity(), "DateTimePicker with correct formatted value pass report validity").to.be.true;
+			});
+
+		cy.get("#dateTimePicker:invalid")
+			.should("not.exist", "DateTimePicker with correct formatted value should not have :invalid CSS class");
+	});
+
+	it("has correct validity for rangeUnderflow", () => {
+		cy.mount(
+			<form method="get">
+				<DateTimePicker id="dateTimePicker" minDate="Jan 10, 2024 08:00:00" valueFormat="MMM d, y hh:mm:ss" formatPattern="MMM d, y hh:mm:ss"></DateTimePicker>
+				<button type="submit" id="submitBtn">Submits forms</button>
+			</form>
+		);
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", (e) => e.preventDefault());
+			});
+
+		cy.get("#dateTimePicker")
+			.as("dateTimePicker")
+			.ui5DatePickerTypeDate("Jan 5, 2024 08:00:00");
+
+		cy.get("@dateTimePicker")
+			.then($el => {
+				const dateTimePicker = $el[0] as DateTimePicker;
+				expect(dateTimePicker.formValidity.rangeUnderflow, "DateTimePicker with value below minDate should have formValidity with rangeUnderflow=true").to.be.true;
+				expect(dateTimePicker.validity.rangeUnderflow, "DateTimePicker with value below minDate should have validity with rangeUnderflow=true").to.be.true;
+				expect(dateTimePicker.validity.valid, "DateTimePicker with value below minDate should have validity with valid=false").to.be.false;
+				expect(dateTimePicker.checkValidity(), "DateTimePicker with value below minDate should fail validity check").to.be.false;
+				expect(dateTimePicker.reportValidity(), "DateTimePicker with value below minDate should fail report validity").to.be.false;
+			});
+
+		cy.get("#dateTimePicker:invalid")
+			.should("exist", "DateTimePicker with value below minDate should have :invalid CSS class");
+
+		cy.get("@dateTimePicker")
+			.ui5DatePickerTypeDate("Jan 20, 2024 08:00:00");
+
+		cy.get("@dateTimePicker")
+			.then($el => {
+				const dateTimePicker = $el[0] as DateTimePicker;
+				expect(dateTimePicker.formValidity.rangeUnderflow, "DateTimePicker with value above minDate should have formValidity with rangeUnderflow=false").to.be.false;
+				expect(dateTimePicker.validity.rangeUnderflow, "DateTimePicker with value above minDate should have validity with rangeUnderflow=false").to.be.false;
+				expect(dateTimePicker.validity.valid, "DateTimePicker with value above minDate should have validity with valid=true").to.be.true;
+				expect(dateTimePicker.checkValidity(), "DateTimePicker with value above minDate should pass validity check").to.be.true;
+				expect(dateTimePicker.reportValidity(), "DateTimePicker with value above minDate should pass report validity").to.be.true;
+			});
+
+		cy.get("#dateTimePicker:invalid")
+			.should("not.exist", "DateTimePicker with value above minDate should not have :invalid CSS class");
+	});
+
+	it("has correct validity for rangeOverflow", () => {
+		cy.mount(
+			<form>
+				<DateTimePicker id="dateTimePicker" maxDate="Jan 10, 2024 08:00:00" valueFormat="MMM d, y hh:mm:ss" formatPattern="MMM d, y hh:mm:ss"></DateTimePicker>
+				<button type="submit" id="submitBtn">Submits forms</button>
+			</form>
+		);
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", (e) => e.preventDefault());
+			});
+
+		cy.get("#dateTimePicker")
+			.as("dateTimePicker")
+			.ui5DatePickerTypeDate("Jan 15, 2024 08:00:00");
+
+		cy.get("@dateTimePicker")
+			.then($el => {
+				const dateTimePiicker = $el[0] as DateTimePicker;
+				expect(dateTimePiicker.formValidity.rangeOverflow, "DateTimePicker with value above maxDate should have formValidity with rangeOverflow=true").to.be.true;
+				expect(dateTimePiicker.validity.rangeOverflow, "DateTimePicker with value above maxDate should have validity with rangeOverflow=true").to.be.true;
+				expect(dateTimePiicker.validity.valid, "DateTimePicker with value above maxDate should have validity with valid=false").to.be.false;
+				expect(dateTimePiicker.checkValidity(), "DateTimePicker with value above maxDate should fail validity check").to.be.false;
+				expect(dateTimePiicker.reportValidity(), "DateTimePicker with value above maxDate should fail report validity").to.be.false;
+			});
+
+		cy.get("#dateTimePicker:invalid")
+			.should("exist", "DateTimePicker with value above maxDate should have :invalid CSS class");
+
+		cy.get("@dateTimePicker")
+			.ui5DatePickerTypeDate("Jan 5, 2024 08:00:00");
+
+		cy.get("@dateTimePicker")
+			.then($el => {
+				const dateTimePiicker = $el[0] as DateTimePicker;
+				expect(dateTimePiicker.formValidity.rangeOverflow, "DateTimePicker with value below maxDate should have formValidity with rangeOverflow=false").to.be.false;
+				expect(dateTimePiicker.validity.rangeOverflow, "DateTimePicker with value below maxDate should have validity with rangeOverflow=false").to.be.false;
+				expect(dateTimePiicker.validity.valid, "DateTimePicker with value below maxDate should have validity with valid=true").to.be.true;
+				expect(dateTimePiicker.checkValidity(), "DateTimePicker with value below maxDate should pass validity check").to.be.true;
+				expect(dateTimePiicker.reportValidity(), "DateTimePicker with value below maxDate should pass report validity").to.be.true;
+			});
+
+		cy.get("#dateTimePicker:invalid")
+			.should("not.exist", "DateTimePicker with value below maxDate should not have :invalid CSS class");
+	});
+});

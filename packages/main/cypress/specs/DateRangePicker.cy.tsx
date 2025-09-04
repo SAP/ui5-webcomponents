@@ -786,3 +786,189 @@ describe("Accessibility", () => {
 			});
 	});
 });
+
+describe("Validation inside a form", () => {
+	it("has correct validity for valueMissing", () => {
+		cy.mount(
+			<form>
+				<DateRangePicker id="dateRangePicker" required formatPattern="dd/MM/yyyy"></DateRangePicker>
+				<button type="submit" id="submitBtn">Submit</button>
+			</form>
+		);
+
+		cy.get("form").then($form => {
+			$form.get(0).addEventListener("submit", cy.stub().as("submit"));
+		});
+
+		cy.get("#submitBtn")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("#dateRangePicker").as("dateRangePicker").then($el => {
+			const picker = $el[0] as any;
+			expect(picker.formValidity.valueMissing).to.be.true;
+			expect(picker.validity.valueMissing).to.be.true;
+			expect(picker.validity.valid).to.be.false;
+			expect(picker.checkValidity()).to.be.false;
+			expect(picker.reportValidity()).to.be.false;
+		});
+
+		cy.get("#dateRangePicker:invalid")
+			.should("exist");
+
+		cy.get("@dateRangePicker")
+			.ui5DatePickerTypeDate("09/09/2020 - 10/10/2020");
+
+		cy.get("@dateRangePicker").then($el => {
+			const picker = $el[0] as any;
+			expect(picker.formValidity.valueMissing).to.be.false;
+			expect(picker.validity.valueMissing).to.be.false;
+			expect(picker.validity.valid).to.be.true;
+			expect(picker.checkValidity()).to.be.true;
+			expect(picker.reportValidity()).to.be.true;
+		});
+
+		cy.get("#dateRangePicker:invalid")
+			.should("not.exist");
+	});
+
+	it("has correct validity for patternMismatch", () => {
+		cy.mount(
+			<form>
+				<DateRangePicker id="dateRangePicker" required formatPattern="dd/MM/yyyy"></DateRangePicker>
+				<button type="submit" id="submitBtn">Submit</button>
+			</form>
+		);
+
+		cy.get("form").then($form => {
+			$form.get(0).addEventListener("submit", cy.stub().as("submit"));
+		});
+
+		cy.get("#dateRangePicker")
+			.as("dateRangePicker")
+			.ui5DatePickerTypeDate("invalid input");
+
+		cy.get("#submitBtn")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+
+		cy.get("@dateRangePicker").then($el => {
+			const picker = $el[0] as any;
+			expect(picker.formValidity.patternMismatch).to.be.true;
+			expect(picker.validity.patternMismatch).to.be.true;
+			expect(picker.validity.valid).to.be.false;
+			expect(picker.checkValidity()).to.be.false;
+			expect(picker.reportValidity()).to.be.false;
+		});
+
+		cy.get("#dateRangePicker:invalid")
+			.should("exist");
+
+		cy.get("@dateRangePicker")
+			.ui5DatePickerTypeDate("09/09/2020 - 10/10/2020");
+
+		cy.get("@dateRangePicker").then($el => {
+			const picker = $el[0] as any;
+			expect(picker.formValidity.patternMismatch).to.be.false;
+			expect(picker.validity.patternMismatch).to.be.false;
+			expect(picker.validity.valid).to.be.true;
+			expect(picker.checkValidity()).to.be.true;
+			expect(picker.reportValidity()).to.be.true;
+		});
+
+		cy.get("#dateRangePicker:invalid")
+			.should("not.exist");
+	});
+
+	it("has correct validity for rangeUnderflow", () => {
+		cy.mount(
+			<form>
+				<DateRangePicker id="dateRangePicker" minDate="10/10/2020" formatPattern="dd/MM/yyyy"></DateRangePicker>
+				<button type="submit" id="submitBtn">Submit</button>
+			</form>
+		);
+
+		cy.get("form").then($form => {
+			$form.get(0).addEventListener("submit", (e) => e.preventDefault());
+		});
+
+		cy.get("#dateRangePicker")
+			.as("dateRangePicker")
+			.ui5DatePickerTypeDate("01/10/2020 - 02/10/2020");
+
+		cy.get("@dateRangePicker").then($el => {
+			const picker = $el[0] as any;
+			expect(picker.formValidity.rangeUnderflow).to.be.true;
+			expect(picker.validity.rangeUnderflow).to.be.true;
+			expect(picker.validity.valid).to.be.false;
+			expect(picker.checkValidity()).to.be.false;
+			expect(picker.reportValidity()).to.be.false;
+		});
+
+		cy.get("#dateRangePicker:invalid")
+			.should("exist");
+
+		cy.get("@dateRangePicker")
+			.ui5DatePickerTypeDate("11/10/2020 - 12/10/2020");
+
+		cy.get("@dateRangePicker").then($el => {
+			const picker = $el[0] as any;
+			expect(picker.formValidity.rangeUnderflow).to.be.false;
+			expect(picker.validity.rangeUnderflow).to.be.false;
+			expect(picker.validity.valid).to.be.true;
+			expect(picker.checkValidity()).to.be.true;
+			expect(picker.reportValidity()).to.be.true;
+		});
+
+		cy.get("#dateRangePicker:invalid")
+			.should("not.exist");
+	});
+
+	it("has correct validity for rangeOverflow", () => {
+		cy.mount(
+			<form>
+				<DateRangePicker id="dateRangePicker" maxDate="10/10/2020" formatPattern="dd/MM/yyyy"></DateRangePicker>
+				<button type="submit" id="submitBtn">Submit</button>
+			</form>
+		);
+
+		cy.get("form").then($form => {
+			$form.get(0).addEventListener("submit", (e) => e.preventDefault());
+		});
+
+		cy.get("#dateRangePicker")
+			.as("dateRangePicker")
+			.ui5DatePickerTypeDate("11/10/2020 - 12/10/2020");
+
+		cy.get("@dateRangePicker").then($el => {
+			const picker = $el[0] as any;
+			expect(picker.formValidity.rangeOverflow).to.be.true;
+			expect(picker.validity.rangeOverflow).to.be.true;
+			expect(picker.validity.valid).to.be.false;
+			expect(picker.checkValidity()).to.be.false;
+			expect(picker.reportValidity()).to.be.false;
+		});
+
+		cy.get("#dateRangePicker:invalid")
+			.should("exist");
+
+		cy.get("@dateRangePicker")
+			.ui5DatePickerTypeDate("07/09/2020 - 09/10/2020");
+
+		cy.get("@dateRangePicker").then($el => {
+			const picker = $el[0] as any;
+			expect(picker.formValidity.rangeOverflow).to.be.false;
+			expect(picker.validity.rangeOverflow).to.be.false;
+			expect(picker.validity.valid).to.be.true;
+			expect(picker.checkValidity()).to.be.true;
+			expect(picker.reportValidity()).to.be.true;
+		});
+
+		cy.get("#dateRangePicker:invalid")
+			.should("not.exist");
+	});
+});
