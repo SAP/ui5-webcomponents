@@ -4,9 +4,10 @@
 
 const fs = require("fs");
 const path = require("path");
-const { execSync } = require("child_process");
+const { exec } = require("child_process");
+const { promisify } = require("util");
 
-console.log("Executing ui5nps...");
+const execAsync = promisify(exec);
 
 const SCRIPT_NAMES = [
 	"package-scripts.js",
@@ -14,182 +15,185 @@ const SCRIPT_NAMES = [
 	"package-scripts.mjs"
 ]
 
-const getScripts = () => {
-	let packageScriptPath;
+/**
+ * Parser for UI5 package scripts with support for parallel and sequential execution
+ */
+class Parser {
+	scripts;
+	envs;
+	parsedScripts = new Map();
+	resolvedScripts = new Map();
 
-	for (const scriptName of SCRIPT_NAMES) {
-		const filePath = path.join(process.cwd(), scriptName);
-		if (fs.existsSync(filePath)) {
-			packageScriptPath = filePath;
-			break;
-		}
+	constructor() {
+		const { scripts, envs } = this.getScripts();
+
+		this.scripts = scripts;
+		this.envs = envs;
+		this.parseScripts();
 	}
 
-	// Package-script file should be in the current working directory
-	if (!packageScriptPath) {
-		console.error("No package-scripts.js/cjs/mjs file found in the current directory.");
-		process.exit(1);
-	}
+	/**
+	 * Recursively parses script definitions from package-scripts file
+	 * @param {Object} scripts - Script definitions object
+	 * @param {string} parentKey - Parent key for nested scripts
+	 */
+	parseScripts(scripts = this.scripts, parentKey = "") {
+		for (const [key, value] of Object.entries(scripts)) {
+			if (key === "__ui5envs") continue; // Skip envs key
 
-	const packageScript = require(packageScriptPath);
-	let scripts;
+			if (parentKey && key === "default") {
+				this.parsedScripts.set(parentKey, value);
+			}
 
-	if (packageScript.__esModule) {
-		scripts = packageScript.default.scripts;
-	} else {
-		scripts = packageScript.scripts;
-	}
+			const fullKey = parentKey ? `${parentKey}.${key}` : key;
 
-	// Package-script should provide default export with scripts object
-	if (!scripts || typeof scripts !== "object") {
-		console.error("No valid 'scripts' object found in package-scripts file.");
-		process.exit(1);
-	}
-
-	return scripts;
-}
-
-const displayScripts = (scriptObj, prefix = "") => {
-	Object.entries(scriptObj).forEach(([key, value]) => {
-		const fullKey = prefix ? `${prefix}.${key}` : key;
-
-		if (typeof value === "string") {
-			console.log(`- ${fullKey}: ${value}`);
-		} else if (typeof value === "object") {
-			displayScripts(value, fullKey);
-		}
-	});
-};
-
-
-const scripts = getScripts();
-
-// When script is not passed, show available scripts
-if (process.argv.length <= 2) {
-	console.log("Available scripts:");
-	displayScripts(scripts);
-	process.exit(0);
-}
-
-const resolveScriptValue = (scriptValue) => {
-	if (typeof scriptValue === "string") {
-		return scriptValue;
-	} else if (typeof scriptValue === "object") {
-		return scriptValue.default;
-	}
-
-	return null;
-};
-
-const getScript = (scriptName) => {
-	if (scripts[scriptName]) {
-		return scripts[scriptName];
-	}
-
-	if (scriptName.includes(".")) {
-		let currentScript = scripts;
-		const subParts = scriptName.split(".");
-		for (const subPart of subParts) {
-			if (currentScript[subPart]) {
-				currentScript = currentScript[subPart];
+			if (typeof value === "string") {
+				this.parsedScripts.set(fullKey, value);
+			} else if (typeof value === "object") {
+				this.parseScripts(value, fullKey);
 			} else {
-				return null;
+				throw new Error(`Invalid script definition for key: ${fullKey}`);
 			}
 		}
-		return currentScript;
 	}
 
-	return null;
-};
+	/**
+	 * Resolves script commands and determines if they should run in parallel
+	 * @param {string} commandName - Name of the command to resolve
+	 * @returns {Object} Resolved command object with commands array and parallel flag
+	 */
+	resolveScripts(commandName) {
+		if (this.resolvedScripts.has(commandName)) {
+			return this.resolvedScripts.get(commandName);
+		}
 
-// Handle cases like: ui5nps \"start -w\"
-function splitArgs(str) {
-	return str.match(/(?:[^\s"]+|"[^"]*")+/g).map(s => s.replace(/"/g, ""));
+		let executableCommand = this.parsedScripts.get(commandName);
+		if (!executableCommand) {
+			throw new Error(`Command "${commandName}" not found in scripts`);
+		}
+
+		if (!executableCommand.startsWith("ui5nps") && !executableCommand.startsWith("ui5nps-p")) {
+			this.resolvedScripts.set(commandName, { commandName, commands: [executableCommand], parallel: false });
+			return this.resolvedScripts.get(commandName);
+		}
+
+		const parts = executableCommand.trim().split(" ").filter(Boolean).slice(1); // Remove "ui5nps" or ui5nps-p part
+		const commands = [];
+		for (const part of parts) {
+			const parsedScript = this.parsedScripts.get(part);
+
+			if (parsedScript && (parsedScript.startsWith("ui5nps") || parsedScript.startsWith("ui5nps-p"))) {
+				this.resolveScripts(part);
+			}
+
+			commands.push(this.resolvedScripts.get(part) || parsedScript);
+		}
+
+
+		this.resolvedScripts.set(commandName, { commandName, commands, parallel: executableCommand.startsWith("ui5nps-p") });
+
+		return this.resolvedScripts.get(commandName);
+	}
+
+	/**
+	 * Loads and validates package-scripts file
+	 * @returns {Object} Object containing scripts and environment variables
+	 */
+	getScripts() {
+		let packageScriptPath;
+
+		for (const scriptName of SCRIPT_NAMES) {
+			const filePath = path.join(process.cwd(), scriptName);
+			if (fs.existsSync(filePath)) {
+				packageScriptPath = filePath;
+				break;
+			}
+		}
+
+		// Package-script file should be in the current working directory
+		if (!packageScriptPath) {
+			console.error("No package-scripts.js/cjs/mjs file found in the current directory.");
+			process.exit(1);
+		}
+
+		const packageScript = require(packageScriptPath);
+		let scripts;
+		let envs;
+
+		if (packageScript.__esModule) {
+			scripts = packageScript.default.scripts;
+		} else {
+			scripts = packageScript.scripts;
+		}
+
+		// Package-script should provide default export with scripts object
+		if (!scripts || typeof scripts !== "object") {
+			console.error("No valid 'scripts' object found in package-scripts file.");
+			process.exit(1);
+		}
+
+		envs = scripts.__ui5envs;
+
+		// Package-script should provide default export with scripts object
+		if (envs && typeof envs !== "object") {
+			console.error("No valid 'envs' object found in package-scripts file.");
+			process.exit(1);
+		}
+
+		return { scripts, envs };
+	}
+
+	/**
+	 * Executes a command or command object (with parallel/sequential support)
+	 * @param {string|Object} command - Command string or command object with commands array
+	 * @returns {Promise} Promise that resolves when command(s) complete
+	 */
+	async executeCommand(command) {
+		if (typeof command === "string" && command) {
+			console.log("	= Executing command:");
+			console.log("	", command);
+			return execAsync(command, { stdio: "inherit", env: { ...process.env, ...this.envs } });
+		} else if (typeof command === "object" && command.commands) {
+			if (command.parallel) {
+				// Execute commands in parallel
+				const promises = command.commands.map(cmd => this.executeCommand(cmd));
+				await Promise.all(promises);
+			} else {
+				// Execute commands sequentially
+				for (const cmd of command.commands) {
+					await this.executeCommand(cmd);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Main execution method for a named command
+	 * @param {string} commandName - Name of the command to execute
+	 * @returns {Promise} Promise that resolves when execution completes
+	 */
+	async execute(commandName) {
+		this.resolveScripts(commandName);
+
+		return this.executeCommand(this.resolvedScripts.get(commandName));
+	}
 }
 
-const flattenExcScripts = (script, excScripts = [], parallel = false) => {
-	script = script.trim();
-	let crossEnvPrefix = "";
+const parser = new Parser();
 
-	if (script.startsWith("cross-env")) {
-		if (!script.includes("ui5nps")) {
-			return [{ commands: [script], parallel }];
-		}
+// Basic input validation
+const commands = process.argv.slice(2);
+if (commands.length === 0) {
+	console.error("Usage: ui5nps <command> [command2] [command3] ...");
+	console.error("No commands provided.");
+	process.exit(1);
+}
 
-		const match = script.match(/(cross-env.+?)ui5nps/);
-
-		if (match) {
-			crossEnvPrefix = match[1];
-			script = script.replace(crossEnvPrefix, "");
-		}
-	} else if (!script.startsWith("ui5nps")) {
-		return [{ commands: [script], parallel }];
+(async () => {
+	for (const commandName of commands) {
+		await parser.execute(commandName);
 	}
-
-	parallel = script.includes("--parallel") || parallel;
-	script = script.replace("--parallel", "").trim();
-
-	const parts = splitArgs(script).slice(1); // Remove the initial "ui5nps"
-	let buildExcScripts = [];
-
-	for (let part of parts) {
-		let restArgs = "";
-		if (part.includes(" ")) {
-			restArgs = part.split(" ").slice(1).join(" ");
-			part = part.split(" ")[0]
-		}
-
-		const foundScript = getScript(part);
-
-		if (foundScript) {
-			const resolvedScript = resolveScriptValue(foundScript);
-			if (resolvedScript) {
-				let flattened = flattenExcScripts(resolvedScript, undefined, parallel);
-
-				// Append restArgs to each command in flattened
-				flattened = flattened.map(s => {
-					return { commands: s.commands.map(cmd => `${cmd} ${restArgs}`.trim()), parallel: s.parallel };
-				});
-
-				buildExcScripts.push(...flattened);
-			}
-		} else {
-			console.error(`Script not found: ${part}`);
-		}
-	}
-
-	if (parallel) {
-		buildExcScripts = [{ commands: buildExcScripts.map(s => s.commands).flat(), parallel }];
-	}
-
-	buildExcScripts = buildExcScripts.map(s => {
-		// Append cross-env prefix if exists
-		return { commands: s.commands.map(cmd => `${crossEnvPrefix} ${cmd}`.trim()), parallel: s.parallel };
-	});
-
-	return [...excScripts, ...buildExcScripts];
-};
-
-const execution = process.argv.slice(2).reduce((excScripts, script) => {
-	const foundScript = getScript(script);
-
-	if (foundScript) {
-		const resolvedScript = resolveScriptValue(foundScript);
-		if (resolvedScript) {
-			excScripts.push(...flattenExcScripts(resolvedScript));
-		}
-	} else {
-		console.error(`Script not found: ${script}`);
-	}
-
-	return excScripts;
-}, []);
-
-execution.forEach((cmd) => {
-	cmd.commands.forEach((command) => {
-		console.log(`Executing command: ${command}`);
-		execSync(command, { stdio: "inherit" });
-	});
+})().catch(error => {
+	console.error("Error executing commands:", error);
+	process.exit(1);
 });
-
-console.log("Execution finished.");

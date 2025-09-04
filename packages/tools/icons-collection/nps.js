@@ -42,15 +42,18 @@ const getScripts = (options) => {
 	const createJSImportsCmd = createIconImportsCommand(options);
 	const copyAssetsCmd = copyIconAssetsCommand(options);
 	const tsCommand = !options.legacy ? "tsc --build" : "";
-	const tsCrossEnv = !options.legacy ? "cross-env UI5_TS=true" : "";
+	const tsOption = !options.legacy;
 
 	const scripts = {
+		__ui5envs:{
+			UI5_TS: tsOption,
+		},
 		clean: "rimraf dist && rimraf src/generated",
 		copy: copyAssetsCmd,
-		generate: `${tsCrossEnv} ui5nps clean copy build.i18n build.icons build.jsonImports copyjson`,
+		generate: `ui5nps clean copy build.i18n build.icons build.jsonImports copyjson`,
 		copyjson: "copy-and-watch \"src/generated/**/*.json\" dist/generated/",
 		build: {
-			default: `${tsCrossEnv} ui5nps clean copy build.i18n typescript build.icons build.jsonImports`,
+			default: `ui5nps clean copy build.i18n typescript build.icons build.jsonImports`,
 			i18n: {
 				default: "ui5nps build.i18n.defaultsjs build.i18n.json",
 				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,

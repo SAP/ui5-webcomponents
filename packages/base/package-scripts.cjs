@@ -14,10 +14,15 @@ const LIB = path.join(__dirname, `../tools/lib/`);
 const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.js")}"`;
 
 const scripts = {
+	__ui5envs: {
+		UI5_TS: true,
+		UI5_BASE: true,
+		UI5_CEM_MODE: "dev",
+	},
 	clean: "rimraf src/generated && rimraf dist",
 	lint: `eslint .`,
-	generate: "cross-env UI5_TS=true ui5nps clean build.i18n integrate copy generateAssetParameters generateVersionInfo generateStyles generateFontFace generateTemplates build.jsonImports",
-	prepare: "cross-env UI5_TS=true ui5nps clean build.i18n integrate copy generateAssetParameters generateVersionInfo generateStyles generateFontFace generateTemplates typescript integrate.no-remaining-require build.jsonImports",
+	generate: "ui5nps clean build.i18n integrate copy generateAssetParameters generateVersionInfo generateStyles generateFontFace build.jsonImports",
+	prepare: "ui5nps clean build.i18n integrate copy generateAssetParameters generateVersionInfo generateStyles generateFontFace typescript integrate.no-remaining-require build.jsonImports",
 	typescript: "tsc -b",
 	integrate: {
 		default: "ui5nps integrate.copy-used-modules integrate.amd-to-es6 integrate.third-party",
@@ -51,8 +56,7 @@ const scripts = {
 	generateVersionInfo: `node "${versionScript}"`,
 	generateStyles: `node "${stylesScript}"`,
 	generateFontFace: `node "${fontFaceScript}"`,
-	generateTemplates: ``,
-	generateTestTemplates: `cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/test-elements -o test/test-elements/generated/templates`,
+	generateTestTemplates: `node "${LIB}/hbs2ui5/index.js" -d test/test-elements -o test/test-elements/generated/templates`,
 	generateProd: {
 		"default": "ui5nps generateProd.remove-dev-mode generateProd.copy-prod",
 		"remove-dev-mode": `node "${LIB}/remove-dev-mode/remove-dev-mode.mjs"`,
@@ -60,29 +64,27 @@ const scripts = {
 	},
 	generateAPI: {
 		default: "ui5nps generateAPI.generateCEM generateAPI.validateCEM",
-		generateCEM: `cross-env UI5_CEM_MODE='dev' cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
-		validateCEM: `cross-env UI5_CEM_MODE='dev' node "${LIB}/cem/validate.js"`,
+		generateCEM: `cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs"`,
+		validateCEM: `node "${LIB}/cem/validate.js"`,
 	},
 	watch: {
-		default: 'ui5nps watch.src watch.styles --parallel',
-		withBundle: 'ui5nps watch.src watch.bundle watch.styles --parallel',
+		default: 'ui5nps-p watch.src watch.styles', // concurently
+		withBundle: 'ui5nps-p watch.src watch.bundle watch.styles', // concurently
 		src: 'ui5nps "copy.src --watch --skip-initial-copy"',
 		bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 		styles: 'chokidar "src/css/*.css" -c "ui5nps generateStyles"'
 	},
 	test: {
-		default: 'ui5nps test.ssr test.ssr2 test.test-cy-ci --parallel',
+		default: 'ui5nps-p test.ssr test.ssr2 test.test-cy-ci', // concurently
 		ssr: `mocha test/ssr`,
 		ssr2: "node -e \"import('./dist/Device.js')\"",
 		"test-cy-ci": {
-			default: "ui5nps test.test-cy-ci.prepare test.test-cy-ci.cypress",
-			prepare: `ui5nps generateTestTemplates`,
-			cypress: `cross-env UI5_BASE=true yarn cypress run --component --browser chrome`
+			default: "ui5nps test.generateTestTemplates test.test-cy-ci.cypress",
+			cypress: ` yarn cypress run --component --browser chrome`
 		},
 		"test-cy-open": {
-			default: "ui5nps test.test-cy-ci.prepare test.test-cy-ci.cypress",
-			prepare: `ui5nps generateTestTemplates`,
-			cypress: `cross-env UI5_BASE=true yarn cypress open --component --browser chrome`
+			default: "ui5nps test.generateTestTemplates test.test-cy-ci.cypress",
+			cypress: ` yarn cypress open --component --browser chrome`
 		}
 	},
 };

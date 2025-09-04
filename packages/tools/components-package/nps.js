@@ -9,25 +9,6 @@ if (process.env.DEPLOY) {
 	websiteBaseUrl = "/ui5-webcomponents/nightly/";
 }
 
-const cypressEnvVariables = (options, predefinedVars) => {
-	let variables = [];
-	const { cypress_code_coverage, cypress_acc_tests } = options.internal ?? {};
-
-	// Handle environment variables like TEST_SUITE
-	if (predefinedVars) {
-		variables = [...predefinedVars];
-	}
-
-	// The coverage task is always registered and requires an explicit variable whether to generate a report or not
-	variables.push(`CYPRESS_COVERAGE=${!!cypress_code_coverage}`);
-
-	if (cypress_acc_tests) {
-		variables.push("CYPRESS_UI5_ACC=true");
-	}
-
-	return variables.length ? `cross-env ${variables.join(" ")}` : "";
-}
-
 const getScripts = (options) => {
 
 	// The script creates all JS modules (dist/illustrations/{illustrationName}.js) out of the existing SVGs
@@ -45,7 +26,6 @@ const getScripts = (options) => {
 	if (options.noWatchTS) {
 		tsWatchCommandStandalone = "";
 	}
-	const tsCrossEnv = tsOption ? "cross-env UI5_TS=true" : "";
 
 	if (tsOption) {
 		try {
@@ -74,31 +54,42 @@ const getScripts = (options) => {
 		eslintConfig = "";
 	} else {
 		// no custom configuration - use default from tools project
-		eslintConfig = `--config  "${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}"`;
+		eslintConfig = `--config "${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}"`;
 	}
 
 	const scripts = {
-		clean: 'rimraf src/generated && rimraf dist && ui5nps "scope.testPages.clean"',
+		__ui5envs: {
+			UI5_CEM_MODE: options.dev,
+			UI5_TS: !!tsOption,
+			CYPRESS_COVERAGE: !!(options.internal?.cypress_code_coverage),
+			CYPRESS_UI5_ACC: !!(options.internal?.cypress_acc_tests),
+		},
+		clean: {
+			default: 'ui5nps clean.generated scope.testPages.clean',
+			generated: 'rimraf src/generated && rimraf dist',
+		},
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig} --fix`,
 		generate: {
-			default: `${tsCrossEnv} ui5nps prepare.all`,
-			all: `ui5nps  build.templates build.i18n prepare.styleRelated copyProps build.illustrations --parallel`,
+			default: `ui5nps prepare.all`,
+			all: `ui5nps-p build.templates build.i18n prepare.styleRelated copyProps build.illustrations`, // concurently
 			styleRelated: "ui5nps build.styles build.jsonImports build.jsImports",
 		},
 		prepare: {
-			default: `${tsCrossEnv} ui5nps clean prepare.all copy copyProps prepare.typescript generateAPI`,
-			all: `ui5nps  build.templates build.i18n prepare.styleRelated build.illustrations --parallel`,
+			default: `ui5nps clean prepare.all copy copyProps prepare.typescript generateAPI`,
+			all: `ui5nps-p build.templates build.i18n prepare.styleRelated build.illustrations`, // concurently
 			styleRelated: "ui5nps build.styles build.jsonImports build.jsImports",
 			typescript: tsCommandOld,
 		},
 		build: {
 			default: "ui5nps prepare lint build.bundle", // build.bundle2
-			templates: options.legacy ? `mkdirp src/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates` : "",
+			templates: options.legacy ? `mkdirp src/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates` : "",
 			styles: {
-				default: `ui5nps build.styles.themes build.styles.components --parallel`,
+				default: `ui5nps-p build.styles.themes build.styles.components`, // concurently
 				themes: `node "${LIB}/css-processors/css-processor-themes.mjs"`,
+				themesWithWatch: `node "${LIB}/css-processors/css-processor-themes.mjs" -w`,
 				components: `node "${LIB}/css-processors/css-processor-components.mjs"`,
+				componentsWithWatch: `node "${LIB}/css-processors/css-processor-components.mjs" -w`,
 			},
 			i18n: {
 				default: "ui5nps build.i18n.defaultsjs build.i18n.json",
@@ -114,39 +105,40 @@ const getScripts = (options) => {
 				default: "ui5nps build.jsImports.illustrationsLoaders",
 				illustrationsLoaders: createIllustrationsLoadersScript,
 			},
-			bundle: `vite build ${viteConfig} --mode testing  --base ${websiteBaseUrl}`,
+			bundle: `vite build ${viteConfig} --mode testing --base ${websiteBaseUrl}`,
 			bundle2: ``,
 			illustrations: createIllustrationsJSImportsScript,
 		},
 		copyProps: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
+		copyPropsWithWatch: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/ --watch --safe --skip-initial-copy`,
 		copy: {
 			default: options.legacy ? "ui5nps copy.src copy.props" : "",
 			src: options.legacy ? `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.{js,json}" dist/` : "",
 			props: options.legacy ? `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/` : "",
 		},
 		watch: {
-			default: `${tsCrossEnv} ui5nps watch.templates watch.typescript watch.src watch.styles watch.i18n watch.props --parallel`,
-			devServer: 'ui5nps watch.default watch.bundle --parallel',
+			default: `ui5nps-p watch.templates watch.typescript watch.src watch.styles watch.i18n watch.props`, // concurently
+			devServer: 'ui5nps-p watch.default watch.bundle', // concurently
 			src: options.legacy ? 'ui5nps "copy.src --watch --safe --skip-initial-copy"' : "",
 			typescript: tsWatchCommandStandalone,
-			props: 'ui5nps "copyProps --watch --safe --skip-initial-copy"',
+			props: 'ui5nps copyPropsWithWatch',
 			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 			styles: {
-				default: 'ui5nps watch.styles.themes watch.styles.components --parallel',
-				themes: 'ui5nps "build.styles.themes -w"',
-				components: `ui5nps "build.styles.components -w"`,
+				default: 'ui5nps-p watch.styles.themes watch.styles.components', // concurently
+				themes: 'ui5nps build.styles.themesWithWatch',
+				components: `ui5nps build.styles.componentsWithWatch`,
 			},
 			templates: options.legacy ? 'chokidar "src/**/*.hbs" -i "src/generated" -c "ui5nps build.templates"' : "",
 			i18n: 'chokidar "src/i18n/messagebundle.properties" -c "ui5nps build.i18n.defaultsjs"'
 		},
 		start: "ui5nps prepare watch.devServer",
 		test: `node "${LIB}/test-runner/test-runner.js"`,
-		"test-cy-ci": `${cypressEnvVariables(options)} yarn cypress run --component --browser chrome`,
-		"test-cy-ci-suite-1": `${cypressEnvVariables(options, ["TEST_SUITE=SUITE1"])} yarn cypress run --component --browser chrome`,
-		"test-cy-ci-suite-2": `${cypressEnvVariables(options, ["TEST_SUITE=SUITE2"])} yarn cypress run --component --browser chrome`,
-		"test-cy-open": `${cypressEnvVariables(options)} yarn cypress open --component --browser chrome`,
-		"test-suite-1": `node "${LIB}/test-runner/test-runner.js" --suite suite1`,
-		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2`,
+		"test-cy-ci": `yarn cypress run --component --browser chrome`,
+		"test-cy-ci-suite-1": `yarn cypress run --component --browser chrome`,
+		"test-cy-ci-suite-2": `yarn cypress run --component --browser chrome`,
+		"test-cy-open": `yarn cypress open --component --browser chrome`,
+		"test-suite-1": `node "${LIB}/test-runner/test-runner.js" --suite suite1 --spec "**/specs/base/*.cy.{jsx,tsx},**/specs/[A-I]*.cy.{js,jsx,ts,tsx}"`,
+		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2 --spec "**/specs/[^A-I]*.cy.{js,jsx,ts,tsx}"`,
 		startWithScope: "ui5nps scope.prepare scope.watchWithBundle",
 		scope: {
 			prepare: "ui5nps scope.lint scope.testPages",
@@ -157,14 +149,14 @@ const getScripts = (options) => {
 				copy: `node "${LIB}/copy-and-watch/index.js" --silent "test/pages/**/*" test/pages/scoped`,
 				replace: `node "${LIB}/scoping/scope-test-pages.js" test/pages/scoped demo`,
 			},
-			watchWithBundle: 'ui5nps scope.watch ui5nps scope.bundle --parallel',
-			watch: 'ui5nps watch.templates watch.props watch.styles --parallel',
+			watchWithBundle: 'ui5nps-p scope.watch ui5nps scope.bundle', // concurently
+			watch: 'ui5nps-p watch.templates watch.props watch.styles', // concurently
 			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 		},
 		generateAPI: {
 			default: tsOption ? "ui5nps generateAPI.generateCEM generateAPI.validateCEM" : "",
-			generateCEM: `${options.dev ? "cross-env UI5_CEM_MODE='dev'" : ""} cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs"`,
-			validateCEM: `${options.dev ? "cross-env UI5_CEM_MODE='dev'" : ""} node "${LIB}/cem/validate.js"`,
+			generateCEM: `cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs"`,
+			validateCEM: `node "${LIB}/cem/validate.js"`,
 		},
 	};
 
