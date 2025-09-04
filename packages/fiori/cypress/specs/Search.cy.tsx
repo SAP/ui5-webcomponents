@@ -11,6 +11,7 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import AvatarSize from "@ui5/webcomponents/dist/types/AvatarSize.js";
+import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import { SEARCH_ITEM_SHOW_MORE_COUNT, SEARCH_ITEM_SHOW_MORE_NO_COUNT } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("Properties", () => {
@@ -791,7 +792,7 @@ describe("Events", () => {
 
 		cy.get("[ui5-search]")
 			.then(search => {
-				search.get(0).addEventListener("ui5-close", cy.stub().as("closed"));
+				search.get(0).addEventListener("ui5-close", cy.spy().as("closed"));
 			});
 
 		cy.get("[ui5-search]")
@@ -818,7 +819,7 @@ describe("Events", () => {
 
 		cy.get("[ui5-search]")
 			.then(search => {
-				search.get(0).addEventListener("ui5-close", cy.stub().as("closed"));
+				search.get(0).addEventListener("ui5-close", cy.spy().as("closed"));
 			});
 
 		cy.get("[ui5-search]")
@@ -1007,7 +1008,7 @@ describe("Events", () => {
 			.should("have.attr", "highlight-text", "");
 	});
 
-	it.skip("should close the popover on search if no suggestion is selected", () => {
+	it("should close the popover on search if no suggestion is selected", () => {
 		cy.mount(
 			<Search showClearIcon>
 				<SearchItem text="Item 1" />
@@ -1075,6 +1076,19 @@ describe("Events", () => {
 
 		cy.get("@search")
 			.should("not.have.attr", "open");
+	});
+
+	it("should open picker by default when 'open' property is set to true", () => {
+		cy.mount(
+			<Search open>
+				<SearchItem text="Item 1" />
+			</Search>
+		);
+
+		cy.get("[ui5-search]")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
 	});
 });
 
