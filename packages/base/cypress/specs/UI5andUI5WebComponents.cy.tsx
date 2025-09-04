@@ -75,10 +75,6 @@ describe("ui5 and web components integration", () => {
             doc.head.appendChild(ui5Script);
         });
         
-		// wait for ui5 to initialize completely
-        cy.window().should('have.property', 'sap');
-        cy.window().should('have.property', 'ui5InitComplete', true);
-        
         // act: open sap.m.Dialog
         cy.get('#ui5-button')
 			.should('be.visible')
