@@ -235,7 +235,7 @@ class Search extends SearchField {
 		super.onBeforeRendering();
 
 		if (this.collapsed && !isPhone()) {
-			this.open = false; 
+			this.open = false;
 			return;
 		}
 
