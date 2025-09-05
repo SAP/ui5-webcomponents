@@ -77,7 +77,9 @@
 				</ui5-toolbar-select>
 				<ui5-toolbar-separator></ui5-toolbar-separator>
 				<ui5-toolbar-separator></ui5-toolbar-separator>
-				<ui5-toolbar-button icon="employee" text="Call me later"></ui5-toolbar-button>
+				<ui5-toolbar-item overflow-priority="AlwaysOverflow">
+					<ui5-button icon="employee">Call me later</ui5-button>
+				</ui5-toolbar-item>
 			</ui5-toolbar>
 		</section>
 		<br /><br />
@@ -115,6 +117,9 @@
 						<ui5-toolbar-button icon="employee" text="Right 4"></ui5-toolbar-button>
 						<ui5-toolbar-button id="myOverflowBtn" prevent-overflow-closing icon="employee"
 							text="User Menu"></ui5-toolbar-button>
+						<ui5-toolbar-item>
+							<ui5-button prevent-overflow-closing icon="employee" onclick="javaScript:alert('aaa');">User Menu</ui5-button>
+						</ui5-toolbar-item>
 					</ui5-toolbar>
 				</div>
 				<div class="second-toolbar-wrapper">

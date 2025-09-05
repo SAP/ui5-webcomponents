@@ -1,6 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import ToolbarItemTemplate from "./ToolbarItemTemplate.js";
 
 import type ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
@@ -16,13 +20,19 @@ type ToolbarItemEventDetail = {
 	bubbles: true,
 })
 
+@customElement({
+	tag: "ui5-toolbar-item",
+	languageAware: true,
+	renderer: jsxRenderer,
+	template: ToolbarItemTemplate,
+})
+
 /**
  * @class
  *
  * Represents an abstract class for items, used in the `ui5-toolbar`.
  * @constructor
  * @extends UI5Element
- * @abstract
  * @public
  * @since 1.17.0
  */
@@ -59,6 +69,17 @@ class ToolbarItem extends UI5Element {
 
 	@property({ type: Boolean })
 	isOverflowed: boolean = false;
+
+	/**
+	 * Defines if the toolbar item is overflowed.
+	 * @default false
+	 * @since 2.11.0
+	 */
+
+	@slot({
+		"default": true, type: HTMLElement, invalidateOnChildChange: true,
+	})
+	item!: HTMLElement | undefined;
 
 	/**
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
@@ -113,4 +134,6 @@ export type {
 	IEventOptions,
 	ToolbarItemEventDetail,
 };
+ToolbarItem.define();
+
 export default ToolbarItem;
