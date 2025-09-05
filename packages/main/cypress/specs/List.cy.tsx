@@ -1568,7 +1568,7 @@ describe("List Tests", () => {
 		cy.mount(
 			<List>
 				<ListItemStandard>
-					<a href="https://sap.github.io/ui5-webcomponents/playground/components" target="_blank">
+					<a href="https://ui5.github.io/webcomponents/playground/components" target="_blank">
 						Link to UI5 Playground
 					</a>
 				</ListItemStandard>
@@ -1579,7 +1579,7 @@ describe("List Tests", () => {
 
 		cy.get("[ui5-li]")
 			.find("a")
-			.should("have.attr", "href", "https://sap.github.io/ui5-webcomponents/playground/components")
+			.should("have.attr", "href", "https://ui5.github.io/webcomponents/playground/components")
 			.should("have.attr", "target", "_blank");
 
 		cy.get("[ui5-li]")
