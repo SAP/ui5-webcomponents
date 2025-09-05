@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -147,7 +146,6 @@ enum ClipboardDataOperation {
 		ResponsivePopoverCommonCss,
 		SuggestionsCss,
 		TokenizerPopoverCss,
-		getEffectiveScrollbarStyle(),
 	],
 })
 
@@ -282,7 +280,7 @@ class Tokenizer extends UI5Element {
 	@property({
 		converter: DOMReferenceConverter,
 	})
-	opener?: HTMLElement;
+	opener?: HTMLElement | string | null;
 
 	/**
 	 * Sets the min-width of the nMore Popover.
@@ -333,6 +331,10 @@ class Tokenizer extends UI5Element {
 		type: HTMLElement,
 		"default": true,
 		individualSlots: true,
+		invalidateOnChildChange: {
+			properties: ["text"],
+			slots: false,
+		},
 	})
 	tokens!: Array<Token>;
 
@@ -1028,7 +1030,7 @@ class Tokenizer extends UI5Element {
 		return this.getSlottedNodes<Token>("tokens");
 	}
 
-	get morePopoverOpener(): HTMLElement {
+	get morePopoverOpener(): HTMLElement | string | null {
 		// return this.opener ? this : this.opener;
 		if (this.opener) {
 			return this.opener;

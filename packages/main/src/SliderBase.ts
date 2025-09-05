@@ -169,6 +169,7 @@ abstract class SliderBase extends UI5Element {
 	_resizeHandler: ResizeObserverCallback;
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
 	_upHandler: (e: TouchEvent | MouseEvent) => void;
+	_windowMouseoutHandler: (e: MouseEvent) => void;
 	_stateStorage: StateStorage;
 	notResized = false;
 	_isUserInteraction = false;
@@ -189,6 +190,11 @@ abstract class SliderBase extends UI5Element {
 		this._resizeHandler = this._handleResize.bind(this);
 		this._moveHandler = this._handleMove.bind(this);
 		this._upHandler = this._handleUp.bind(this);
+		this._windowMouseoutHandler = (e: MouseEvent) => {
+			if (e.relatedTarget === document.documentElement) {
+				this.handleUpBase();
+			}
+		};
 
 		this._stateStorage = {
 			step: undefined,
@@ -205,12 +211,6 @@ abstract class SliderBase extends UI5Element {
 	_onmousedown(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
 	_handleActionKeyPress(e: Event) {} // eslint-disable-line
-
-	// used in base template, but implemented in subclasses
-	abstract styles: {
-		label: Record<string, string>,
-		labelContainer: Record<string, string>,
-	};
 
 	abstract tickmarksObject: Array<boolean>;
 	abstract _ariaLabelledByText: string;
@@ -395,21 +395,28 @@ abstract class SliderBase extends UI5Element {
 		// In such case the labels must correspond to the tickmarks, only the first and the last one should exist.
 		if (spaceBetweenTickmarks < SliderBase.MIN_SPACE_BETWEEN_TICKMARKS) {
 			this._hiddenTickmarks = true;
-			this._labelsOverlapping = true;
 		} else {
 			this._hiddenTickmarks = false;
 		}
 
 		if (this.labelInterval <= 0 || this._hiddenTickmarks) {
+			this._labelsOverlapping = true;
 			return;
 		}
 
 		// Check if there are any overlapping labels.
 		// If so - only the first and the last one should be visible
-		const labelItems = this.shadowRoot!.querySelectorAll(".ui5-slider-labels li");
-		this._labelsOverlapping = [...labelItems].some(label => label.scrollWidth > label.clientWidth);
-	}
 
+		const remInPx = parseFloat(getComputedStyle(document.documentElement).fontSize); // calculate 1 rem in pixels
+		const childWidthPx = 2 * remInPx; // as specified label must be 2 rems so calculate one child width in pixels
+
+		const labelItemsParent = this.shadowRoot!.querySelector(".ui5-slider-labels") as HTMLElement;
+
+		const labelItemsSumWidth = this._labels.length * childWidthPx; // all labels width
+		const labelItemsParentWidth = labelItemsParent.clientWidth; // label parent width
+
+		this._labelsOverlapping = labelItemsParentWidth < labelItemsSumWidth;
+	}
 	/**
 	 * Called when the user starts interacting with the slider.
 	 * After a down event on the slider root, listen for move events on window, so the slider value
@@ -429,6 +436,7 @@ abstract class SliderBase extends UI5Element {
 
 		window.addEventListener("mouseup", this._upHandler);
 		window.addEventListener("touchend", this._upHandler);
+		window.addEventListener("mouseout", this._windowMouseoutHandler);
 		// Only allow one type of move event to be listened to (the first one registered after the down event)
 		if (supportsTouch() && e instanceof TouchEvent) {
 			window.addEventListener("touchmove", this._moveHandler);
@@ -462,6 +470,7 @@ abstract class SliderBase extends UI5Element {
 	handleUpBase() {
 		window.removeEventListener("mouseup", this._upHandler);
 		window.removeEventListener("touchend", this._upHandler);
+		window.removeEventListener("mouseout", this._windowMouseoutHandler);
 		// Only one of the following was attached, but it's ok to remove both as there is no error
 		window.removeEventListener("mousemove", this._moveHandler);
 		window.removeEventListener("touchmove", this._moveHandler);

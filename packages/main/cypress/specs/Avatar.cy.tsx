@@ -39,9 +39,9 @@ describe("Accessibility", () => {
 		cy.mount(
 			<div>
 				<Avatar interactive disabled initials="JD" id="diabled-avatar" onClick={increment}>
-				<Tag slot="badge">
-					<Icon slot="icon" name="accelerated"></Icon>
-				</Tag>
+					<Tag slot="badge">
+						<Icon slot="icon" name="accelerated"></Icon>
+					</Tag>
 				</Avatar>
 				<input value="0" id="click-event" />
 			</div>
@@ -304,5 +304,200 @@ describe("Fallback Logic", () => {
 			.shadow()
 			.find(".ui5-avatar-icon-fallback")
 			.should("have.class", "ui5-avatar-fallback-icon-hidden");
+	});
+});
+
+describe("Avatar Rendering and Interaction", () => {
+	it("tests rendering of image", () => {
+		cy.mount(
+			<Avatar>
+				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==" alt="Woman image" />
+			</Avatar>
+		);
+
+		cy.get("[ui5-avatar]")
+			.shadow()
+			.find(".ui5-avatar-root slot:not([name])") 
+			.should("exist");
+
+		cy.get("[ui5-avatar]")
+			.shadow()
+			.find("ui5-avatar-icon")
+			.should("not.exist");
+	});
+
+	it("tests rendering of icon", () => {
+		cy.mount(
+			<Avatar icon="filter"></Avatar>
+		);
+
+		cy.get("[ui5-avatar]")
+			.shadow()
+			.find(".ui5-avatar-icon")
+			.should("exist");
+
+		cy.get("[ui5-avatar]")
+			.shadow()
+			.find("slot:not([name])")
+			.should("not.exist");
+	});
+
+	it("tests rendering of image, when all set", () => {
+		cy.mount(
+			<Avatar icon="filter" initials="SF">
+				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==" alt="Woman image" />
+			</Avatar>
+		);
+
+		cy.get("[ui5-avatar]")
+			.shadow()
+			.find(".ui5-avatar-root slot:not([name])")
+			.should("exist");
+
+		cy.get("[ui5-avatar]")
+			.shadow()
+			.find(".ui5-avatar-icon")
+			.should("not.exist");
+
+		cy.get("[ui5-avatar]")
+			.shadow()
+			.find(".ui5-avatar-initials")
+			.should("not.exist");
+	});
+
+	it("tests rendering of initials", () => {
+		cy.mount(
+			<Avatar initials="SF" shape="Square" size="M"></Avatar>
+		);
+
+		cy.get("[ui5-avatar]")
+			.shadow()
+			.find(".ui5-avatar-initials")
+			.should("exist");
+	});
+
+	it("tests rendering of accented characters", () => {
+		cy.mount(
+			<Avatar initials="IOU" colorScheme="Accent1"></Avatar>
+		);
+
+		cy.get("[ui5-avatar]")
+			.shadow()
+			.find(".ui5-avatar-initials")
+			.should("exist");
+	});
+
+	it("tests rendering of default fallback icon when initials are overflowing", () => {
+		cy.mount(
+			<Avatar initials="WWW" shape="Square" size="M"></Avatar>
+		);
+
+		cy.get("[ui5-avatar]")
+			.shadow()
+			.find(".ui5-avatar-icon")
+			.should("exist")
+			.should("have.attr", "name", "employee");
+	});
+
+	it("tests rendering of custom fallback icon when initials are overflowing", () => {
+		cy.mount(
+			<Avatar fallbackIcon="alert" initials="WWW" shape="Circle" size="L"></Avatar>
+		);
+
+		cy.get("[ui5-avatar]")
+			.shadow()
+			.find(".ui5-avatar-icon-fallback")
+			.should("exist")
+			.should("have.attr", "name", "alert");
+	});
+
+	it("Tests noConflict 'ui5-click' event for interactive avatars", () => {
+		cy.mount(
+			<Avatar interactive initials="XS" size="XS"></Avatar>
+		);
+
+		cy.get("[ui5-avatar]")
+			.as("avatar")
+			.then(($avatar) => {
+				$avatar[0].addEventListener("ui5-click", cy.stub().as("clickStub"));
+			});
+
+		cy.get("@avatar")
+			.shadow()
+			.find(".ui5-avatar-root")
+			.realClick();
+		
+		cy.get("@clickStub")
+			.should("have.been.calledOnce");
+
+		cy.get("@avatar")
+			.shadow()
+			.find(".ui5-avatar-root")
+			.realPress("Enter");
+		
+		cy.get("@clickStub")
+			.should("have.been.calledTwice");
+
+		cy.get("@avatar")
+			.shadow()
+			.find(".ui5-avatar-root")
+			.realPress("Space");
+		
+		cy.get("@clickStub")
+			.should("have.been.calledThrice");
+	});
+
+	it("Tests noConflict 'ui5-click' event for non interactive avatars", () => {
+		cy.mount(
+			<Avatar initials="S" size="S"></Avatar>
+		);
+
+		cy.get("[ui5-avatar]")
+			.as("avatar")
+			.then(($avatar) => {
+				$avatar[0].addEventListener("ui5-click", cy.stub().as("clickStub"));
+			});
+
+		cy.get("@avatar")
+			.shadow()
+			.find(".ui5-avatar-root")
+			.realClick();
+		
+		cy.get("@clickStub")
+			.should("have.been.calledOnce");
+
+		cy.get("@avatar")
+			.shadow()
+			.find(".ui5-avatar-root")
+			.realPress("Enter");
+		
+		cy.get("@clickStub")
+			.should("have.been.calledOnce");
+
+		cy.get("@avatar")
+			.shadow()
+			.find(".ui5-avatar-root")
+			.realPress("Space");
+		
+		cy.get("@clickStub")
+			.should("have.been.calledOnce");
+	});
+
+	it("Tests native 'click' event thrown", () => {
+		cy.mount(
+			<Avatar interactive initials="L" size="L"></Avatar>
+		);
+
+		cy.get("[ui5-avatar]")
+			.as("avatar")
+			.then(($avatar) => {
+				$avatar[0].addEventListener("ui5-click", cy.stub().as("clickStub"));
+			});
+
+		cy.get("@avatar")
+			.realClick();
+		
+		cy.get("@clickStub")
+			.should("have.been.calledOnce");
 	});
 });

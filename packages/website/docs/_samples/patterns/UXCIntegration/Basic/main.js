@@ -20,6 +20,7 @@ import "@ui5/webcomponents/dist/CheckBox.js";
 import "@ui5/webcomponents/dist/Toast.js";
 
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
+import "@ui5/webcomponents-fiori/dist/ShellBarBranding.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarSearch.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarSpacer.js";
@@ -34,7 +35,6 @@ import NavigationLayoutMode from "@ui5/webcomponents-fiori/dist/types/Navigation
 
 import "@ui5/webcomponents/dist/Menu.js";
 import "@ui5/webcomponents/dist/MenuItem.js";
-import "@ui5/webcomponents/dist/MessageStrip.js";
 import "@ui5/webcomponents-fiori/dist/NotificationList.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListGroupItem.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";

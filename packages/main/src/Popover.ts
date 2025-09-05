@@ -6,7 +6,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
-import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import Popup from "./Popup.js";
@@ -81,7 +80,6 @@ type CalculatedPlacement = {
 		Popup.styles,
 		PopupsCommonCss,
 		PopoverCss,
-		getEffectiveScrollbarStyle(),
 	],
 	template: PopoverTemplate,
 })
@@ -190,7 +188,7 @@ class Popover extends Popup {
 	@slot({ type: HTMLElement })
 	footer!: Array<HTMLElement>;
 
-	_opener?: HTMLElement | string;
+	_opener?: HTMLElement | string | null | undefined;
 	_openerRect?: DOMRect;
 	_preventRepositionAndClose?: boolean;
 	_top?: number;
@@ -216,7 +214,7 @@ class Popover extends Popup {
 	 * @since 1.2.0
 	 */
 	@property({ converter: DOMReferenceConverter })
-	set opener(value: HTMLElement | string) {
+	set opener(value: HTMLElement | string | null) {
 		if (this._opener === value) {
 			return;
 		}
@@ -228,7 +226,7 @@ class Popover extends Popup {
 		}
 	}
 
-	get opener(): HTMLElement | string | undefined {
+	get opener(): HTMLElement | string | null | undefined {
 		return this._opener;
 	}
 
@@ -243,7 +241,7 @@ class Popover extends Popup {
 			return;
 		}
 
-		if (this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
+		if (!opener || this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
 			await renderFinished();
 			this.open = false;
 			this.fireDecoratorEvent("close");
@@ -290,8 +288,8 @@ class Popover extends Popup {
 		removeOpenedPopover(this);
 	}
 
-	getOpenerHTMLElement(opener: HTMLElement | string | undefined): HTMLElement | null | undefined {
-		if (opener === undefined) {
+	getOpenerHTMLElement(opener: HTMLElement | string | null | undefined): HTMLElement | null | undefined {
+		if (opener === undefined || opener === null) {
 			return opener;
 		}
 
@@ -375,6 +373,14 @@ class Popover extends Popup {
 
 		const opener = this.getOpenerHTMLElement(this.opener);
 
+		if (!opener) {
+			Object.assign(this.style, {
+				top: `0px`,
+				left: `0px`,
+			});
+			return;
+		}
+
 		if (opener && instanceOfUI5Element(opener) && !opener.getDomRef()) {
 			return;
 		}
@@ -393,7 +399,7 @@ class Popover extends Popup {
 
 		if (this.open) {
 			// update opener rect if it was changed during the popover being opened
-			this._openerRect = opener!.getBoundingClientRect();
+			this._openerRect = opener.getBoundingClientRect();
 		}
 
 		if (this._oldPlacement && this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin()) {

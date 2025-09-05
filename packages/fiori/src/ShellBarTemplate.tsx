@@ -16,7 +16,11 @@ export default function ShellBarTemplate(this: ShellBar) {
 				<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-left">
 					{this.startButton.length > 0 && <slot name="startButton"></slot>}
 
-					{this.hasMenuItems && (
+					{this.hasBranding && (
+						<slot name="branding"></slot>
+					)}
+
+					{this.hasMenuItems && !this.hasBranding && (
 						<>
 							{!this.showLogoInMenuButton && this.hasLogo && singleLogo.call(this)}
 							{this.showTitleInMenuButton && <h1 class="ui5-hidden-text">{this.primaryTitle}</h1>}
@@ -43,23 +47,30 @@ export default function ShellBarTemplate(this: ShellBar) {
 										)}
 										<Icon class="ui5-shellbar-menu-button-arrow" name={slimArrowDown} />
 									</button>
-									{this.secondaryTitle && !this.isSBreakPoint && (
-										<div style={{ display: "block" }} class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">
-											{this.secondaryTitle}
-										</div>
-									)}
 								</>
+							)}
+						</>
+					)}
+
+					{this.hasMenuItems && (
+						// The secondary title remains visible when both menu items and the branding slot are present,
+						// as the branding slot has higher priority and takes precedence in visibility.
+						<>
+							{this.secondaryTitle && !this.isSBreakPoint && (
+								<div style={{ display: "block" }} class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">
+									{this.secondaryTitle}
+								</div>
 							)}
 						</>
 					)}
 
 					{!this.hasMenuItems && (
 						<>
-							{this.isSBreakPoint && this.hasLogo && singleLogo.call(this)}
+							{this.isSBreakPoint && this.hasLogo && !this.hasBranding && singleLogo.call(this)}
 							{!this.isSBreakPoint && (this.hasLogo || this.primaryTitle) && (
 								<>
-									{combinedLogo.call(this)}
-									{this.secondaryTitle && this.primaryTitle && (
+									{!this.hasBranding && combinedLogo.call(this)}
+									{this.secondaryTitle && (this.primaryTitle || this.hasBranding) && (
 										<h2 class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">
 											{this.secondaryTitle}
 										</h2>
@@ -89,9 +100,9 @@ export default function ShellBarTemplate(this: ShellBar) {
 									}}></div>
 								)}
 								{this.startContent.map(item => {
-									const itemInfo = this._contentInfo.find(info => info.id === item._individualSlot);
+									const itemInfo = this._contentInfo.find(info => info.id === (item as any)._individualSlot);
 									return (
-										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes}>
+										<div key={(item as any)._individualSlot} id={(item as any)._individualSlot} class={itemInfo?.classes}>
 											{this.shouldIncludeSeparator(itemInfo, this.startContentInfoSorted) && (
 												// never displayed, only "packed" with last item that was hidden, used for measurement purposes
 												<div class={{
@@ -99,16 +110,16 @@ export default function ShellBarTemplate(this: ShellBar) {
 													"ui5-shellbar-separator-start": true,
 												}}></div>
 											)}
-											<slot name={item._individualSlot}></slot>
+											<slot name={(item as any)._individualSlot}></slot>
 										</div>
 									);
 								})}
 								<div class="ui5-shellbar-spacer"></div>
 								{this.endContent.map(item => {
-									const itemInfo = this._contentInfo.find(info => info.id === item._individualSlot);
+									const itemInfo = this._contentInfo.find(info => info.id === (item as any)._individualSlot);
 									return (
-										<div key={item._individualSlot} id={item._individualSlot} class={itemInfo?.classes}>
-											<slot name={item._individualSlot}></slot>
+										<div key={(item as any)._individualSlot} id={(item as any)._individualSlot} class={itemInfo?.classes}>
+											<slot name={(item as any)._individualSlot}></slot>
 											{this.shouldIncludeSeparator(itemInfo, this.endContentInfoSorted) && (
 												// never displayed, only "packed" with last item that was hidden, used for measurement purposes
 												<div class={{

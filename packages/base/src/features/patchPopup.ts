@@ -1,4 +1,6 @@
 // OpenUI5's Control.js subset
+import getSharedResource from "../getSharedResource.js";
+
 type Control = {
 	getDomRef: () => HTMLElement | null,
 }
@@ -12,6 +14,51 @@ type OpenUI5Popup = {
 		getContent: () => Control | HTMLElement | null, // this is the OpenUI5 Element/Control instance that opens the Popup (usually sap.m.Popover/sap.m.Dialog)
 		onFocusEvent: (e: FocusEvent) => void,
 	}
+};
+
+type PopupInfo = {
+	type: "OpenUI5" | "WebComponent";
+	instance: object;
+};
+
+// contains all OpenUI5 and Web Component popups that are currently opened
+const AllOpenedPopupsRegistry = getSharedResource<{ openedRegistry: Array<PopupInfo> }>("AllOpenedPopupsRegistry", { openedRegistry: [] });
+
+const addOpenedPopup = (popupInfo: PopupInfo) => {
+	AllOpenedPopupsRegistry.openedRegistry.push(popupInfo);
+};
+
+const removeOpenedPopup = (popup: object) => {
+	const index = AllOpenedPopupsRegistry.openedRegistry.findIndex(el => el.instance === popup);
+	if (index > -1) {
+		AllOpenedPopupsRegistry.openedRegistry.splice(index, 1);
+	}
+};
+
+const getTopmostPopup = () => {
+	return AllOpenedPopupsRegistry.openedRegistry[AllOpenedPopupsRegistry.openedRegistry.length - 1].instance;
+};
+
+/**
+ * Original OpenUI5 popup focus event is triggered only
+ * if there are no Web Component popups opened on top of it.
+ *
+ * @param {object} popup - The popup instance to check.
+ * @returns {boolean} True if the focus event should be triggered, false otherwise.
+ */
+const shouldCallOpenUI5FocusEvent = (popup: object) => {
+	for (let i = AllOpenedPopupsRegistry.openedRegistry.length - 1; i >= 0; i--) {
+		const popupInfo = AllOpenedPopupsRegistry.openedRegistry[i];
+		if (popupInfo.type !== "OpenUI5") {
+			return false;
+		}
+
+		if (popupInfo.instance === popup) {
+			break;
+		}
+	}
+
+	return true;
 };
 
 const openNativePopover = (domRef: HTMLElement) => {
@@ -52,6 +99,11 @@ const patchOpen = (Popup: OpenUI5Popup) => {
 				}
 			}
 		}
+
+		addOpenedPopup({
+			type: "OpenUI5",
+			instance: this,
+		});
 	};
 };
 
@@ -64,15 +116,15 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 		if (domRef) {
 			closeNativePopover(domRef); // unset the popover attribute and close the native popover, but only if still in DOM
 		}
+
+		removeOpenedPopup(this);
 	};
 };
 
 const patchFocusEvent = (Popup: OpenUI5Popup) => {
 	const origFocusEvent = Popup.prototype.onFocusEvent;
 	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
-		const isTypeFocus = e.type === "focus" || e.type === "activate";
-		const target = e.target as HTMLElement;
-		if (!isTypeFocus || !target.closest("[ui5-popover],[ui5-responsive-popover],[ui5-dialog]")) {
+		if (shouldCallOpenUI5FocusEvent(this)) {
 			origFocusEvent.call(this, e);
 		}
 	};
@@ -91,5 +143,11 @@ const patchPopup = (Popup: OpenUI5Popup) => {
 	patchFocusEvent(Popup);// Popup.prototype.onFocusEvent
 };
 
-export default patchPopup;
-export type { OpenUI5Popup };
+export {
+	patchPopup,
+	addOpenedPopup,
+	removeOpenedPopup,
+	getTopmostPopup,
+};
+
+export type { OpenUI5Popup, PopupInfo };

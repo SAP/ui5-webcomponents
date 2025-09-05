@@ -3,6 +3,7 @@ import SuggestionItem from "../../src/SuggestionItem.js";
 import SuggestionItemCustom from "../../src/SuggestionItemCustom.js";
 import SuggestionItemGroup from "../../src/SuggestionItemGroup.js";
 import Dialog from "../../src/Dialog.js";
+import Link from "../../src/Link.js";
 
 import add from "@ui5/webcomponents-icons/dist/add.js";
 import type ResponsivePopover from "../../src/ResponsivePopover.js";
@@ -195,6 +196,35 @@ describe("Input Tests", () => {
 		cy.get("@change").should("have.been.calledBefore", cy.get("@submit"));
 		cy.get("@submit").should("have.been.calledOnce");
 		cy.get("@change").should("have.been.calledOnce");
+	});
+
+	it("should not fire 'submit' event when there is more than one input field in a form", () => {
+		cy.mount(
+			<form>
+				<Input id="first-input" onChange={cy.stub().as("change")}></Input>
+				<Input></Input>
+			</form>
+		);
+
+		// spy submit event and prevent it
+		cy.get("form")
+			.then($form => {
+				$form.get(0).addEventListener("submit", cy.spy().as("submit"));
+			});
+
+		// check if submit is triggered after change
+		cy.get("#first-input")
+			.as("input")
+			.realClick();
+
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realType("test");
+
+		cy.realPress("Enter");
+
+		cy.get("@submit").should("have.not.been.called");
 	});
 
 	it("tests if pressing enter twice fires submit 2 times and change once", () => {
@@ -418,10 +448,106 @@ describe("Input general interaction", () => {
 
 		cy.get("@inputEvent").should("have.been.calledTwice");
 	});
+
+	it("Should updated typedInValue upon clear", () => {
+		cy.mount(
+			<Input showClearIcon></Input>
+		);
+
+		cy.get("[ui5-input]")
+			.as("input")
+			.realClick();
+
+		cy.get("@input")
+			.realType("C");
+
+		// click on the clear icon
+		cy.get("@input")
+			.shadow()
+			.find("[ui5-icon]")
+			.as("clearIcon")
+			.realClick();
+
+		// check typedInValue property
+		cy.get("@input")
+			.should("have.prop", "typedInValue", "");
+	});
+
+	it("Should fire 'change' event once when clicking a suggestion equal to the typed value", () => {
+		const onChange = cy.spy().as("onChange");
+		const onSelectionChange = cy.spy().as("onSelectionChange");
+
+		cy.mount(
+			<Input
+				id="input-equal-click"
+				showSuggestions
+				noTypeahead
+				onChange={onChange}
+				onSelectionChange={onSelectionChange}
+			>
+				<SuggestionItem text="Cozy" />
+				<SuggestionItem text="Compact" />
+			</Input>
+		);
+
+		cy.get("#input-equal-click")
+		.shadow()
+		.find("input")
+		.click()
+		.realType("Cozy");
+
+		cy.get("#input-equal-click")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
+
+		cy.get('#input-equal-click')
+		.find('ui5-suggestion-item[text="Cozy"]')
+		.click();
+
+		cy.get("#input-equal-click").should("have.value", "Cozy");
+		cy.get("@onChange").should("have.been.calledOnce");
+	});
+
+	it("Should fire 'change' event once when selecting a suggestion equal to the typed value with keyboard", () => {
+		const onChange = cy.spy().as("onChange");
+		const onSelectionChange = cy.spy().as("onSelectionChange");
+
+		cy.mount(
+			<Input
+				id="input-equal-keyboard"
+				showSuggestions
+				noTypeahead
+				onChange={onChange}
+				onSelectionChange={onSelectionChange}
+			>
+				<SuggestionItem text="Cozy" />
+				<SuggestionItem text="Compact" />
+			</Input>
+		);
+
+		cy.get("#input-equal-keyboard")
+		.shadow()
+		.find("input")
+		.click()
+		.realType("Cozy");
+
+		cy.get("#input-equal-keyboard")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
+
+		cy.realPress("ArrowDown");
+		cy.realPress("Enter");
+
+		cy.get("#input-equal-keyboard").should("have.value", "Cozy");
+		cy.get("@onChange").should("have.been.calledOnce");
+		cy.get("@onSelectionChange").should("have.been.calledOnce");
+	});
 });
 
 describe("Input arrow navigation", () => {
-	it("Value state header and group headers should be included in the arrow navigation", () => {
+	it("Value state header and group headers should not be included in the arrow navigation", () => {
 		cy.mount(
 			<Input showSuggestions valueState="Negative" placeholder="Search for a country ...">
 				<div slot="valueStateMessage">
@@ -442,29 +568,22 @@ describe("Input arrow navigation", () => {
 		cy.get("@input")
 			.should("be.focused");
 
-		cy.realType("a");
+		cy.realType("c");
 
 		cy.realPress("ArrowDown");
 
 		cy.get("@input")
 			.should("not.have.attr", "focused");
 
-		cy.get("@input")
-			.shadow()
-			.find("[ui5-responsive-popover]")
-			.as("ui5-responsive-popover")
-			.find("div")
-			.as("valueMessage")
-			.should("have.class", "ui5-responsive-popover-header--focused");
+		cy.get("ui5-suggestion-item")
+			.eq(1)
+			.should("have.attr", "focused");
 
 		cy.get("@input")
-			.realPress("ArrowDown");
+			.realPress("ArrowUp")
+			.realPress("ArrowUp");
 
-		cy.get("@valueMessage")
-			.should("not.have.class", "ui5-responsive-popover-header--focused");
-
-		cy.get("[ui5-suggestion-item]")
-			.eq(0)
+		cy.get("@input")
 			.should("have.attr", "focused");
 	});
 
@@ -611,6 +730,217 @@ describe("Input PAGEUP/PAGEDOWN navigation", () => {
 		cy.get("[ui5-suggestion-item-group]")
 			.eq(0)
 			.should("have.attr", "focused");
+	});
+});
+
+describe("Input Ctrl + Alt + F8 navigation", () => {
+	beforeEach(() => {
+		cy.mount(<Input id="inputWithLinkInValueState" class="input2auto" valueState="Negative" placeholder="Input with Link in error value state">
+			<div slot="valueStateMessage">
+				Custom error value state message with a <Link href="#">Link</Link>.
+			</div>
+		</Input>);
+	});
+
+	it("Should move the focus from the input to the first link in the value state message", () => {
+		cy.get("ui5-input")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("@innerInput")
+			.realClick()
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
+
+		cy.get("@input")
+			.shadow()
+			.find("ui5-popover")
+			.as("popover")
+			.should("have.class", "ui5-valuestatemessage-popover");
+
+		cy.get("@popover")
+			.should("have.attr", "open")
+
+		cy.get("ui5-link")
+			.should("have.focus");
+	});
+
+	it("When pressing [Tab], the focus moves to the next value state message link. Pressing [Tab] again closes the popup and moves the focus to the next input", () => {
+		cy.mount(<>
+			<Input id="inputError" class="input2auto" valueState="Negative" placeholder="Input in error state">
+				<div slot="valueStateMessage">
+					Custom error value state message with a <Link href="#">First Link</Link> <Link href="#">Second Link</Link>.
+				</div>
+			</Input>
+			<Input id="nextInput" class="input2auto" placeholder="Next input"></Input>
+		</>);
+
+		cy.get("ui5-input")
+			.eq(0)
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("ui5-input")
+			.eq(0)
+			.as("input");
+
+		cy.get("ui5-input")
+			.eq(1)
+			.as("secondInput");
+
+		cy.get("@innerInput")
+			.realClick()
+			.realPress(["Control", "Alt", "F8"]);
+
+		cy.get("@input")
+			.shadow()
+			.find("ui5-popover")
+			.as("ui5-popover")
+			.should("have.attr", "open");
+
+		cy.get("ui5-link")
+			.eq(0)
+			.as("firstLink")
+			.should("have.focus");
+
+		cy.get("@firstLink")
+			.realPress("Tab");
+
+		cy.get("@firstLink")
+			.should("not.have.focus");
+
+		cy.get("ui5-link")
+			.eq(1)
+			.as("secondLink")
+			.should("have.focus");
+
+		cy.get("@secondLink")
+		.realPress("Tab");
+
+		cy.get("@secondInput")
+			.should("have.focus");
+	});
+
+	it("Pressing [Shift+Tab] moves the focus from the second value state message link to the first one. Pressing it again shifts the focus to the input", () => {
+		cy.mount(<Input id="inputError" class="input2auto" valueState="Negative" placeholder="Input in error state">
+			<div slot="valueStateMessage">
+				Custom error value state message with a <Link href="#">First Link</Link> <Link href="#">Second Link</Link>.
+			</div>
+		</Input>);
+		cy.get("ui5-input")
+			.eq(0)
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("ui5-input")
+			.eq(0)
+			.as("input");
+
+		cy.get("@innerInput")
+			.realClick()
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
+
+		cy.get("@input")
+			.shadow()
+			.find("ui5-popover")
+			.as("ui5-popover")
+			.should("have.attr", "open");
+
+		cy.get("ui5-link")
+			.eq(0)
+			.as("firstLink")
+			.should("have.focus");
+
+		cy.get("@firstLink")
+			.realPress("Tab");
+
+		cy.get("@firstLink")
+			.should("not.have.focus");
+
+		cy.get("ui5-link")
+			.eq(1)
+			.as("secondLink")
+			.should("have.focus");
+
+		cy.get("@secondLink")
+			.realPress(["Shift", "Tab"]);
+
+		cy.get("@firstLink")
+			.should("have.focus");
+
+		cy.get("@firstLink")
+			.realPress(["Shift", "Tab"]);
+
+		cy.get("@innerInput")
+			.should("have.focus");
+	});
+
+	it("When pressing [Down Arrow] while focused on the first value state message link and suggestions are open, the focus moves to the next suggestion item", () => {
+		cy.mount(
+			<Input id="myInputEsc" showSuggestions valueState="Critical" class="input3auto">
+				<div slot="valueStateMessage">
+					Custom warning value state message with a <Link href="#">First Link</Link>.
+				</div>
+				<SuggestionItem text="Chromium"></SuggestionItem>
+				<SuggestionItem text="Titanium"></SuggestionItem>
+				<SuggestionItem text="Iron"></SuggestionItem>
+				<SuggestionItem text="Gold"></SuggestionItem>
+				<SuggestionItem text="Silver"></SuggestionItem>
+			</Input>
+		);
+
+		cy.get("ui5-input")
+			.as("input");
+
+		cy.get("ui5-input")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("@input")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.as("popover");
+
+		cy.get("@input")
+			.realClick()
+			.should("be.focused");
+
+		cy.get("@input")
+			.realType("C");
+
+		cy.get("@popover")
+			.should("have.attr", "open");
+
+		cy.get("@innerInput")
+			.realClick()
+			.should("be.focused");
+
+		cy.realPress(["Control", "Alt", "F8"]);
+
+		cy.get("ui5-link")
+			.as("firstLink")
+			.should("have.focus");
+
+		cy.get("@firstLink")
+			.realPress("ArrowDown");
+
+		cy.get("ui5-suggestion-item")
+			.eq(0)
+			.should("have.attr", "focused");
+
+		cy.get("@input")
+			.should("have.attr", "value", "Chromium")
+			.should("have.focus");
 	});
 });
 
@@ -987,5 +1317,1316 @@ describe("Accessibility", () => {
 			.shadow()
 			.find("span#accessibleDescription")
 			.should("have.text", "This is an input");
+	});
+});
+
+describe("Attribute propagation", () => {
+	it("Should change the placeholder of the inner input", () => {
+		const placeholder = "New placeholder text";
+		cy.mount(<Input placeholder={placeholder} />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "placeholder", placeholder);
+	});
+
+	it("Disabled attribute is propagated properly", () => {
+		cy.mount(<Input disabled={true} />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "disabled");
+	});
+
+	it("Readonly attribute is propagated properly", () => {
+		cy.mount(<Input readonly={true} />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "readonly");
+	});
+
+	it("Required attribute is propagated properly", () => {
+		cy.mount(<Input required={true} />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-required", "true");
+		cy.mount(<Input required={false} />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-required", "false");
+	});
+
+	it("Type attribute is propagated properly", () => {
+		cy.mount(<Input type="Number" />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "type", "number");
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "step", "any");
+	});
+
+	it("Value attribute is propagated properly", () => {
+		const value = "Test test";
+		cy.mount(<Input value={value} />);
+		cy.get("[ui5-input]").shadow().find("input").should("have.value", value);
+	});
+
+	it("sets empty value to an input", () => {
+		cy.mount(<Input value="initial" />);
+		cy.get("[ui5-input]").as("input");
+		cy.get("@input").shadow().find("input").as("innerInput");
+
+		cy.get("@input").invoke("attr", "value", "");
+		cy.get("@input").should("have.value", "");
+		cy.get("@innerInput").should("have.value", "");
+
+		cy.get("@input").invoke("attr", "value", "new value");
+		cy.get("@input").invoke("attr", "value", null);
+		cy.get("@input").should("not.have.attr", "value");
+		cy.get("@innerInput").should("not.have.attr", "value");
+	});
+
+	it("Maxlength property is set correctly", () => {
+		cy.mount(<Input maxlength={10} />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "maxlength", "10");
+	});
+
+	it("Aria-label is reflected in the shadow DOM", () => {
+		const accessibleName = "New cool text";
+		cy.mount(<Input accessibleName={accessibleName} />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-label", accessibleName);
+	});
+
+	it("Aria-invalid is set correctly", () => {
+		cy.mount(<Input valueState="Negative" />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-invalid", "true");
+		cy.mount(<Input valueState="None" />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("not.have.attr", "aria-invalid");
+	});
+
+	it("Should render aria-haspopup attribute with value 'dialog'", () => {
+		cy.mount(<Input showSuggestions={true} />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-haspopup", "dialog");
+	});
+});
+
+describe("Input general interaction", () => {
+	it("Should not open suggestions popover when focused", () => {
+		cy.mount(<Input showSuggestions placeholder="Type here" />);
+		cy.get("[ui5-input]").shadow().find("input").click();
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("not.be.visible");
+	});
+
+	it("fires change", () => {
+		const onChange = cy.spy().as("onChange");
+		cy.mount(<Input id="input1" onChange={onChange} />);
+		cy.get("#input1").shadow().find("input").click().realType("abc");
+		cy.get("body").click(); // simulate focus out
+		cy.get("#input1").shadow().find("input").click().realType("def");
+		cy.get("body").click(); // simulate focus out
+		cy.get("@onChange").should("have.been.calledTwice");
+	});
+
+	it("fires change on tab", () => {
+		const onChange = cy.spy().as("onChange");
+		cy.mount(
+			<Input id="inputChangeSuggestions" showSuggestions onChange={onChange} />
+		);
+		cy.get("#inputChangeSuggestions")
+			.shadow()
+			.find("input")
+			.click()
+			.realType("c");
+		cy.get("#inputChangeSuggestions")
+			.shadow()
+			.find("input")
+			.realPress("ArrowDown");
+		cy.get("#inputChangeSuggestions").shadow().find("input").realPress("Tab");
+		cy.get("@onChange").should("have.been.calledOnce");
+	});
+
+	it("fires input", () => {
+		const onInput = cy.spy().as("onInput");
+		cy.mount(
+			<>
+				<Input
+					id="input2"
+					onInput={onInput}
+				/>
+			</>
+		);
+		cy.get("#input2").shadow().find("input").click().realType("abc");
+		cy.get("@onInput").should("have.been.calledThrice");
+	});
+
+	it("fires select event", () => {
+		const onSelect = cy.spy().as("onSelect");
+		cy.mount(<Input id="selectInput" onSelect={onSelect} value="Value to be selected" />);
+		cy.get("#selectInput").shadow().find("input").as("inputInner");
+		cy.get("@inputInner").realClick({ clickCount: 2 });
+		cy.get("@onSelect").should("have.been.calledOnce");
+	});
+
+	it("tests removing fractional part of numeric value", () => {
+		cy.mount(
+			<>
+				<Input id="input-number31" type={"Number"} value="4.333" />
+				<Input id="input-number32" type={"Number"} value="4.3" />
+				<Input id="input-number33" type={"Number"} value=".33" />
+				<Input id="input-number34" type={"Number"} value="-1.33" />
+				<button id="input-number3-focusout" />
+			</>
+		);
+		cy.get("#input-number31").as("input1");
+		cy.get("#input-number32").as("input2");
+		cy.get("#input-number33").as("input3");
+		cy.get("#input-number34").as("input4");
+		cy.get("#input-number3-focusout").as("btn");
+
+		cy.get("@input1").click().realType("{backspace}{backspace}{backspace}");
+		cy.get("@btn").click();
+		cy.get("@input1").should(($el) => {
+			expect(($el[0] as HTMLInputElement).value).to.eq("4");
+		});
+
+		cy.get("@input2").click().realType("{backspace}");
+		cy.get("@btn").click();
+		cy.get("@input2").should(($el) => {
+			expect(($el[0] as HTMLInputElement).value).to.eq("4");
+		});
+
+		cy.get("@input3").click().realType("{backspace}{backspace}");
+		cy.get("@btn").click();
+		cy.get("@input3").should(($el) => {
+			expect(($el[0] as HTMLInputElement).value).to.eq("");
+		});
+
+		cy.get("@input4").click().realType("{backspace}{backspace}");
+		cy.get("@btn").click();
+		cy.get("@input4").should(($el) => {
+			expect(($el[0] as HTMLInputElement).value).to.eq("-1");
+		});
+	});
+
+	it("handles suggestions", () => {
+		cy.mount(
+			<Input id="myInput" showSuggestions>
+				<SuggestionItem text="Portugal" />
+				<SuggestionItem text="Poland" />
+			</Input>
+		);
+		cy.get("#myInput").shadow().find("input").click().realType("p");
+		cy.get("#myInput")
+			.shadow()
+			.find("ui5-responsive-popover")
+			.should("have.attr", "open");
+		// Note: item click and value assertion skipped due to headless browser limitations
+	});
+
+	it("Input value should correspond to suggestion item when it is clicked", () => {
+		cy.mount(
+			<Input id="myInput" showSuggestions>
+				<SuggestionItem text="China" />
+				<SuggestionItem text="Chile" />
+			</Input>
+		);
+		cy.get("#myInput").shadow().find("input").as("suggestionsInput");
+		cy.get("#myInput").as("input");
+		cy.get("@suggestionsInput").click().invoke("val", "China").trigger("input");
+		cy.get("@input").find("ui5-suggestion-item").first().click();
+		cy.get("@suggestionsInput").realType("{backspace}");
+		cy.get("@input").find("ui5-suggestion-item").first().click();
+		cy.get("@suggestionsInput").should("have.value", "China");
+	});
+
+	it("input value should be cleared with ESC", () => {
+		cy.mount(<Input id="myInputEsc" showSuggestions />);
+		cy.get("#myInputEsc").shadow().find("input").as("suggestionsInput");
+		cy.get("@suggestionsInput").click().realType("Some value");
+		cy.get("@suggestionsInput").realType("{esc}");
+		cy.get("@suggestionsInput").realType("{esc}");
+		cy.get("@suggestionsInput").should("have.value", "");
+		cy.get("@suggestionsInput").realType("abc");
+		cy.get("@suggestionsInput").realType("{enter}");
+		cy.get("@suggestionsInput").realType("cba");
+		cy.get("@suggestionsInput").realType("{esc}");
+		cy.get("@suggestionsInput").realType("{esc}");
+		cy.get("@suggestionsInput").should("have.value", "abc");
+	});
+
+	it("should select typeaheaded item on mouse click and remove value text selection", () => {
+		// Mount Input with suggestions and a change event spy
+		cy.mount(
+			<Input
+			id="myInput"
+			showSuggestions={true}
+			onChange={cy.spy().as("changeSpy")}
+			>
+				<SuggestionItem text="Canada"></SuggestionItem>
+				<SuggestionItem text="Cuba"></SuggestionItem>
+				<SuggestionItem text="Chile"></SuggestionItem>
+			</Input>
+		);
+
+		cy.get("#myInput").shadow().find("input").as("inputEl");
+		cy.get("@inputEl").realClick();
+		cy.get("@inputEl").realType("C");
+
+		cy.get("ui5-suggestion-item").first().click();
+
+		// Assert change event fired once
+		cy.get("@changeSpy").should("have.been.calledOnce");
+
+		// Assert input value is not selected (no text selection)
+		cy.get("@inputEl").then($input => {
+			const input = $input[0] as HTMLInputElement;
+			expect(input.selectionEnd - input.selectionStart).to.eq(0);
+		});
+	});
+
+	it("should select typeaheaded item on mouse click and remove value text selection 2", () => {
+		cy.mount(
+			<Input
+				id="myInput"
+				showSuggestions={true}
+				onChange={cy.spy().as("changeSpy")}
+			>
+				<SuggestionItem text="Canada" />
+				<SuggestionItem text="Cuba" />
+				<SuggestionItem text="Chile" />
+			</Input>
+		);
+
+		cy.get("#myInput").shadow().find("input").as("inputEl");
+		cy.get("@inputEl").realClick();
+		cy.get("@inputEl").realType("C");
+		cy.realPress("ArrowDown");
+		cy.realPress("ArrowDown");
+		cy.realPress("ArrowDown");
+
+		cy.get("ui5-suggestion-item").eq(1).click();
+
+		cy.get("@inputEl").should("have.value", "Cuba");
+		cy.get("@changeSpy").should("have.been.calledOnce");
+		cy.get("@inputEl").then($input => {
+			const input = $input[0] as HTMLInputElement;
+			expect(input.selectionEnd - input.selectionStart).to.eq(0);
+		});
+	});
+
+	it("should remove input's focus when group header item is clicked", () => {
+		cy.mount(
+			<Input showSuggestions={true} placeholder="Search for a country ...">
+				<SuggestionItemGroup headerText="A">
+					<SuggestionItem text="Afghanistan" />
+					<SuggestionItem text="Argentina" />
+					<SuggestionItem text="Albania" />
+				</SuggestionItemGroup>
+			</Input>
+		);
+
+		cy.get("[ui5-input]")
+			.as("input")
+			.realClick();
+
+		cy.get("@input")
+			.should("be.focused");
+
+		cy.realType("a");
+		cy.get("@input")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("@input")
+			.should("be.focused");
+		cy.get("[ui5-suggestion-item-group]")
+			.first()
+			.should("not.have.attr", "focused");
+	});
+
+	it("checks if the suggestions popover width is minimum the size of the input", () => {
+		cy.mount(
+			<Input id="inputWithSuggestions" showSuggestions placeholder="Search for a country ...">
+				<SuggestionItem text="Bulgaria" />
+			</Input>
+		);
+
+		cy.get("#inputWithSuggestions")
+			.as("input");
+
+		cy.get("@input")
+			.realClick();
+
+		// type a
+		cy.get("@input")
+		cy.realType("a");
+
+		cy.get("@input")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
+		// compare the width of the input and the popover
+		cy.get("@input")
+			.invoke("outerWidth")
+			.then((inputWidth) => {
+				cy.get("@input")
+					.shadow()
+					.find<ResponsivePopover>("[ui5-responsive-popover]")
+					.should("have.css", "width")
+					.and("be.equal", inputWidth + "px");
+			});
+	});
+
+	it("checks if suggestions popover width is maximum 40rem if input isn't wider", () => {
+		cy.mount(
+			<div style={{ width: "400px" }}>
+				<Input
+					id="long-sugg"
+					style={{ width: "100%" }}
+					showSuggestions={true}
+				>
+					<SuggestionItem text="Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2."></SuggestionItem>
+				</Input>
+			</div>
+		);
+
+		cy.get("#long-sugg").shadow().find("input").realClick();
+		cy.get("#long-sugg").shadow().find("input").realType("a");
+
+		cy.get("#long-sugg")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.ui5ResponsivePopoverOpened();
+
+		cy.get("ui5-suggestion-item").first().then($el => {
+			const width = $el[0].getBoundingClientRect().width;
+			expect(Math.round(width)).to.eq(640);
+		});
+	});
+
+	it("Input's maxlength property is set correctly", () => {
+		cy.mount(<Input maxlength={10} />);
+
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.realClick();
+
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.realType("cccccccccccccccccccccccc");
+
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "maxlength", "10");
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.value", "cccccccccc");
+	});
+
+	it("Checks if valueStateMessage is shown", () => {
+		cy.mount(
+			<Input id="inputWithValueStateMessage" valueState="Critical" placeholder="Input with value state message">
+				<div slot="valueStateMessage">
+					Custom critical value state message.
+				</div>
+			</Input>
+		);
+
+		cy.get("#inputWithValueStateMessage")
+			.as("input");
+
+		cy.get("@input")
+			.shadow()
+			.find("input")
+			.as("innerInput");
+
+		cy.get("@innerInput")
+			.realClick()
+			.should("be.focused");
+
+		cy.get("@input")
+			.shadow()
+			.find("ui5-popover")
+			.as("popover")
+			.should("have.class", "ui5-valuestatemessage-popover");
+
+		cy.get("@popover")
+			.should("have.attr", "open");
+
+		// type a
+		cy.get("@innerInput")
+			.realType("a");
+
+		cy.get("@popover")
+			.should("have.attr", "open");
+	});
+
+	it("Checks if aria-describedby is rendered if not necessary", () => {
+		cy.mount(<Input accessible-name="Enter your secret password" />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("not.have.attr", "aria-describedby");
+	});
+	
+	it("Checks if aria-label is reflected in the shadow DOM", () => {
+		const accessibleName = "New cool text";
+		cy.mount(<Input accessibleName={accessibleName} />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-label", accessibleName);
+	});
+
+	it("Checks if aria-invalid is set correctly", () => {
+		cy.mount(<Input valueState="Negative" />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-invalid", "true");
+
+		cy.mount(<Input valueState="Critical" />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("not.have.attr", "aria-invalid");
+	});
+
+	it("Should render aria-haspopup attribute with value 'dialog'", () => {
+		cy.mount(<Input showSuggestions={true} />);
+		cy.get("[ui5-input]")
+			.shadow()
+			.find("input")
+			.should("have.attr", "aria-haspopup", "dialog");
+	});
+
+	it("Value state type should be added to the screen readers default value states announcement", () => {
+		cy.mount(<>
+			<Input id="inputCritical" valueState="Critical" />
+			<Input id="inputNegative" valueState="Negative" />
+			<Input id="inputPositive" valueState="Positive" />
+			<Input id="inputInformation" valueState="Information" />
+		</>);
+
+		cy.get("#inputCritical")
+			.click();
+
+		cy.get("#inputCritical")
+			.shadow()
+			.find(".ui5-hidden-text")
+			.should("have.text", "Value State Warning Warning issued");
+
+		cy.get("#inputCritical")
+			.shadow()
+			.find("[ui5-popover] div")
+			.should("have.text", "Warning issued");
+
+		cy.get("#inputNegative")
+			.click();
+
+		cy.get("#inputNegative")
+			.shadow()
+			.find(".ui5-hidden-text")
+			.should("have.text", "Value State Error Invalid entry");
+
+		cy.get("#inputNegative")
+			.shadow()
+			.find("[ui5-popover] div")
+			.should("have.text", "Invalid entry");
+
+		cy.get("#inputPositive")
+			.click();
+
+		cy.get("#inputPositive")
+			.shadow()
+			.find(".ui5-hidden-text")
+			.should("have.text", "Value State Success");
+
+		cy.get("#inputInformation")
+			.click();
+
+		cy.get("#inputInformation")
+			.shadow()
+			.find(".ui5-hidden-text")
+			.should("have.text", "Value State Information Informative entry");
+
+		cy.get("#inputInformation")
+			.shadow()
+			.find("[ui5-popover] div")
+			.should("have.text", "Informative entry");
+	});
+
+	it("Value state type should be added to the screen readers custom value states announcement", () => {
+		cy.mount(<>
+			<Input id="field" valueState="Negative">
+				<div slot="valueStateMessage">
+					Custom critical value state message.
+				</div>
+			</Input>
+		</>)
+
+		cy.get("#field")
+			.shadow()
+			.find("#valueStateDesc")
+			.should("include.text", "Value State Error");
+	});
+
+	it("Tests autocomplete(type-ahead)", () => {
+		cy.mount(
+			<Input id="myInputHighlighted" showSuggestions={true} noTypeahead={false}>
+				<SuggestionItem text="Adam D" />
+				<SuggestionItem text="Adam Smith" />
+				<SuggestionItem text="Adam Johnson" />
+			</Input>
+		);
+
+		cy.get("#myInputHighlighted")
+			.shadow()
+			.find("input")
+			.as("inputEl");
+
+		cy.get("@inputEl")
+			.realClick()
+			.should("be.focused");
+
+		cy.get("@inputEl")
+			.realType("a");
+
+		cy.get("@inputEl")
+			.should("have.value", "Adam D");
+		cy.get("@inputEl")
+			.then($input => {
+				const input = $input[0] as HTMLInputElement;
+				expect(input.selectionEnd - input.selectionStart).to.gt(0)
+			});
+	});
+
+	it("Tests autocomplete(type-ahead) of custom suggestions", () => {
+		cy.mount(
+			<Input id="input-custom-flat" showSuggestions>
+				<SuggestionItem text="Albania" />
+				<SuggestionItem text="Argentina" />
+				<SuggestionItem text="Australia" />
+			</Input>
+		);
+
+		cy.get("#input-custom-flat").shadow().find("input").as("input");
+		cy.get("@input").click().realType("a");
+
+		cy.get("@input").should("have.value", "Albania");
+		cy.get("@input").then($input => {
+			const input = $input[0] as HTMLInputElement;
+			expect(input.selectionEnd - input.selectionStart).to.gt(0);
+		});
+	});
+
+	it("Tests disabled autocomplete(type-ahead)", () => {
+		cy.mount(
+			<Input id="input-disabled-autocomplete" showSuggestions noTypeahead>
+				<SuggestionItem text="China" />
+				<SuggestionItem text="Chile" />
+			</Input>
+		);
+
+		cy.get("#input-disabled-autocomplete").shadow().find("input").click().realType("c");
+		cy.get("#input-disabled-autocomplete").shadow().find("input").should("have.value", "c");
+	});
+	
+	it("Tests disabled autocomplete(type-ahead)", () => {
+		cy.mount(
+			<Input id="input-disabled-autocomplete" showSuggestions noTypeahead>
+				<SuggestionItem text="China" />
+				<SuggestionItem text="Chile" />
+			</Input>
+		);
+
+		cy.get("#input-disabled-autocomplete").shadow().find("input").click().realType("c");
+		cy.get("#input-disabled-autocomplete").shadow().find("input").should("have.value", "c");
+	});
+
+	it("Doesn't remove value on number type input even if locale specific delimiter/multiple delimiters", () => {
+		cy.mount(<Input id="input-number2" type="Number" />);
+
+		cy.get("#input-number2").shadow().find("input").click().realType("1.22.33");
+		cy.get("#input-number2").shadow().find("input").realPress("Tab");
+
+		cy.get("#input-number2").shadow().find("input").should($el => {
+			const input = $el[0] as HTMLInputElement;
+			expect(parseFloat(input.value).toPrecision(3)).to.eq("1.22");
+		});
+	});
+
+	it("fires selection-change", () => {
+		const onSelectionChange = cy.spy().as("onSelectionChange");
+		cy.mount(
+			<>
+				<Input id="inputPreview2" showSuggestions={true} onSelectionChange={onSelectionChange}>
+					<SuggestionItem text="Laptop Lenovo" />
+					<SuggestionItem text="Laptop Dell" />
+				</Input>
+			</>
+		);
+
+		cy.get("#inputPreview2").shadow().find("input").click().realType("c");
+		cy.get("#inputPreview2")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
+
+		cy.get("#inputPreview2").shadow().find("input").realPress("ArrowDown");
+
+		cy.get("#inputPreview2").shadow().find<ResponsivePopover>("ui5-responsive-popover").ui5ResponsivePopoverOpened();
+		cy.get("@onSelectionChange").should("have.been.calledOnce");
+	});
+
+	it("fires open event when suggestions picker is opened on typing", () => {
+		const onOpen = cy.spy().as("onOpen");
+		cy.mount(
+			<Input id="myInput" showSuggestions onOpen={onOpen}>
+				<SuggestionItem text="Albania" />
+				<SuggestionItem text="Argentina" />
+			</Input>
+		);
+
+		cy.get("#myInput").shadow().find("input").click().realType("a");
+		cy.get("#myInput")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
+
+		cy.get("#myInput").shadow().find<ResponsivePopover>("ui5-responsive-popover").ui5ResponsivePopoverOpened();
+		cy.get("@onOpen").should("have.been.calledOnce");
+	});
+
+	it("fires close event when suggestions picker is closed", () => {
+		const onClose = cy.spy().as("onClose");
+		cy.mount(
+			<Input id="myInput" showSuggestions onClose={onClose}>
+				<SuggestionItem text="Albania" />
+				<SuggestionItem text="Argentina" />
+			</Input>
+		);
+
+		cy.get("#myInput").shadow().find("input").click().realType("a");
+		cy.get("#myInput").find("ui5-suggestion-item").first().click();
+		cy.get("#myInput").shadow().find("ui5-responsive-popover").should("not.be.visible");
+		cy.get("@onClose").should("have.been.calledOnce");
+	});
+
+	it("Should open suggestions popover when ui5-input is the first focusable element within a dialog", () => {
+		cy.mount(
+			<>
+				<Dialog id="dialog" open={true}>
+					<Input id="inputInDialog" showSuggestions>
+						<SuggestionItem text="China" />
+						<SuggestionItem text="Chile" />
+					</Input>
+				</Dialog>
+			</>
+		);
+
+		cy.get("#inputInDialog").shadow().find("input").realType("c");
+		cy.get("#inputInDialog")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
+		cy.get("#inputInDialog").shadow().find<ResponsivePopover>("ui5-responsive-popover").ui5ResponsivePopoverOpened();
+
+		cy.get("#inputInDialog").shadow().find("input").realPress("ArrowDown");
+		cy.get("#inputInDialog").shadow().find("input").realPress("Escape");
+		cy.get("#inputInDialog")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverClosed();
+		cy.get("#dialog").should("have.attr", "open");
+	});
+
+	it("Suggestions count should be read out when necessary", () => {
+		cy.mount(
+			<>
+				<Input id="inputCompact" showSuggestions>
+					<SuggestionItem text="China" />
+					<SuggestionItem text="Chile" />
+					<SuggestionItem text="Canada" />
+				</Input>
+				<Input id="myInput2" showSuggestions>
+					<SuggestionItem text="Portugal" />
+					<SuggestionItem text="Poland" />
+					<SuggestionItem text="Peru" />
+					<SuggestionItem text="Panama" />
+					<SuggestionItem text="Paraguay" />
+				</Input>
+			</>
+		);
+
+		cy.get("#inputCompact").click();
+		cy.get("#inputCompact").shadow().find("#suggestionsCount").should("have.text", "");
+
+		cy.get("#inputCompact").shadow().find("input").realType("c");
+		cy.get("#inputCompact").shadow().find("#suggestionsCount").should("have.text", "3 results are available");
+
+		cy.get("#inputCompact").shadow().find("input").realType("{backspace}");
+		cy.get("#inputCompact").shadow().find("input").realType("{esc}");
+
+		cy.get("#myInput2").click();
+		cy.get("#myInput2").shadow().find("input").realType("c");
+		cy.get("#myInput2").shadow().find("#suggestionsCount").should("have.text", "5 results are available");
+	});
+
+	it("Should close the Popover when no suggestions are available", () => {
+		cy.mount(
+			<Input id="myInput" showSuggestions>
+				<SuggestionItem text="China" />
+				<SuggestionItem text="Chile" />
+			</Input>
+		);
+
+		cy.get("#myInput").shadow().find("input").realType("A Space");
+		cy.get("#myInput").should("not.have.attr", "open");
+	});
+
+	it("Should not open value state message when input is in readonly state", () => {
+		cy.mount(
+			<Input id="readonly-value-state-input" readonly valueState="Negative" />
+		);
+
+		cy.get("#readonly-value-state-input").click();
+		cy.get("#readonly-value-state-input").shadow().find("ui5-popover").should("not.have.attr", "open");
+	});
+
+	it("Displays clear icon when typing and pressing it clears the value", () => {
+		const onChange = cy.spy().as("onChange");
+		const onInput = cy.spy().as("onInput");
+		cy.mount(
+			<Input id="clear-input" showClearIcon={true} onChange={onChange} onInput={onInput} />
+		);
+
+		cy.get("#clear-input").should("not.have.attr", "_effectiveShowClearIcon");
+
+		cy.get("#clear-input").shadow().find("input").click().realType("a");
+		cy.get("#clear-input").should("have.attr", "_effective-show-clear-icon");
+		cy.get("@onChange").should("not.have.been.called");
+		cy.get("@onInput").should("have.been.calledOnce");
+
+		cy.get("#clear-input").shadow().find(".ui5-input-clear-icon-wrapper").click();
+		cy.get("#clear-input").should("have.value", "");
+		cy.get("#clear-input").should("not.have.attr", "_effective-show-clear-icon");
+		cy.get("@onChange").should("not.have.been.called");
+		cy.get("@onInput").should("have.been.calledTwice");
+	});
+
+	it("Change event is called when value of input is cleared with clear icon and input is focused out", () => {
+		const onChange = cy.spy().as("onChange");
+		const onInput = cy.spy().as("onInput");
+
+		cy.mount(
+			<Input id="clear-input" showClearIcon={true} onChange={onChange} onInput={onInput} />
+		);
+
+		cy.get("#clear-input").shadow().find("input").click().realType("a");
+		cy.get("#clear-input").shadow().find("input").realPress("Tab");
+		cy.get("#clear-input").shadow().find(".ui5-input-clear-icon-wrapper").click();
+
+		cy.get("@onChange").should("have.been.calledOnce");
+		cy.get("@onInput").should("have.been.calledTwice");
+	});
+
+	it("Change event calling after clear icon is pressed", () => {
+		const onChange = cy.spy().as("onChange");
+		const onInput = cy.spy().as("onInput");
+		cy.mount(
+			<Input id="clear-input" showClearIcon={true} onChange={onChange} onInput={onInput} />
+		);
+
+		cy.get("#clear-input").shadow().find("input").click().realType("a");
+		cy.get("#clear-input").shadow().find("input").realPress("Tab");
+		cy.get("#clear-input").shadow().find(".ui5-input-clear-icon-wrapper").click();
+		cy.get("#clear-input").shadow().find("input").realPress("Tab");
+
+		cy.get("@onChange").should("have.been.calledTwice");
+		cy.get("@onInput").should("have.been.calledTwice");
+
+		cy.get("#clear-input").shadow().find("input").click().realType("a");
+		cy.get("#clear-input").shadow().find("input").realPress("Tab");
+		cy.get("#clear-input").shadow().find(".ui5-input-clear-icon-wrapper").click();
+		cy.get("#clear-input").shadow().find("input").click().realType("a");
+		cy.get("#clear-input").shadow().find("input").realPress("Tab");
+
+		cy.get("@onChange").should("have.been.calledThrice");
+		cy.get("@onInput").should("have.been.called", 5);
+	});
+
+	it("Setting readonly hides clear icon", () => {
+		cy.mount(
+			<>
+				<Input id="clear-input-compact" showClearIcon={true} readonly={true} value="test" />
+			</>
+		);
+
+		cy.get("#clear-input-compact").should("not.have.attr", "_effective-show-clear-icon");
+	});
+
+	it("Setting disabled hides clear icon", () => {
+		cy.mount(
+			<>
+				<Input id="clear-input-compact" showClearIcon={true} disabled={true} value="test" />
+			</>
+		);
+
+		cy.get("#clear-input-compact").should("not.have.attr", "_effective-show-clear-icon");
+	});
+
+	it("Should open suggestions popover if open is set on focusin", () => {
+		cy.mount(
+			<Input id="openPickerInput" showSuggestions={true} onFocus={(e) => (e.target as Input).open = true}>
+				<SuggestionItem text="China" />
+				<SuggestionItem text="Chile" />
+			</Input>
+		);
+
+		cy.get("#openPickerInput").click();
+		cy.get("#openPickerInput")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+			cy.get("#openPickerInput")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.should("have.attr", "open");
+	});
+
+	it("Private property for input value should be in sync, when value gets updated programatically", () => {
+		const onChange = cy.spy().as("onChange");
+		cy.mount(
+			<>
+				<Input id="input-change-1" onChange={onChange} />
+				<button id="clear-button">Clear</button>
+			</>
+		);
+
+		cy.get("#input-change-1").shadow().find("input").click().realType("12{enter}");
+		cy.get("@onChange").should("have.been.calledOnce");
+
+		cy.get("#clear-button").click();
+		cy.get("@onChange").should("have.been.calledOnce");
+
+		cy.get("#input-change-1").shadow().find("input").click().realType("12{enter}");
+		cy.get("@onChange").should("have.been.calledTwice");
+	});
+
+	it("Change event should be fired only once, when a user types a value identical to an item and presses ENTER", () => {
+		const onChange = cy.spy().as("onChange");
+		cy.mount(
+			<Input id="input-change-2" showSuggestions onChange={onChange}>
+				<SuggestionItem text="sofia" />
+				<SuggestionItem text="sofia" />
+			</Input>
+		);
+
+		cy.get("#input-change-2").shadow().find("input").click().realType("sofia{enter}");
+		cy.get("@onChange").should("have.been.calledOnce");
+	});
+
+	it("Value should be updated correctly, when using DEL", () => {
+		const onChange = (e) => {
+			cy.get("#input-change-3").should("have.value", "");
+		};
+
+		cy.mount(
+			<>
+				<Input />
+				<Input id="input-change-3" value="12.4" type="Number" onChange={onChange} />
+			</>
+		);
+
+		cy.get("#input-change-3").shadow().find("input").click();
+		cy.get("#input-change-3").shadow().find("input").realPress(["Shift", "Tab"]);
+		cy.get("#input-change-3").shadow().find("input").realPress("Tab");
+		cy.get("#input-change-3").shadow().find("input").realPress("Delete");
+		cy.get("#input-change-3").shadow().find("input").realPress("Tab");
+	});
+
+	it("Changes text if cleared in change event handler", () => {
+		cy.mount(
+			<Input id="change-event-value" showSuggestions={true} open={true} onChange={e => (e.target as Input).value = ""}>
+				<SuggestionItem text="China" />
+				<SuggestionItem text="Chile" />
+			</Input>
+		);
+
+		// click on first item
+		cy.get("#change-event-value").find("ui5-suggestion-item").first().click();
+
+
+		cy.get("#change-event-value").should("have.value", "");
+		cy.get("#change-event-value").shadow().find("input").should("have.value", "");
+	});
+
+	it("Tests prevented input event", () => {
+		cy.mount(<Input id="prevent-input-event" onInput={e => (e.target as Input).value.length > 3 ? e.preventDefault() : null}/>);
+
+		cy.get("#prevent-input-event").shadow().find("input").click().realType("abcd");
+		cy.get("#prevent-input-event").should("have.value", "abc");
+	});
+
+	it("Tests prevented input event with clear icon", () => {
+		cy.mount(<Input id="prevent-input-event-clear-icon" showClearIcon={true} onInput={e => e.preventDefault()} value="Test" />);
+
+		cy.get("#prevent-input-event-clear-icon").shadow().find(".ui5-input-clear-icon-wrapper").click();
+		cy.get("#prevent-input-event-clear-icon").should("have.value", "Test");
+	});
+});
+
+describe("Input HOME navigation", () => {
+	it("Should move caret to beginning of input with HOME if focus is on Input", () => {
+		cy.mount(
+			<Input id="myInput2" showSuggestions>
+				<SuggestionItem text="Cozy" />
+				<SuggestionItem text="Compact" />
+			</Input>
+		);
+
+		cy.get("#myInput2").shadow().find("input").click().realType("c");
+		cy.get("#myInput2").shadow().find("input").realPress("Home");
+
+		cy.get("#myInput2").should("have.prop", "focused", true);
+		cy.get("#myInput2").then($input => {
+			const input = $input[0] as Input;
+			expect(input.getCaretPosition()).to.eq(0);
+		});
+	});
+
+	it("Should focus the first item from the suggestions popover with HOME", () => {
+		cy.mount(
+			<Input id="myInput2" showSuggestions>
+				<SuggestionItem text="Cozy" />
+				<SuggestionItem text="Compact" />
+			</Input>
+		);
+
+		cy.get("#myInput2").shadow().find("input").click().realType("c");
+		cy.get("#myInput2").shadow().find("input").realPress("ArrowDown");
+		cy.get("#myInput2").shadow().find("input").realPress("Home");
+
+		cy.get("#myInput2").should("have.value", "Cozy");
+		cy.get("#myInput2").should("have.prop", "focused", false);
+		cy.get("#myInput2").find("ui5-suggestion-item").first().should("have.prop", "focused", true);
+	});
+
+	it("Should focus the group header from the suggestions popover with HOME", () => {
+		cy.mount(
+			<Input id="myInput" showSuggestions>
+				<SuggestionItemGroup>
+					<SuggestionItem text="Item 1" />
+					<SuggestionItem text="Item 2" />
+				</SuggestionItemGroup>
+				<SuggestionItem text="Item 3" />
+			</Input>
+		);
+
+		cy.get("#myInput").shadow().find("input").click().realType("a");
+		cy.get("#myInput").shadow().find("input").realPress("ArrowDown");
+		cy.get("#myInput").shadow().find("input").realPress("ArrowDown");
+		cy.get("#myInput").shadow().find("input").realPress("Home");
+
+		cy.get("#myInput").should("have.prop", "focused", false);
+		cy.get("#myInput").find("ui5-suggestion-item-group").should("have.prop", "focused", true);
+	});
+});
+
+describe("Input END navigation", () => {
+	it("Should move caret to end of input with END if focus is on Input", () => {
+		cy.mount(
+			<Input id="myInput2" showSuggestions>
+				<SuggestionItem text="Cozy" />
+				<SuggestionItem text="Compact" />
+			</Input>
+		);
+
+		cy.get("#myInput2").shadow().find("input").click().realType("c");
+		cy.get("#myInput2").shadow().find("input").realPress("ArrowLeft");
+		cy.get("#myInput2").shadow().find("input").realPress("End");
+
+		cy.get("#myInput2").should("have.prop", "focused", true);
+		cy.get("#myInput2").then($input => {
+			const input = $input[0] as Input;
+			expect(input.getCaretPosition()).to.eq(4);
+		});
+	});
+
+	it("Should focus the last item from the suggestions popover with END", () => {
+		cy.mount(
+			<Input id="inputCompact" showSuggestions>
+				<SuggestionItem text="China" />
+				<SuggestionItem text="Chile" />
+				<SuggestionItem text="Chili" />
+			</Input>
+		);
+
+		cy.get("#inputCompact").shadow().find("input").click().realType("c");
+		cy.get("#inputCompact").shadow().find("input").realPress("ArrowDown");
+		cy.get("#inputCompact").shadow().find("input").realPress("End");
+
+		cy.get("#inputCompact").should("have.value", "Chili");
+		cy.get("#inputCompact").should("have.prop", "focused", false);
+		cy.get("#inputCompact").find("ui5-suggestion-item").last().should("have.prop", "focused", true);
+	});
+});
+
+describe("Input PAGEUP/PAGEDOWN navigation", () => {
+	it("PAGEUP and PAGEDOWN should do nothing if focus is on Input", () => {
+		cy.mount(
+			<Input id="myInput2" showSuggestions>
+				<SuggestionItem text="Cozy" />
+				<SuggestionItem text="Compact" />
+			</Input>
+		);
+
+		cy.get("#myInput2").shadow().find("input").click().realType("c");
+		cy.get("#myInput2").then($input => {
+			const input = $input[0] as Input;
+			expect(input.getCaretPosition()).to.eq(4);
+		});
+		cy.get("#myInput2").should("have.prop", "focused", true);
+
+		cy.get("#myInput2").shadow().find("input").realPress("PageUp");
+		cy.get("#myInput2").then($input => {
+			const input = $input[0] as Input;
+			expect(input.getCaretPosition()).to.eq(4);
+		});
+		cy.get("#myInput2").should("have.prop", "focused", true);
+
+		cy.get("#myInput2").shadow().find("input").realPress("PageDown");
+		cy.get("#myInput2").then($input => {
+			const input = $input[0] as Input;
+			expect(input.getCaretPosition()).to.eq(4);
+		});
+		cy.get("#myInput2").should("have.prop", "focused", true);
+	});
+});
+
+describe("XSS tests for suggestions", () => {
+	it("add suggestion item with XSS", () => {
+		cy.mount(
+			<>
+				<Input id="xss-input" showSuggestions>
+					<SuggestionItem text="<script>alert('xss')</script>" />
+					<SuggestionItem text="<b></b>" />
+					<SuggestionItem text="3412test1234" />
+					<SuggestionItem text="[[[b]]]" />
+					<SuggestionItem text="&amp;" />
+				</Input>
+				<button id="xss-btn" onClick={() => {
+					const item = document.createElement("ui5-suggestion-item");
+					(item as SuggestionItem).text = `Canada<<img src="xss" onerror="document.getElementById('xss-result').innerText = 'XSS FOUND'">`;
+					document.getElementById("xss-input").appendChild(item);
+				}}>Test XSS</button>
+				<span id="xss-result">NO XSS</span>
+			</>
+		);
+
+		cy.get("#xss-btn").click();
+		cy.get("#xss-result").should("have.text", "NO XSS");
+	});
+
+	it("tests dangerous items highlighting", () => {
+		cy.mount(
+			<Input id="xss-input" showSuggestions={true}>
+				<SuggestionItem text="" />
+				<SuggestionItem text="&lt;b&gt;&lt;/b&gt;" />
+				<SuggestionItem text="3412test1234" />
+				<SuggestionItem text="[[[b]]]" />
+				<SuggestionItem text="&amp;amp;" />
+			</Input>
+		);
+
+		cy.get("#xss-input").shadow().find("input").click().realType("a");
+		cy.get("#xss-input")
+			.shadow()
+			.find<ResponsivePopover>("[ui5-responsive-popover]")
+			.as("popover")
+			.ui5ResponsivePopoverOpened();
+
+		const expected = ["", "<b></b>", "3412test1234", "[[[b]]]", "&amp;"];
+
+		cy.get("#xss-input").find("ui5-suggestion-item").each(($item, index) => {
+			cy.wrap($item[0].shadowRoot.querySelector(".ui5-li-title")).should("have.prop", "innerText", expected[index]);
+		});
+	});
+});
+
+describe("Lazy loading", () => {
+	it("Lazy loading opens the picker once items are populated", () => {
+		cy.mount(
+			<Input id="field" showSuggestions>
+				<SuggestionItem text="Async Item 1" />
+				<SuggestionItem text="Async Item 2" />
+			</Input>
+		);
+
+		cy.get("#field").shadow().find("input").click().realType("a");
+		cy.get("#field")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
+	});
+
+	it("Does not reopen picker on focus in", () => {
+		cy.mount(
+			<Input id="field" showSuggestions>
+				<SuggestionItem text="Async Item 1" />
+				<SuggestionItem text="Async Item 2" />
+			</Input>
+		);
+
+		cy.get("#field").shadow().find("input").click().realType("a");
+		cy.get("#field").shadow().find("input").realPress("Tab");
+		cy.get("#field").shadow().find("input").realPress("Tab");
+		cy.wait(3000);
+		cy.get("#field")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverClosed();
+	});
+
+	it("Should not close picker when items are updated", () => {
+		cy.mount(
+			<Input id="field1" showSuggestions>
+				<SuggestionItem text="Search Item 1" />
+				<SuggestionItem text="Search Item 2" />
+			</Input>
+		);
+
+		cy.get("#field1").shadow().find("input").click().realType("S");
+		cy.get("#field1")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
+		cy.get("#field1").shadow().find("input").realType("b");
+		cy.get("#field1")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
+	});
+});
+
+describe("Selection-change event", () => {
+	it("Selection-change event fires when interacting with Arrow UP and Arrow DOWN keys", () => {
+		const onSelectionChange = cy.spy().as("onSelectionChange");
+		cy.mount(
+			<Input id="input-selection-change" showSuggestions onSelectionChange={onSelectionChange}>
+				<SuggestionItem text="China" />
+				<SuggestionItem text="Chile" />
+				<SuggestionItem text="Canada" />
+			</Input>
+		);
+
+		cy.get("#input-selection-change").shadow().find("input").click().realType("C");
+		cy.get("#input-selection-change").shadow().find("input").realPress("ArrowDown");
+		cy.get("#input-selection-change").shadow().find("input").realPress("ArrowDown");
+		cy.get("#input-selection-change").shadow().find("input").realPress("ArrowUp");
+
+		cy.get("@onSelectionChange").should("have.been.called", 3);
+	});
+
+	it("Selection-change event fires when suggestion item is selected by clicking on it without previously selected", () => {
+		const onSelectionChange = cy.spy().as("onSelectionChange");
+		cy.mount(
+			<Input id="input-selection-change" showSuggestions onSelectionChange={onSelectionChange}>
+				<SuggestionItem text="China" />
+				<SuggestionItem text="Chile" />
+				<SuggestionItem text="Canada" />
+			</Input>
+		);
+
+		cy.get("#input-selection-change").shadow().find("input").click().realType("C");
+		cy.get("#input-selection-change").shadow().find("input").realPress("ArrowDown");
+		cy.get("@onSelectionChange").should("have.been.calledOnce");
+
+		cy.get("#input-selection-change").find("ui5-suggestion-item").eq(2).click();
+		cy.get("@onSelectionChange").should("have.been.calledTwice");
+	});
+
+	it("Selection-change event does not fire when item is clicked but focus is already on it", () => {
+		const onSelectionChange = cy.spy().as("onSelectionChange");
+		cy.mount(
+			<Input id="input-selection-change" showSuggestions onSelectionChange={onSelectionChange}>
+				<SuggestionItem text="China" />
+				<SuggestionItem text="Chile" />
+				<SuggestionItem text="Canada" />
+			</Input>
+		);
+
+		cy.get("#input-selection-change").shadow().find("input").click().realType("C");
+		cy.get("#input-selection-change").shadow().find("input").realPress("ArrowDown");
+		cy.get("@onSelectionChange").should("have.been.calledOnce");
+
+		cy.get("#input-selection-change").find("ui5-suggestion-item").first().click();
+		cy.get("@onSelectionChange").should("have.been.calledOnce");
+	});
+});
+
+describe("Property open", () => {
+	it("Suggestions picker is open when attribute open is set to true", () => {
+		cy.mount(
+			<Input id="input-suggestions-open" showSuggestions open>
+				<SuggestionItem text="Item 1" />
+				<SuggestionItem text="Item 2" />
+				<SuggestionItem text="Item 3" />
+			</Input>
+		);
+
+		cy.get("#input-suggestions-open")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverOpened();
+		cy.get("#input-suggestions-open").find("ui5-suggestion-item").should("have.length", 3);
+	});
+
+	it("Suggestions picker is closed when attribute open is set to false", () => {
+		cy.mount(
+			<Input id="input-suggestions-open" showSuggestions open={false}>
+				<SuggestionItem text="Item 1" />
+				<SuggestionItem text="Item 2" />
+				<SuggestionItem text="Item 3" />
+			</Input>
+		);
+
+		cy.get("#input-suggestions-open")
+		.shadow()
+		.find<ResponsivePopover>("[ui5-responsive-popover]")
+		.ui5ResponsivePopoverClosed();
 	});
 });

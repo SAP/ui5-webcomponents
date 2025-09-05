@@ -4,6 +4,9 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import {
 	isSpace,
 	isEnter,
+	isEnterShift,
+	isEnterCtrl,
+	isEnterAlt,
 	isLeft,
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -43,6 +46,15 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	eventDetails!: SideNavigationItemBase["eventDetails"] & {
 		"click": SideNavigationItemClickEventDetail
 	}
+
+	/**
+	 * Defines if the item's parent is disabled.
+	 * @private
+	 * @default false
+	 * @since 2.10.0
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_parentDisabled: boolean = false;
 
 	/**
 	 * Defines the icon of the item.
@@ -178,7 +190,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	get _target() {
-		return (!this.effectiveDisabled && this.target) ? this.target : undefined;
+		return (!this.effectiveDisabled && this.href && this.target) ? this.target : undefined;
 	}
 
 	get isExternalLink() {
@@ -187,6 +199,22 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 
 	get _selected() {
 		return this.selected;
+	}
+
+	get _effectiveTag() {
+		return this._href ? "a" : "div";
+	}
+
+	get effectiveDisabled() {
+		return this.disabled || this._parentDisabled;
+	}
+
+	get _ariaHasPopup() {
+		if (this.accessibilityAttributes?.hasPopup) {
+			return this.accessibilityAttributes.hasPopup;
+		}
+
+		return undefined;
 	}
 
 	get classesArray() {
@@ -208,11 +236,19 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	get _ariaCurrent() {
-		if (!this.selected) {
+		if (!this.sideNavCollapsed && !this.selected) {
 			return undefined;
 		}
 
 		return "page";
+	}
+
+	get _ariaSelected() {
+		if (!this.sideNavCollapsed) {
+			return undefined;
+		}
+
+		return this.selected;
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -222,7 +258,8 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 			e.preventDefault();
 		}
 
-		if (isEnter(e)) {
+		// "Enter" + "Meta" is missing since it is often reserved by the operating system or window manager
+		if (isEnter(e) || isEnterShift(e) || isEnterCtrl(e) || isEnterAlt(e)) {
 			this._activate(e);
 		}
 
@@ -236,6 +273,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
+		// "Space" + modifier is often reserved by the operating system or window manager
 		if (isSpace(e)) {
 			this._activate(e);
 
