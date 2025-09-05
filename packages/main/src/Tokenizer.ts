@@ -350,8 +350,7 @@ class Tokenizer extends UI5Element {
 	_previousToken: Token | null = null;
 	_focusedElementBeforeOpen?: HTMLElement | null;
 	_deletedDialogItems!: Token[];
-	_lastTokenCount?: number;
-	_lastExpanded?: boolean;
+	_focusedToken?: Token;
 
 	_handleResize() {
 		this._nMoreCount = this.overflownTokens.length;
@@ -409,6 +408,7 @@ class Tokenizer extends UI5Element {
 
 		this._tokens.forEach(token => {
 			token.forcedTabIndex = "-1";
+			this._focusedToken = token;
 		});
 
 		this._skipTabIndex = true;
@@ -419,14 +419,13 @@ class Tokenizer extends UI5Element {
 	_onmousedown(e: MouseEvent) {
 		if ((e.target as HTMLElement).hasAttribute("ui5-token")) {
 			const target = e.target as Token;
-			this.expanded = true;
 
 			if (this.open) {
 				this._preventCollapse = true;
 			}
 
 			if (!target.toBeDeleted) {
-				this._itemNav.setCurrentItem(target);
+				this._addTokenToNavigation(target);
 				this._scrollToToken(target);
 			}
 		}
@@ -479,24 +478,20 @@ class Tokenizer extends UI5Element {
 		this._tokenDeleting = false;
 	}
 
+	/**
+	 * Scrolls the container to the end to ensure very long tokens are visible at their end.
+	 * Otherwise, tokens may appear visually cut off.
+	 * @protected
+	 */
 	_scrollToEndIfNeeded() {
-		const tokenCount = this.tokens.length;
-		if (this._lastTokenCount === undefined) {
-			this._lastTokenCount = tokenCount;
-		}
-		if (this._lastExpanded === undefined) {
-			this._lastExpanded = this.expanded;
+		// if token is focused skip scroll to the end
+		if (this._focusedToken) {
+			return;
 		}
 
-		const tokenAdded = tokenCount > this._lastTokenCount;
-		const expandedNow = this.expanded && !this._lastExpanded;
-
-		if (tokenAdded || expandedNow) {
+		if (this.tokens.length || this.expanded) {
 			this.scrollToEnd();
 		}
-
-		this._lastTokenCount = tokenCount;
-		this._lastExpanded = this.expanded;
 	}
 
 	_delete(e: CustomEvent<TokenDeleteEventDetail>) {
@@ -916,13 +911,14 @@ class Tokenizer extends UI5Element {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		const target = e.target as Token;
 		this.open = false;
-		this._itemNav.setCurrentItem(target);
+		this.expanded = true;
+		this._addTokenToNavigation(e.target as Token);
+	}
 
-		if (!this.expanded) {
-			this.expanded = true;
-		}
+	_addTokenToNavigation(token: Token) {
+		this._focusedToken = token;
+		this._itemNav.setCurrentItem(token);
 	}
 
 	_onfocusout(e: FocusEvent) {
@@ -933,6 +929,7 @@ class Tokenizer extends UI5Element {
 		});
 
 		this._itemNav._currentIndex = -1;
+		this._focusedToken = undefined;
 		this._skipTabIndex = true;
 
 		if (!this.contains(relatedTarget)) {
