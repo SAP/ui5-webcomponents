@@ -194,7 +194,6 @@ class ColorPalette extends UI5Element {
 	_colorsColumn = 0; // The column index of the last focused color in any palette (colors or recent colors)
 	_colorsDirection = false; // true: bottom-to-top, false: top-to-bottom
 
-
 	@query(".ui5-cp-default-color-button")
 	_defaultColorButton!: Button;
 
@@ -282,8 +281,8 @@ class ColorPalette extends UI5Element {
 	 * Handler for focusin event to detect when any item navigation is focused
 	 * @private
 	 */
-	_onAnyItemNavigationFocus = (event: FocusEvent) => {
-		const focusedElement = event.target as HTMLElement;
+	_onAnyItemNavigationFocus = (e: FocusEvent) => {
+		const focusedElement = e.target as HTMLElement;
 		const items1 = this._itemNavigation._getItems();
 		const items2 = this._itemNavigationRecentColors._getItems();
 
@@ -548,7 +547,7 @@ class ColorPalette extends UI5Element {
 			e.stopPropagation();
 			this._colorsDirection = true;
 			this._focusFirstAvailable(
-				() =>this._focusColorInColumn(),
+				() => this._focusColorInColumn(),
 				() => this._focusDefaultColor(),
 				() => this._focusRecentColorInColumn(),
 			);
@@ -582,7 +581,6 @@ class ColorPalette extends UI5Element {
 
 	_onColorContainerKeyDown(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
-		const isLastSwatchInSingleRow = this._isSingleRow() && this._isLastSwatch(target, this.displayedColors);
 
 		if (this._isUpOrDownNavigatableColorPaletteItem(e)) {
 			this._currentlySelected = undefined;
@@ -697,10 +695,10 @@ class ColorPalette extends UI5Element {
 	}
 
 	_lastColumnIndex(swatches: Array<IColorPaletteItem>): number {
-    if (!swatches.length) {
-        return this._colorsColumn;
-    }
-    return (swatches.length - 1) % this.rowSize;
+		if (!swatches.length) {
+			return this._colorsColumn;
+		}
+		return (swatches.length - 1) % this.rowSize;
 	}
 
 	/**
