@@ -606,11 +606,12 @@ class List extends UI5Element {
 
 	onAfterRendering() {
 		this.attachGroupHeaderEvents();
-		this.unobserveListEnd();
-		this.unobserveListStart();
 		if (this.growsOnScroll) {
 			this.observeListEnd();
 			this.observeListStart();
+		} else {
+			this.unobserveListEnd();
+			this.unobserveListStart();
 		}
 
 		if (this.grows) {
