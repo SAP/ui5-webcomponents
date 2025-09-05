@@ -140,6 +140,8 @@ type MultiComboboxItemWithSelection = {
 	selected: boolean,
 };
 
+type CompositionEventHandler = (e?: CompositionEvent) => void;
+
 /**
  * @class
  *
@@ -480,6 +482,14 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_linksListenersArray: Array<(args: any) => void> = [];
 
 	/**
+	 * Indicates whether IME composition is currently active
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_isComposing = false;
+
+	/**
 	 * Defines the component items.
 	 * @public
 	 */
@@ -533,6 +543,8 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_itemsBeforeOpen: Array<MultiComboboxItemWithSelection>;
 	selectedItems: Array<IMultiComboBoxItem>;
 	_valueStateLinks: Array<HTMLElement>;
+	_onCompositionStartBound: CompositionEventHandler;
+	_onCompositionEndBound: CompositionEventHandler;
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -584,15 +596,19 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		this._lastValue = this.getAttribute("value") || "";
 		this.currentItemIdx = -1;
 		this._valueStateLinks = [];
+		this._onCompositionStartBound = this._onCompositionStart.bind(this);
+		this._onCompositionEndBound = this._onCompositionEnd.bind(this);
 	}
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
+		this._addCompositionEventListeners();
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResizeBound);
 		this._removeLinksEventListeners();
+		this._removeCompositionEventListeners();
 	}
 
 	_handleResize() {
@@ -1689,6 +1705,32 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		});
 	}
 
+	_addCompositionEventListeners() {
+		const input = this._innerInput;
+		if (!input) { return; }
+
+		this._removeCompositionEventListeners();
+
+		input.addEventListener("compositionstart", this._onCompositionStartBound);
+		input.addEventListener("compositionend", this._onCompositionEndBound);
+	}
+
+	_removeCompositionEventListeners() {
+		const input = this._innerInput;
+		if (!input) { return; }
+
+		input.removeEventListener("compositionstart", this._onCompositionStartBound);
+		input.removeEventListener("compositionend", this._onCompositionEndBound);
+	}
+
+	_onCompositionStart() {
+		this._isComposing = true;
+	}
+
+	_onCompositionEnd() {
+		this._isComposing = false;
+	}
+
 	onBeforeRendering() {
 		const input = this._innerInput;
 		const autoCompletedChars = input && (input.selectionEnd || 0) - (input.selectionStart || 0);
@@ -1728,7 +1770,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 			// Keep the original typed in text intact
 			this.valueBeforeAutoComplete = value;
-			item && this._handleTypeAhead(item, value);
+			item && !this._isComposing && this._handleTypeAhead(item, value);
 		}
 
 		if (this._shouldFilterItems) {
