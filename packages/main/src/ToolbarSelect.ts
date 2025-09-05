@@ -98,7 +98,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * Defines the HTML element that will be displayed in the component input part,
 	 * representing the selected option.
 	 * @public
-	 * @since 2.13.0
+	 * @since 2.15.0
 	*/
 	@slot()
 	label!: Array<HTMLElement>;
@@ -142,7 +142,7 @@ class ToolbarSelect extends ToolbarItem {
 	 *
 	 * @public
 	 * @default ""
-	 * @since 2.13.0
+	 * @since 2.15.0
 	 */
 	@property()
 	set value(newValue: string) {
