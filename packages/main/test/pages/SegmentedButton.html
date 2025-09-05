@@ -212,6 +212,36 @@
 			segButtonProg.items[0].selected = true;
 		});
 
+		// Test ARIA attributes
+		function testARIAAttributes() {
+			console.log('Testing ARIA attributes...');
+			
+			// Test Single mode (default)
+			const singleModeButton = document.getElementById('segButton1');
+			if (singleModeButton) {
+				const singleUl = singleModeButton.shadowRoot.querySelector('ul[role="listbox"]');
+				console.log('Single mode button:', {
+					selectionMode: singleModeButton.selectionMode,
+					'aria-multiselectable': singleUl.getAttribute('aria-multiselectable'),
+					'aria-orientation': singleUl.getAttribute('aria-orientation')
+				});
+			}
+			
+			// Test Multiple mode
+			const multipleModeButton = document.getElementById('segButtonMulti');
+			if (multipleModeButton) {
+				const multipleUl = multipleModeButton.shadowRoot.querySelector('ul[role="listbox"]');
+				console.log('Multiple mode button:', {
+					selectionMode: multipleModeButton.selectionMode,
+					'aria-multiselectable': multipleUl.getAttribute('aria-multiselectable'),
+					'aria-orientation': multipleUl.getAttribute('aria-orientation')
+				});
+			}
+		}
+
+		// Wait for components to load and then test
+		setTimeout(testARIAAttributes, 1000);
+
 	</script>
 
 </body>
