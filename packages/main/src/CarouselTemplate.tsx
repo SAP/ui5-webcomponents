@@ -10,7 +10,6 @@ export default function CarouselTemplate(this: Carousel) {
 				"ui5-carousel-root": true,
 				[`ui5-carousel-background-${this._backgroundDesign}`]: true,
 			}}
-			tabindex={0}
 			role="list"
 			aria-label={this.ariaLabelTxt}
 			aria-roledescription={this._roleDescription}
@@ -21,20 +20,22 @@ export default function CarouselTemplate(this: Carousel) {
 			onMouseOver={this._onmouseover}
 		>
 			<div class={this.classes.viewport} part="content">
-				<div class={this.classes.content} style={{ transform: `translateX(${this._isRTL ? "" : "-"}${this._selectedIndex * (this._itemWidth || 0)}px` }}>
+				<div class={this.classes.content} style={{ transform: `translate3d(${this._isRTL ? "" : "-"}${this._currentSlideIndex * (this._itemWidth || 0)}px, 0, 0` }}>
 					{this.items.map(itemInfo =>
 						<div
+							data-sap-focus-ref
 							id={itemInfo.id}
 							class={{
 								"ui5-carousel-item": true,
-								"ui5-carousel-item--hidden": !itemInfo.selected,
+								"ui5-carousel-item--hidden": !itemInfo.visible,
 							}}
 							style={{ width: `${this._itemWidth || 0}px` }}
 							part="item"
 							role="listitem"
 							aria-posinset={itemInfo.posinset}
 							aria-setsize={itemInfo.setsize}
-							aria-selected = {itemInfo.selected}
+							aria-hidden={!itemInfo.visible}
+							tabindex= {itemInfo.tabIndex}
 						>
 							<slot name={itemInfo.item._individualSlot} tabindex={itemInfo.tabIndex}></slot>
 						</div>
@@ -105,5 +106,5 @@ function navIndicator(this: Carousel) {
 		<div
 			dir="auto"
 			class="ui5-carousel-navigation-text"
-		>{this.selectedIndexToShow}&nbsp;{this.ofText}&nbsp;{this.pagesCount}</div>;
+		>{this._currentSlideIndex + 1}&nbsp;{this.ofText}&nbsp;{this.pagesCount}</div>;
 }
