@@ -1,8 +1,8 @@
-#  ![UI5 icon](https://raw.githubusercontent.com/UI5/ui5-webcomponents/main/docs/images/Logo_wide_25.png)
+#  ![UI5 icon](https://raw.githubusercontent.com/UI5/webcomponents/main/docs/images/Logo_wide_25.png)
 
-[![CI](https://github.com/UI5/ui5-webcomponents/actions/workflows/test.yaml/badge.svg)](https://github.com/UI5/ui5-webcomponents/actions/workflows/test.yaml)
+[![CI](https://github.com/UI5/webcomponents/actions/workflows/test.yaml/badge.svg)](https://github.com/UI5/webcomponents/actions/workflows/test.yaml)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
-[![REUSE status](https://api.reuse.software/badge/github.com/UI5/ui5-webcomponents)](https://api.reuse.software/info/github.com/UI5/ui5-webcomponents)
+[![REUSE status](https://api.reuse.software/badge/github.com/UI5/webcomponents)](https://api.reuse.software/info/github.com/UI5/webcomponents)
 
 ## What are [UI5 Web Components](https://sap.github.io/ui5-webcomponents)?
 
@@ -55,13 +55,13 @@ UI5 remains what it is: the best choice for…
 
 ### UI5 Web Components for React
 
-[UI5 Web Components for React](https://github.com/UI5/ui5-webcomponents-react) is a wrapper implementation around
+[UI5 Web Components for React](https://github.com/UI5/webcomponents-react) is a wrapper implementation around
 UI5 Web Components which makes using them in React even more comfortable. The current version of React (`react 18`) has some
 shortcomings when it comes to handling Custom Elements, namely the binding of `boolean` attributes as well as adding event listeners to custom event names like `selection-change`. With the help of UI5 Web Components for React, you can use the UI5 Web Components in React as if they were native React components. In addition to that, this library is also offering TypeScript definitions for all components, some complex layout components built on top of UI5 Web Components as well as Charting Components.
 
 ### UI5 Web Components for Angular
 
-[UI5 Web Components for Angular](https://github.com/UI5/ui5-webcomponents-ngx) is a wrapper implementation around
+[UI5 Web Components for Angular](https://github.com/UI5/webcomponents-ngx) is a wrapper implementation around
 UI5 Web Components which to make it work with Angular without needing to use the `CUSTOM_ELEMENTS_SCHEMA` or `NO_ERRORS_SCHEMA` schemas.
 Moreover, all Angular-specific features, such as two-way data binding and Angular Form support, work out of the box.
 
@@ -116,7 +116,7 @@ This section might be of interest to you mainly if you need to run or build the 
 - [Yarn](https://yarnpkg.com/en) (**version 1.22 or higher**)
 
 **Note:** The UI5 Web Components project is set up with the [Yarn](https://yarnpkg.com/) node package manager.
-This is because it offers functionality that the otherwise preferred [npm](https://www.npmjs.com/) package manager is currently lacking. Namely, the [workspace](https://yarnpkg.com/lang/en/docs/workspaces/) setting which is currently used in the [UI5 Web Components (mono-)repository](https://github.com/UI5/ui5-webcomponents). Note that npm [might add](https://github.com/npm/npm/pull/15900#issuecomment-315335381) this feature in the future.
+This is because it offers functionality that the otherwise preferred [npm](https://www.npmjs.com/) package manager is currently lacking. Namely, the [workspace](https://yarnpkg.com/lang/en/docs/workspaces/) setting which is currently used in the [UI5 Web Components (mono-)repository](https://github.com/UI5/webcomponents). Note that npm [might add](https://github.com/npm/npm/pull/15900#issuecomment-315335381) this feature in the future.
 
 ### Structure
 
@@ -173,7 +173,7 @@ For example, to find the Button component (that belongs to the `main` package), 
 None as of 1.24.0
 
 ## Known Issues
-No major bugs known. To report an issue or view the currently open issues, click [here](https://github.com/UI5/ui5-webcomponents/issues).
+No major bugs known. To report an issue or view the currently open issues, click [here](https://github.com/UI5/webcomponents/issues).
 
 ## Support
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://ui5-slack-invite.cfapps.eu10.hana.ondemand.com/).
