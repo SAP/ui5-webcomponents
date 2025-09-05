@@ -10,13 +10,18 @@ export default function CalendarTemplate(this: Calendar) {
 			<div
 				data-ui5-cal-header-btn-prev
 				class={{
+					"ui5-calheader-middlebtn": true,
 					"ui5-calheader-arrowbtn": true,
 					"ui5-calheader-arrowbtn-disabled": this._previousButtonDisabled,
 				}}
 				part="calendar-header-arrow-button"
 				role="button"
+				tabindex={0}
 				onMouseDown={this.onPrevButtonClick}
-				title={this.headerPreviousButtonText}
+				title={this.headerPreviousButtonTitle}
+				aria-keyshortcuts="PageUp"
+				aria-label="Previous month"
+				aria-description="Previous month"
 			>
 				<Icon class="ui5-calheader-arrowicon" name={slimArowLeft}/>
 			</div>
@@ -30,6 +35,9 @@ export default function CalendarTemplate(this: Calendar) {
 					tabindex={0}
 					role="button"
 					aria-label={this.accInfo.ariaLabelMonthButton}
+					aria-description={this.accInfo.ariaLabelMonthButton}
+					title="Select Month (F4)"
+					aria-keyshortcuts="F4"
 					onClick={this.onHeaderShowMonthPress}
 					onKeyDown={this.onMonthButtonKeyDown}
 					onKeyUp={this.onMonthButtonKeyUp}
@@ -47,9 +55,13 @@ export default function CalendarTemplate(this: Calendar) {
 					hidden={this._isHeaderYearButtonHidden}
 					tabindex={0}
 					role="button"
+					aria-label={this.accInfo.ariaLabelYearButton}
+					aria-description={this.accInfo.ariaLabelYearButton}
 					onClick={this.onHeaderShowYearPress}
 					onKeyDown={this.onYearButtonKeyDown}
 					onKeyUp={this.onYearButtonKeyUp}
+					title="Select Year (Shift + F4)"
+					aria-keyshortcuts="SHIFT + F4"
 				>
 					<span>{this._headerYearButtonText}</span>
 					{this.hasSecondaryCalendarType &&
@@ -63,6 +75,10 @@ export default function CalendarTemplate(this: Calendar) {
 					hidden={this._isHeaderYearRangeButtonHidden}
 					tabindex={0}
 					role="button"
+					aria-label={this.accInfo.ariaLabelYearButton}
+					aria-description={this.accInfo.ariaLabelYearButton}
+					title="Select Year Range (Shift + F4)"
+					aria-keyshortcuts="SHIFT + F4"
 					onClick={this.onHeaderShowYearRangePress}
 					onKeyDown={this.onYearRangeButtonKeyDown}
 					onKeyUp={this.onYearRangeButtonKeyUp}
@@ -77,13 +93,18 @@ export default function CalendarTemplate(this: Calendar) {
 			<div
 				data-ui5-cal-header-btn-next
 				class={{
+					"ui5-calheader-middlebtn": true,
 					"ui5-calheader-arrowbtn": true,
 					"ui5-calheader-arrowbtn-disabled": this._nextButtonDisabled,
 				}}
 				part="calendar-header-arrow-button"
 				role="button"
+				tabindex={0}
 				onMouseDown={this.onNextButtonClick}
-				title={this.headerNextButtonText}
+				title={this.headerNextButtonTitle}
+				aria-keyshortcuts="Pagedown"
+				aria-label="Next month"
+				aria-description="Next month"
 			>
 				<Icon class="ui5-calheader-arrowicon" name={slimArowRight}/>
 			</div>
