@@ -46,7 +46,7 @@ Additional features, settings and old browser support will increase bundle size 
 
 **Q: What is the difference between UI5 Web Components and OpenUI5?**
 
-**A:** See the project's [readme.md](https://github.com/SAP/ui5-webcomponents) for more on this.
+**A:** See the project's [readme.md](https://github.com/UI5/ui5-webcomponents) for more on this.
 
 
 **Q: Can I use UI5 Web Components in an OpenUI5 application?**

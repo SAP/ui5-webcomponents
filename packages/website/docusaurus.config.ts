@@ -190,7 +190,7 @@ const config: Config = {
             },
             {
               label: 'GitHub',
-              to: 'https://github.com/SAP/ui5-webcomponents/',
+              to: 'https://github.com/UI5/ui5-webcomponents/',
             },
             // {
             //   html: `
@@ -251,7 +251,7 @@ const config: Config = {
           items: [
             {
               label: 'Report Issue',
-              to: 'https://github.com/SAP/ui5-webcomponents/issues/new',
+              to: 'https://github.com/UI5/ui5-webcomponents/issues/new',
             },
             {
               label: 'Technical Questions',
