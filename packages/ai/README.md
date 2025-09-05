@@ -26,7 +26,7 @@ Provides web components implementing AI-related visual and interaction.
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/UI5/webcomponents/blob/main/README.md)
-- [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/)
+- [UI5 Web Components - Playground and API Reference](https://ui5.github.io/webcomponents/)
 
 ## Support
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/UI5/webcomponents/blob/main/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://ui5-slack-invite.cfapps.eu10.hana.ondemand.com/).

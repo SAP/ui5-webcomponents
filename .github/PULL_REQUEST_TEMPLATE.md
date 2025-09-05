@@ -2,7 +2,7 @@
 
 
 ### PR checklist
-- [ ] Check the [Development Hints](https://sap.github.io/ui5-webcomponents/docs/contributing/DoD/)
+- [ ] Check the [Development Hints](https://ui5.github.io/webcomponents/docs/contributing/DoD/)
 
 - [ ] Follow the [Commit message Guidelines](https://github.com/UI5/webcomponents/blob/main/docs/5-contributing/02-conventions-and-guidelines.md#commit-message-style)
 

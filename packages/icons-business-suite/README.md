@@ -52,8 +52,8 @@ For a full list of the icons in the `business-suite` collection, click [here](ht
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/UI5/webcomponents/blob/main/README.md)
-- [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)
-- [UI5 Web Components - Using Icons](https://sap.github.io/ui5-webcomponents/docs/getting-started/using-icons/)
+- [UI5 Web Components - Home Page](https://ui5.github.io/webcomponents)
+- [UI5 Web Components - Using Icons](https://ui5.github.io/webcomponents/docs/getting-started/using-icons/)
 
 ## Support
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/UI5/webcomponents/blob/main/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://ui5-slack-invite.cfapps.eu10.hana.ondemand.com/).

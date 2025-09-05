@@ -4,7 +4,7 @@
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 [![REUSE status](https://api.reuse.software/badge/github.com/UI5/webcomponents)](https://api.reuse.software/info/github.com/UI5/webcomponents)
 
-## What are [UI5 Web Components](https://sap.github.io/ui5-webcomponents)?
+## What are [UI5 Web Components](https://ui5.github.io/webcomponents)?
 
  - A rich set of **enterprise-grade reusable UI elements** driven by a **lightweight framework** (~20K gzipped for the framework part).
  - Suitable for building anything from **static web sites** to **complex web applications**.
@@ -19,10 +19,10 @@
  - **Elegant**: being *custom HTML elements*, they hide implementation complexity behind a single HTML tag, making them easily usable with the standard DOM APIs.
 
 ## Where can I see them in action?
-- [Playground and API Reference](https://sap.github.io/ui5-webcomponents/components/)
+- [Playground and API Reference](https://ui5.github.io/webcomponents/components/)
 
 ## More Resources
-- [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
+- [UI5 Web Components Home Page](https://ui5.github.io/webcomponents)
 - [Configuring UI5 Web Components](./docs/2-advanced/01-configuration.md)
 - [Customizing with `UI Theme Designer`](./docs/2-advanced/12-theming.md)
 - [Creating a Custom UI5 Web Components Package](docs/4-development/01-package.md)
@@ -85,7 +85,7 @@ Moreover, all Angular-specific features, such as two-way data binding and Angula
 	<ui5-button>Hello world!</ui5-button>
 	```
 
-	For more information, see [Importing UI5 Web Components](https://sap.github.io/ui5-webcomponents/docs/getting-started/components-packages/) and [Understanding UI5 Web Components APIs](https://sap.github.io/ui5-webcomponents/docs/getting-started/components-APIs/).
+	For more information, see [Importing UI5 Web Components](https://ui5.github.io/webcomponents/docs/getting-started/components-packages/) and [Understanding UI5 Web Components APIs](https://ui5.github.io/webcomponents/docs/getting-started/components-APIs/).
 
 ## Typescript Support
 TypeScript Support is enabled for both component development and component consumption.
