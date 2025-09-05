@@ -17,10 +17,10 @@
     "./*": "./dist/*"
   },
   "scripts": {
-    "clean": "nps clean",
-    "build": "nps build",
-    "generate": "nps generate",
-    "start": "nps start",
+    "clean": "ui5nps clean",
+    "build": "ui5nps build",
+    "generate": "ui5nps generate",
+    "start": "ui5nps start",
     "verify": "node ./lib/verify-vars/index.js",
     "prepublishOnly": "tsc -b"
   },
