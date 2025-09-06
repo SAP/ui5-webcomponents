@@ -21,11 +21,11 @@
     "./*": "./dist/*"
   },
   "scripts": {
-    "clean": "nps clean",
-    "lint": "nps lint",
-    "start": "nps start",
-    "build": "nps build",
-    "generate": "nps generate",
+    "clean": "node ./custom-runner.cjs clean",
+    "lint": "node ./custom-runner.cjs lint",
+    "start": "node ./custom-runner.cjs start",
+    "build": "node ./custom-runner.cjs build",
+    "generate": "node ./custom-runner.cjs generate",
     "prepublishOnly": "tsc -b"
   },
   "devDependencies": {

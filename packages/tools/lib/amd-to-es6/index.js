@@ -1,12 +1,11 @@
 const fs = require("fs").promises;
 const path = require("path");
-const basePath = process.argv[2];
 const babelCore = require("@babel/core");
 const babelParser = require("@babel/parser");
 const babelGenerator = require("@babel/generator").default;
 const replaceAsync = require('replace-in-file');
 
-const convertSAPUIDefineToDefine = async (filePath) => {
+const convertSAPUIDefineToDefine = async (filePath, basePath) => {
 	return replaceAsync({
 		files: filePath,
 		processor: (input) => {
@@ -15,13 +14,13 @@ const convertSAPUIDefineToDefine = async (filePath) => {
 	})
 }
 
-const convertAmdToEs6 = async (code) => {
+const convertAmdToEs6 = async (code, basePath) => {
 	return (await babelCore.transformAsync(code, {
 		plugins: [['babel-plugin-amd-to-esm', {}]]
 	})).code;
 }
 
-const convertAbsImportsToRelative = (filePath, code) => {
+const convertAbsImportsToRelative = (filePath, code, basePath) => {
 	let changed = false;
 	// console.log("File processing started: ", srcPath);
 
@@ -68,8 +67,8 @@ const convertAbsImportsToRelative = (filePath, code) => {
 	return changed ? babelGenerator(tree).code : code;
 }
 
-const replaceGlobalCoreUsage = (filePath, code) => {
-	if (!filePath.includes("Configuration"))  {
+const replaceGlobalCoreUsage = (filePath, code, basePath) => {
+	if (!filePath.includes("Configuration")) {
 		const replaced = code.replace(/sap\.ui\.getCore\(\)/g, `Core`);
 		return code !== replaced ? `import Core from 'sap/ui/core/Core';${replaced}` : code;
 	}
@@ -77,26 +76,31 @@ const replaceGlobalCoreUsage = (filePath, code) => {
 	return code;
 };
 
-const transformAmdToES6Module = async (filePath) => {
-	await convertSAPUIDefineToDefine(filePath);
+const transformAmdToES6Module = async (filePath, basePath) => {
+	await convertSAPUIDefineToDefine(filePath, basePath);
 
 	let code = (await fs.readFile(filePath)).toString();
 
-	code = await convertAmdToEs6(code);
+	code = await convertAmdToEs6(code, basePath);
 
-	code = replaceGlobalCoreUsage(filePath, code);
+	code = replaceGlobalCoreUsage(filePath, code, basePath);
 
-	code = convertAbsImportsToRelative(filePath, code);
+	code = convertAbsImportsToRelative(filePath, code, basePath);
 
 	return fs.writeFile(filePath, code);
 }
 
-const transformAmdToES6Modules = async () => {
+const transformAmdToES6Modules = async (distFolder) => {
+	const basePath = distFolder;
+
+
 	const { globby } = await import("globby");
 	const fileNames = await globby(basePath.replace(/\\/g, "/") + "**/*.js");
-	return Promise.all(fileNames.map(transformAmdToES6Module).filter(x => !!x));
+	return Promise.all(fileNames.map(fileName => transformAmdToES6Module(fileName, basePath)).filter(x => !!x));
 };
 
-transformAmdToES6Modules().then(() => {
-	console.log("Success: all amd modules are transformed to es6!");
-});
+// transformAmdToES6Modules().then(() => {
+// 	console.log("Success: all amd modules are transformed to es6!");
+// });
+
+module.exports = transformAmdToES6Modules;

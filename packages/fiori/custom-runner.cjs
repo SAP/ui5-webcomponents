@@ -1,4 +1,4 @@
-const getScripts = require("@ui5/webcomponents-tools/components-package/nps.js");
+const getScripts = require("@ui5/webcomponents-tools/components-package/custom-runner-commands.js");
 
 const filterOut = [
 	"sapIllus-Dot",
@@ -80,6 +80,16 @@ const options = {
 
 const scripts = getScripts(options);
 
-module.exports = {
-	scripts
-};
+// Export for CLI usage
+if (require.main === module) {
+	const taskName = process.argv[2];
+	if (!taskName) {
+		console.log('Available tasks:', Array.from(scripts.tasks.keys()).join(', '));
+		process.exit(1);
+	}
+
+	scripts.run(taskName).catch(error => {
+		console.error('Task failed:', error.message);
+		process.exit(1);
+	});
+}

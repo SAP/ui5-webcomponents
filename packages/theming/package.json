@@ -17,10 +17,10 @@
     "./*": "./dist/*"
   },
   "scripts": {
-    "clean": "nps clean",
-    "build": "nps build",
-    "generate": "nps generate",
-    "start": "nps start",
+    "clean": "node ./custom-runner.cjs clean",
+    "build": "node ./custom-runner.cjs build",
+    "generate": "node ./custom-runner.cjs generate",
+    "start": "node ./custom-runner.cjs start",
     "verify": "node ./lib/verify-vars/index.js",
     "prepublishOnly": "tsc -b"
   },

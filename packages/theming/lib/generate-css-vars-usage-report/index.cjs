@@ -1,10 +1,6 @@
-import fs from "fs/promises";
-import path from "path";
-import beautify from "json-beautify";
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const fs = require("fs/promises");
+const path = require("path");
+const beautify = require("json-beautify");
 
 const vars = new Set();
 
@@ -18,7 +14,7 @@ const processFile = async file => {
 };
 
 const generate = async () => {
-	const { globby } = await import("globby");
+	const { globby } = require("globby");
 
 	const mainFiles = await globby(path.join(__dirname, "../../../main/src/themes/**/*.css").replace(/\\/g, "/"));
 	const fioriFiles = await globby(path.join(__dirname, "../../../fiori/src/themes/**/*.css").replace(/\\/g, "/"));
@@ -33,6 +29,8 @@ const generate = async () => {
 	return fs.writeFile(path.join(__dirname, "../../css-vars-usage.json"), beautify(result, null, 2, 100));
 }
 
-generate().then(() => {
-	console.log("CSS Vars usage report generated.");
-});
+// generate().then(() => {
+// 	console.log("CSS Vars usage report generated.");
+// });
+
+module.exports = generate;

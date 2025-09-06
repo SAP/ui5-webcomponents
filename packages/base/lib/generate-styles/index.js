@@ -16,6 +16,8 @@ const generate = async () => {
 	return Promise.all(filesPromises);
 };
 
-generate().then(() => {
-	console.log("Styles files generated.");
-});
+// generate().then(() => {
+// 	console.log("Styles files generated.");
+// });
+
+export default generate;
