@@ -549,7 +549,7 @@ describe("MultiInput Form Submission Prevention", () => {
 	it("should prevent form submission when Enter is pressed", () => {
 		cy.mount(
 			<form>
-				<MultiInput id="mi-form-prevent" />
+				<MultiInput/>
 			</form>
 		);
 
@@ -557,7 +557,7 @@ describe("MultiInput Form Submission Prevention", () => {
 			.as("testForm")
 			.invoke('on', 'submit', cy.spy().as('formSubmit'));
 
-		cy.get("#mi-form-prevent")
+		cy.get("[ui5-multi-input]")
 			.shadow()
 			.find("input")
 			.as("innerInput");
