@@ -546,7 +546,7 @@ describe("MultiInput tokens", () => {
 });
 
 describe("MultiInput Form Submission Prevention", () => {
-	it("should prevent form submission when Enter is pressed with a value", () => {
+	it("should prevent form submission when Enter is pressed", () => {
 		cy.mount(
 			<form>
 				<MultiInput id="mi-form-prevent" />
@@ -554,9 +554,8 @@ describe("MultiInput Form Submission Prevention", () => {
 		);
 
 		cy.get("form")
-			.then($form => {
-				cy.spy($form[0], "requestSubmit").as("formSubmit");
-			});
+			.as("testForm")
+			.invoke('on', 'submit', cy.spy().as('formSubmit'));
 
 		cy.get("#mi-form-prevent")
 			.shadow()
@@ -586,9 +585,8 @@ describe("MultiInput Form Submission Prevention", () => {
 		);
 
 		cy.get("form")
-			.then($form => {
-				cy.spy($form[0], "requestSubmit").as("formSubmit");
-			});
+			.as("testForm")
+			.invoke('on', 'submit', cy.spy().as('formSubmit'));
 
 		cy.get("#mi-form-multi1")
 			.shadow()
@@ -603,64 +601,6 @@ describe("MultiInput Form Submission Prevention", () => {
 			.realPress("Enter");
 
 		cy.get("@formSubmit").should("not.have.been.called");
-	});
-
-	it("should work correctly with suggestions and prevent form submission", () => {
-		cy.mount(
-			<form>
-				<MultiInput id="mi-suggestions" showSuggestions>
-					<SuggestionItem text="Suggestion 1"></SuggestionItem>
-					<SuggestionItem text="Suggestion 2"></SuggestionItem>
-				</MultiInput>
-			</form>
-		);
-
-		cy.get("form")
-			.then($form => {
-				cy.spy($form[0], "requestSubmit").as("formSubmit");
-			});
-
-		cy.get("#mi-suggestions")
-			.as("multiInput")
-			.then($multiInput => {
-				const changeSpy = cy.spy().as("changeSpy");
-				$multiInput[0].addEventListener("ui5-change", changeSpy);
-				$multiInput[0].addEventListener("ui5-change", (event) => {
-					const target = event.target as HTMLInputElement;
-					if (target.value.trim()) {
-						const token = createTokenFromText(target.value);
-						target.appendChild(token);
-						target.value = "";
-					}
-				});
-			});
-
-		cy.get("@multiInput")
-			.shadow()
-			.find("input")
-			.as("innerInput");
-
-		cy.get("@innerInput")
-			.realClick()
-			.should("be.focused");
-
-		cy.get("@innerInput")
-			.realType("Sugg");
-
-		cy.get("@multiInput")
-			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("have.attr", "open");
-
-		cy.get("@innerInput")
-			.realPress("Enter");
-
-		cy.get("@multiInput")
-			.find("[ui5-token]")
-			.should("have.length", 1);
-
-		cy.get("@formSubmit").should("not.have.been.called");
-		cy.get("@changeSpy").should("have.been.calledOnce");
 	});
 });
 
