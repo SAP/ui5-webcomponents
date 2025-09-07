@@ -152,7 +152,7 @@ describe("MultiInput Web Component", () => {
 			.as("respPopover");
 
 		cy.get("@respPopover")
-			.should("have.attr", "open");
+			.ui5PopoverOpened();
 	});
 
 	it("fires value-help-trigger on icon press", () => {
@@ -623,7 +623,7 @@ describe("MultiInput Form Submission Prevention", () => {
 		cy.get("#mi-suggestions")
 			.as("multiInput")
 			.then($multiInput => {
-				const changeSpy = cy.spy().as("change");
+				const changeSpy = cy.spy().as("changeSpy");
 				$multiInput[0].addEventListener("ui5-change", changeSpy);
 				$multiInput[0].addEventListener("ui5-change", (event) => {
 					const target = event.target as HTMLInputElement;
@@ -660,7 +660,7 @@ describe("MultiInput Form Submission Prevention", () => {
 			.should("have.length", 1);
 
 		cy.get("@formSubmit").should("not.have.been.called");
-		cy.get("@change").should("have.been.calledOnce");
+		cy.get("@changeSpy").should("have.been.calledOnce");
 	});
 });
 

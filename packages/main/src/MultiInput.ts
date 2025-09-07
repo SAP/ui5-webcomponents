@@ -232,11 +232,6 @@ class MultiInput extends Input implements IFormInputElement {
 
 		if (isEnter(e)) {
 			e.preventDefault();
-
-			// Fire change event if there's a value
-			if (this.value) {
-				this.fireDecoratorEvent("change", { inputType: "" });
-			}
 		}
 
 		if (isLeft(e)) {
