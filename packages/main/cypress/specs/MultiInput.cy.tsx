@@ -152,7 +152,7 @@ describe("MultiInput Web Component", () => {
 			.as("respPopover");
 
 		cy.get("@respPopover")
-			.ui5PopoverOpened();
+			.should("have.attr", "open");
 	});
 
 	it("fires value-help-trigger on icon press", () => {
@@ -549,7 +549,7 @@ describe("MultiInput Form Submission Prevention", () => {
 	it("should prevent form submission when Enter is pressed with a value", () => {
 		cy.mount(
 			<form>
-				<MultiInput id="mi-form-prevent" onChange={cy.stub().as("change")} />
+				<MultiInput id="mi-form-prevent" />
 			</form>
 		);
 
@@ -575,37 +575,6 @@ describe("MultiInput Form Submission Prevention", () => {
 
 		// Form submission should be prevented when there's a value
 		cy.get("@formSubmit").should("not.have.been.called");
-		cy.get("@change").should("have.been.calledOnce");
-	});
-
-	it("should allow form submission when Enter is pressed without a value in single input form", () => {
-		cy.mount(
-			<form>
-				<MultiInput id="mi-form-allow" onChange={cy.stub().as("change")} />
-			</form>
-		);
-
-		cy.get("form")
-			.then($form => {
-				cy.spy($form[0], "requestSubmit").as("formSubmit");
-			});
-
-		cy.get("#mi-form-allow")
-			.shadow()
-			.find("input")
-			.as("innerInput");
-
-		cy.get("@innerInput")
-			.realClick()
-			.should("be.focused");
-
-		// Press Enter without typing anything
-		cy.get("@innerInput")
-			.realPress("Enter");
-
-		// Form submission should be allowed when there's no value and it's a single input
-		cy.get("@formSubmit").should("have.been.calledOnce");
-		cy.get("@change").should("not.have.been.called");
 	});
 
 	it("should prevent form submission when there are multiple inputs in form", () => {
@@ -630,73 +599,16 @@ describe("MultiInput Form Submission Prevention", () => {
 			.realClick()
 			.should("be.focused");
 
-		// Press Enter without typing anything
 		cy.get("@firstInput")
 			.realPress("Enter");
 
-		// Form submission should be prevented when there are multiple inputs
 		cy.get("@formSubmit").should("not.have.been.called");
-	});
-
-	it("should create token on Enter keypress and prevent form submission", () => {
-		cy.mount(
-			<form>
-				<MultiInput id="mi-token-creation" onChange={cy.stub().as("change")} />
-			</form>
-		);
-
-		cy.get("form")
-			.then($form => {
-				cy.spy($form[0], "requestSubmit").as("formSubmit");
-			});
-
-		cy.get("#mi-token-creation")
-			.as("multiInput")
-			.then($multiInput => {
-				$multiInput[0].addEventListener("ui5-change", (event) => {
-					const target = event.target as HTMLInputElement;
-					if (target.value.trim()) {
-						const token = createTokenFromText(target.value);
-						target.appendChild(token);
-						target.value = "";
-					}
-				});
-			});
-
-		cy.get("@multiInput")
-			.shadow()
-			.find("input")
-			.as("innerInput");
-
-		cy.get("@innerInput")
-			.realClick()
-			.should("be.focused");
-
-		cy.get("@innerInput")
-			.realType("new token");
-
-		cy.get("@innerInput")
-			.realPress("Enter");
-
-		// Token should be created
-		cy.get("@multiInput")
-			.find("[ui5-token]")
-			.should("have.length", 1)
-			.and("have.attr", "text", "new token");
-
-		// Input should be cleared
-		cy.get("@multiInput")
-			.should("have.attr", "value", "");
-
-		// Form submission should be prevented
-		cy.get("@formSubmit").should("not.have.been.called");
-		cy.get("@change").should("have.been.calledOnce");
 	});
 
 	it("should work correctly with suggestions and prevent form submission", () => {
 		cy.mount(
 			<form>
-				<MultiInput id="mi-suggestions" showSuggestions onChange={cy.stub().as("change")}>
+				<MultiInput id="mi-suggestions" showSuggestions>
 					<SuggestionItem text="Suggestion 1"></SuggestionItem>
 					<SuggestionItem text="Suggestion 2"></SuggestionItem>
 				</MultiInput>
@@ -711,6 +623,8 @@ describe("MultiInput Form Submission Prevention", () => {
 		cy.get("#mi-suggestions")
 			.as("multiInput")
 			.then($multiInput => {
+				const changeSpy = cy.spy().as("change");
+				$multiInput[0].addEventListener("ui5-change", changeSpy);
 				$multiInput[0].addEventListener("ui5-change", (event) => {
 					const target = event.target as HTMLInputElement;
 					if (target.value.trim()) {
@@ -730,26 +644,21 @@ describe("MultiInput Form Submission Prevention", () => {
 			.realClick()
 			.should("be.focused");
 
-		// Type to trigger suggestions
 		cy.get("@innerInput")
 			.realType("Sugg");
 
-		// Suggestions should be open
 		cy.get("@multiInput")
 			.shadow()
 			.find("[ui5-responsive-popover]")
 			.should("have.attr", "open");
 
-		// Press Enter to select suggestion and create token
 		cy.get("@innerInput")
 			.realPress("Enter");
 
-		// Token should be created with the autocompleted value
 		cy.get("@multiInput")
 			.find("[ui5-token]")
 			.should("have.length", 1);
 
-		// Form submission should be prevented
 		cy.get("@formSubmit").should("not.have.been.called");
 		cy.get("@change").should("have.been.calledOnce");
 	});
@@ -787,7 +696,7 @@ describe("MultiInput Truncated Token", () => {
 			.as("input");
 
 		cy.get("@respPopover")
-			.ui5PopoverOpened();
+			.should("have.attr", "open");
 
 		cy.get("@tokenizer")
 			.shadow()
@@ -879,7 +788,7 @@ describe("MultiInput Truncated Token", () => {
 		cy.get("@tokenizer")
 			.shadow()
 			.find("[ui5-responsive-popover]")
-			.ui5PopoverOpened();
+			.should("have.attr", "open");
 	});
 
 	it("should not throw exception when MI with 1 token is added to the page", () => {

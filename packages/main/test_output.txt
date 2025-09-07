@@ -1,0 +1,33 @@
+npm warn cli npm v11.5.2 does not support Node.js v22.0.0. This version of npm supports the following node versions: `^20.17.0 || >=22.9.0`. You can find the latest version at https://nodejs.org/.
+npm warn config ignoring workspace config at C:\SAPDevelop\wbc2025\packages\main/.npmrc
+
+> @ui5/webcomponents@2.14.0 test
+> wc-dev test
+
+npm warn cli npm v11.5.2 does not support Node.js v22.0.0. This version of npm supports the following node versions: `^20.17.0 || >=22.9.0`. You can find the latest version at https://nodejs.org/.
+npm warn config ignoring workspace config at C:\SAPDevelop\wbc2025\packages\main/.npmrc
+nps is executing `test` : node "C:\SAPDevelop\wbc2025\packages\tools\lib\/test-runner/test-runner.js"
+(node:27716) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Found port 8080 from 'C:\SAPDevelop\wbc2025\.dev-server-port'
+executing: yarn cross-env WDIO_LOG_LEVEL=error wdio config/wdio.conf.cjs  --base-url http://localhost:8080/packages/main/ 
+yarn run v1.22.22
+$ C:\SAPDevelop\wbc2025\node_modules\.bin\cross-env WDIO_LOG_LEVEL=error wdio config/wdio.conf.cjs --base-url http://localhost:8080/packages/main/
+
+Execution of 5 workers started at 2025-09-07T20:32:15.268Z
+
+[0-2] RUNNING in chrome - C:\SAPDevelop\wbc2025\packages\main\test\specs\MultiComboBox.spec.js
+[0-3] RUNNING in chrome - C:\SAPDevelop\wbc2025\packages\main\test\specs\TableNavigation.spec.js
+[0-1] RUNNING in chrome - C:\SAPDevelop\wbc2025\packages\main\test\specs\MultiComboBox.mobile.spec.js
+[0-0] RUNNING in chrome - C:\SAPDevelop\wbc2025\packages\main\test\specs\ComboBox.mobile.spec.js
+[0-4] RUNNING in chrome - C:\SAPDevelop\wbc2025\packages\main\test\specs\Tokenizer.mobile.spec.js
+[0-0] (node:61072) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[0-0] (Use `node --trace-deprecation ...` to show where the warning was created)
+[0-3] (node:16332) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[0-3] (Use `node --trace-deprecation ...` to show where the warning was created)
+[0-4] (node:2572) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[0-4] (Use `node --trace-deprecation ...` to show where the warning was created)
+[0-2] (node:57536) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[0-2] (Use `node --trace-deprecation ...` to show where the warning was created)
+[0-1] (node:62100) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[0-1] (Use `node --trace-deprecation ...` to show where the warning was created)
