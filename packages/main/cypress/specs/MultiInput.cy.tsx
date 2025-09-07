@@ -696,7 +696,7 @@ describe("MultiInput Truncated Token", () => {
 			.as("input");
 
 		cy.get("@respPopover")
-			.should("have.attr", "open");
+			.ui5PopoverOpened();
 
 		cy.get("@tokenizer")
 			.shadow()
@@ -788,7 +788,7 @@ describe("MultiInput Truncated Token", () => {
 		cy.get("@tokenizer")
 			.shadow()
 			.find("[ui5-responsive-popover]")
-			.should("have.attr", "open");
+			.ui5PopoverOpened();
 	});
 
 	it("should not throw exception when MI with 1 token is added to the page", () => {
