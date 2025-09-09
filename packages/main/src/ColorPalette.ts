@@ -278,7 +278,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	/**
-	 * Handler for focusin event to detect when any item navigation is focused
+	 * Handler for focusin event to detect which item navigation is focused
 	 * @private
 	 */
 	_onAnyItemNavigationFocus = (e: FocusEvent) => {
