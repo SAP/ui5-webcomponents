@@ -117,8 +117,8 @@
 						<ui5-toolbar-button icon="employee" text="Right 4"></ui5-toolbar-button>
 						<ui5-toolbar-button id="myOverflowBtn" prevent-overflow-closing icon="employee"
 							text="User Menu"></ui5-toolbar-button>
-						<ui5-toolbar-item>
-							<ui5-button prevent-overflow-closing icon="employee" onclick="javaScript:alert('aaa');">User Menu</ui5-button>
+						<ui5-toolbar-item prevent-overflow-closing id="tralala">
+							<ui5-button icon="employee">User Menu</ui5-button>
 						</ui5-toolbar-item>
 					</ui5-toolbar>
 				</div>
@@ -402,6 +402,10 @@
 			// opener is set as property (the DOM reference of the ui5-toolbar-button#btnOpenMenu2)
 			menu2.open = !menu2.open;
 			menu2.opener = btnOpenMenu2;
+		});
+
+		tralala.addEventListener("ui5-click", function(event) {
+			alert("clicked");
 		});
 	</script>
 </body>

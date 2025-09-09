@@ -20,6 +20,10 @@ type ToolbarItemEventDetail = {
 	bubbles: true,
 })
 
+@event("click", {
+	bubbles: true,
+})
+
 @customElement({
 	tag: "ui5-toolbar-item",
 	languageAware: true,
@@ -127,6 +131,25 @@ class ToolbarItem extends UI5Element {
 				"ui5-tb-item": true,
 			},
 		};
+	}
+
+	_onClick = this.onClick.bind(this);
+
+	constructor() {
+		super();
+	}
+
+	/**
+	 * Handles the click event on the toolbar item.
+	 * It stops the event propagation and fires a "click" event with the target reference.
+	 * If `preventOverflowClosing` is false, it will also fire a "close-overflow" event.
+	 * @param {Event} e - The click event
+	 */
+	onClick(e: Event): void {
+		e.stopImmediatePropagation();
+		if (!this.preventOverflowClosing) {
+			this.fireDecoratorEvent("close-overflow");
+		}
 	}
 }
 

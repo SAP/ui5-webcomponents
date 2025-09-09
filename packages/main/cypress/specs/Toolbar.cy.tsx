@@ -4,7 +4,7 @@ import ToolbarSelect from "../../src/ToolbarSelect.js";
 import ToolbarSelectOption from "../../src/ToolbarSelectOption.js";
 import ToolbarSeparator from "../../src/ToolbarSeparator.js";
 import ToolbarSpacer from "../../src/ToolbarSpacer.js";
-import type ToolbarItem from "../../src/ToolbarItem.js";
+import ToolbarItem from "../../src/ToolbarItem.js";
 import add from "@ui5/webcomponents-icons/dist/add.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import employee from "@ui5/webcomponents-icons/dist/employee.js";
@@ -325,20 +325,20 @@ describe("Toolbar general interaction", () => {
 	it("Should render ui5-button by toolbar template, when slotting ui5-toolbar-button elements", () => {
 		cy.mount(
 			<Toolbar>
-				<ToolbarButton 
-					icon="decline" 
+				<ToolbarButton
+					icon="decline"
 					stableDomRef="tb-button-decline"
-					overflowPriority="NeverOverflow" 
-					text="Left 2" 
-				/>
-				<ToolbarButton 
-					icon="employee" 
 					overflowPriority="NeverOverflow"
-					text="Left 3" 
+					text="Left 2"
+				/>
+				<ToolbarButton
+					icon="employee"
+					overflowPriority="NeverOverflow"
+					text="Left 3"
 				/>
 			</Toolbar>
 		);
-	
+
 		cy.get("[ui5-toolbar]")
 			.find("[ui5-toolbar-button]")
 			.first()
@@ -353,51 +353,51 @@ describe("Toolbar general interaction", () => {
 			.should("be.visible")
 			.should("have.length", 2);
 	});
-	
+
 	it("Should call child events only once", () => {
 		cy.mount(
 			<>
 				<Toolbar data-testid="clickCountToolbar">
-					<ToolbarButton 
-						icon="add" 
-						text="Left 1 (long)" 
+					<ToolbarButton
+						icon="add"
+						text="Left 1 (long)"
 						data-testid="clickCounter"
 					/>
-					<ToolbarButton 
-						icon="decline" 
-						text="Left 2" 
+					<ToolbarButton
+						icon="decline"
+						text="Left 2"
 						data-testid="clearCounter"
 					/>
 				</Toolbar>
 				<input data-testid="input" defaultValue="0" />
 			</>
 		);
-	
+
 		// Create stubs for event tracking
 		cy.get("[data-testid='clickCountToolbar']")
 			.as("toolbar")
 			.then($toolbar => {
 				$toolbar.get(0).addEventListener("click", cy.stub().as("toolbarClickStub"));
 			});
-	
+
 		cy.get("[data-testid='clickCounter']")
 			.as("clickCounter")
 			.then($button => {
 				$button.get(0).addEventListener("click", cy.stub().as("counterClickStub"));
 			});
-	
+
 		cy.get("[data-testid='clearCounter']")
 			.as("clearCounter")
 			.then($button => {
 				$button.get(0).addEventListener("click", cy.stub().as("clearClickStub"));
 			});
-	
+
 		// Set up input manipulation logic
 		cy.get("@toolbar").then($toolbar => {
 			$toolbar.get(0).addEventListener("click", (e) => {
 				const input = document.querySelector("[data-testid='input']") as HTMLInputElement;
 				const target = e.target as HTMLElement;
-				
+
 				if (target.dataset.testid === "clearCounter") {
 					input.value = "0";
 				} else if (target.dataset.testid === "clickCounter") {
@@ -406,16 +406,16 @@ describe("Toolbar general interaction", () => {
 				}
 			});
 		});
-	
+
 		cy.get("[data-testid='input']").invoke("val", "0");
-	
+
 		cy.get("@clickCounter").realClick();
-	
+
 		cy.get("[data-testid='input']").should("have.prop", "value", "1");
-	
+
 		cy.get("@toolbarClickStub").should("have.been.calledOnce");
 		cy.get("@counterClickStub").should("have.been.calledOnce");
-	
+
 		cy.get("[data-testid='input']").invoke("val", "0");
 	});
 });
@@ -620,3 +620,99 @@ describe("Toolbar Button", () => {
 		cy.get("#value-input").should("have.value", "1");
 	});
 });
+
+describe("Toolbar Item", () => {
+    it("Should render ui5-toolbar-item with correct properties and not suppress events", () => {
+        // Mount the Toolbar with a ui5-toolbar-item wrapping a web component
+        cy.mount(
+            <Toolbar>
+                <ToolbarItem prevent-overflow-closing overflow-priority="AlwaysOverflow">
+                    <Button id="innerButton" icon="employee">User Menu</Button>
+                </ToolbarItem>
+            </Toolbar>
+        );
+
+        // Verify the ui5-toolbar-item has the correct properties
+        cy.get("ui5-toolbar-item").should((item) => {
+			expect(item).to.have.attr("prevent-overflow-closing");
+			expect(item).to.have.attr("overflow-priority", "AlwaysOverflow");
+		  });
+
+        // Verify the inner component (ui5-button) is rendered
+        cy.get("ui5-toolbar-item")
+            .find("ui5-button").should((button) => {
+				expect(button).to.exist;
+				expect(button).to.contain.text("User Menu");
+			  });
+
+        // Attach a click event to the inner button
+        cy.get("ui5-button#innerButton")
+            .then(button => {
+                button.get(0).addEventListener("click", cy.stub().as("buttonClicked"));
+            });
+
+        // Trigger a click event on the inner button
+        cy.get("ui5-button#innerButton").click();
+
+        // Verify the click event was triggered
+        cy.get("@buttonClicked").should("have.been.calledOnce");
+    });
+
+    it("Should respect prevent-overflow-closing property", () => {
+        // Mount the Toolbar with a ui5-toolbar-item
+        cy.mount(
+            <Toolbar>
+                <ToolbarItem overflow-priority="AlwaysOverflow" prevent-overflow-closing>
+                    <Button id="innerButton" icon="employee">User Menu</Button>
+                </ToolbarItem>
+            </Toolbar>
+        );
+
+        // Simulate overflow behavior
+        cy.get("ui5-toolbar-item")
+            .invoke("attr", "prevent-overflow-closing")
+            .should("exist");
+
+        // Verify the inner button is still visible and not hidden
+        cy.get("ui5-toolbar-item")
+            .find("ui5-button")
+            .should("be.visible");
+
+			cy.get("ui5-toolbar-item")
+            .find("ui5-button")
+            .realClick();
+		expect(cy.get("ui5-popover").should("be.visible"));
+    });
+
+    it("Should respect overflow-priority property", () => {
+        // Mount the Toolbar with multiple ui5-toolbar-items
+        cy.mount(
+            <Toolbar>
+                <ToolbarItem overflow-priority="AlwaysOverflow">
+                    <Button id="highPriorityButton" icon="employee">High Priority</Button>
+                </ToolbarItem>
+                <ToolbarItem overflow-priority="NeverOverflow">
+                    <Button id="lowPriorityButton" icon="employee">Low Priority</Button>
+                </ToolbarItem>
+            </Toolbar>
+        );
+
+        // Verify the overflow-priority property is respected
+        cy.get("ui5-toolbar-item[overflow-priority='AlwaysOverflow']")
+            .should("exist")
+            .should("have.attr", "overflow-priority", "AlwaysOverflow");
+
+        cy.get("ui5-toolbar-item[overflow-priority='NeverOverflow']")
+            .should("exist")
+            .should("have.attr", "overflow-priority", "NeverOverflow");
+
+        // Simulate overflow behavior and ensure high-priority item remains visible
+        cy.viewport(300, 1080); // Simulate a smaller viewport
+        cy.get("ui5-toolbar-item[overflow-priority='NeverOverflow']")
+            .should("be.visible");
+
+        // Ensure low-priority item is hidden or moved to overflow
+        cy.get("ui5-toolbar-item[overflow-priority='AlwaysOverflow']")
+            .should("not.be.visible");
+    });
+})

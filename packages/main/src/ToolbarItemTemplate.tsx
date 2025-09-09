@@ -1,5 +1,9 @@
-export default function ToolbarItemTemplate() {
+import type ToolbarItem from "./ToolbarItem.js";
+
+export default function ToolbarItemTemplate(this: ToolbarItem) {
 	return (
-		<slot></slot>
+		<div onClick={this._onClick}>
+			<slot></slot>
+		</div>
 	);
 }
