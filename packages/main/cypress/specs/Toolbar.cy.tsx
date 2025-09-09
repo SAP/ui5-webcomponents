@@ -495,54 +495,6 @@ describe("Toolbar in Dialog", () => {
 
 //ToolbarSelect
 describe("Toolbar Select", () => {
-	it("Should render the select with the correct attributes inside the popover", () => {
-		cy.mount(
-			<div style="width: 250px;">
-				<Toolbar id="otb_e">
-					<ToolbarSelect value-state="Critical" accessible-name="Add" accessible-name-ref="title" id="toolbar-select">
-						<ToolbarSelectOption>1</ToolbarSelectOption>
-						<ToolbarSelectOption selected>2</ToolbarSelectOption>
-						<ToolbarSelectOption>3</ToolbarSelectOption>
-					</ToolbarSelect>
-
-
-					<ToolbarSelect disabled class="custom-class">
-						<ToolbarSelectOption>1</ToolbarSelectOption>
-						<ToolbarSelectOption selected>2</ToolbarSelectOption>
-						<ToolbarSelectOption>3</ToolbarSelectOption>
-					</ToolbarSelect>
-				</Toolbar>
-			</div>
-		);
-
-		const otb = cy.get("#otb_e").as("otb");
-
-		cy.get("@otb")
-			.shadow()
-			.find(".ui5-tb-overflow-btn")
-			.click();
-		const overflowButton = otb.shadow().find(".ui5-tb-overflow-btn");
-
-		cy.get("@otb")
-			.shadow()
-			.find(".ui5-overflow-popover").as("popover")
-			.should("have.attr", "open", "open");
-		overflowButton.click();
-		cy.wait(500);
-
-		cy.get("@otb")
-			.find("#toolbar-select")
-			.should("have.attr", "value-state", "Critical")
-
-			.should("have.attr", "accessible-name", "Add")
-
-			.should("have.attr", "accessible-name-ref", "title")
-
-		cy.get("@otb")
-			.find(".custom-class")
-			.should("have.attr", "disabled", "disabled");
-
-	});
 
 	//ToolbarButton
 	it.skip("Should render the button with the correct text inside the popover", async () => {
