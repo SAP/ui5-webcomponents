@@ -90,8 +90,23 @@
 				new Popover({
 					title: "OpenUI5 Popover",
 					content: [
-						new Button({
-							text: "Some button"
+						new Button("someButton", {
+							text: "Open new OpenUI5 Popover",
+							press: function (oEvent) {
+								new Popover({
+									title: "New OpenUI5 Popover",
+									placement: "Bottom",
+									content: [
+										new Button({
+											text: "Focus stop"
+										})
+									],
+									initialFocus: "someButton",
+									afterClose: function () {
+										this.destroy();
+									}
+								}).openBy(oEvent.getSource());
+							}
 						})
 					],
 					initialFocus: "popoverButtonNoFocus",
