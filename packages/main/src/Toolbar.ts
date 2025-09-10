@@ -499,8 +499,7 @@ class Toolbar extends UI5Element {
 
 		let itemWidth = 0;
 
-		if (renderedItem && renderedItem.offsetWidth) {
-			const ItemCSSStyleSet = getComputedStyle(renderedItem);
+		if (renderedItem && !renderedItem.classList.contains("ui5-tb-popover-item") && renderedItem.offsetWidth && item._isRendering === false) {			const ItemCSSStyleSet = getComputedStyle(renderedItem);
 			itemWidth = renderedItem.offsetWidth + parsePxValue(ItemCSSStyleSet, "margin-inline-end")
 				+ parsePxValue(ItemCSSStyleSet, "margin-inline-start");
 		} else {
