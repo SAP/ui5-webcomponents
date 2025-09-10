@@ -611,30 +611,57 @@ describe("Toolbar Item", () => {
     });
 
     it("Should respect prevent-overflow-closing property", () => {
-        // Mount the Toolbar with a ui5-toolbar-item
-        cy.mount(
-            <Toolbar>
-                <ToolbarItem overflow-priority="AlwaysOverflow" prevent-overflow-closing>
-                    <Button id="innerButton" icon="employee">User Menu</Button>
-                </ToolbarItem>
-            </Toolbar>
-        );
+		// Mount the Toolbar with constrained width to force overflow
+		cy.mount(
+			<div style={{ width: "200px" }}>
+				<Toolbar>
+					<ToolbarItem overflow-priority="AlwaysOverflow" prevent-overflow-closing>
+						<Button id="preventCloseButton" icon="employee">Prevent Close</Button>
+					</ToolbarItem>
+					<ToolbarItem overflow-priority="AlwaysOverflow">
+						<Button id="normalButton" icon="add">Normal Button</Button>
+					</ToolbarItem>
+				</Toolbar>
+			</div>
+		);
 
-        // Simulate overflow behavior
-        cy.get("ui5-toolbar-item")
-            .invoke("attr", "prevent-overflow-closing")
-            .should("exist");
+		// Wait for overflow processing
+		cy.wait(500);
 
-        // Verify the inner button is still visible and not hidden
-        cy.get("ui5-toolbar-item")
-            .find("ui5-button")
-            .should("be.visible");
+		// Click the overflow button to open the popover
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-tb-overflow-btn")
+			.click();
 
-			cy.get("ui5-toolbar-item")
-            .find("ui5-button")
-            .realClick();
-		expect(cy.get("ui5-popover").should("be.visible"));
-    });
+		// Verify the popover is open
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-overflow-popover")
+			.should("have.prop", "open", true);
+
+		// Click on the item with prevent-overflow-closing
+		cy.get("ui5-toolbar-item[prevent-overflow-closing]")
+			.find("ui5-button")
+			.click();
+
+		// Verify the popover remains open
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-overflow-popover")
+			.should("have.prop", "open", true);
+
+		// Optional: Test that normal items still close the popover
+		cy.get("ui5-toolbar-item:not([prevent-overflow-closing])")
+			.find("ui5-button")
+			.click();
+
+		// Verify the popover closes
+		cy.get("ui5-toolbar")
+			.shadow()
+			.find(".ui5-overflow-popover")
+			.should("have.prop", "open", false);
+	});
 
     it("Should respect overflow-priority property", () => {
         // Mount the Toolbar with multiple ui5-toolbar-items
