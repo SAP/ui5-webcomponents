@@ -78,7 +78,7 @@ const _keydownListener = (event: KeyboardEvent) => {
 };
 
 const attachGlobalListener = () => {
-	document.addEventListener("keydown", _keydownListener);
+	document.addEventListener("keydown", _keydownListener, true);
 };
 
 const detachGlobalListener = () => {
