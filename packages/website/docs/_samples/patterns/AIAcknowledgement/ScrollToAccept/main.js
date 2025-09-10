@@ -16,12 +16,7 @@ let hasScrolledToBottom = false;
 dialog.open = true;
 
 acceptButton.addEventListener("click", function (event) {
-	if (!hasScrolledToBottom) {
-		event.preventDefault();
-		return;
-	}
-
-	if (!checkbox.checked) {
+	if (!hasScrolledToBottom || !checkbox.checked) {
 		event.preventDefault();
 	}
 });
