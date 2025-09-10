@@ -140,7 +140,6 @@ class ToolbarItem extends UI5Element {
 	/**
 	 * Handles the click event on the toolbar item.
 	 * If `preventOverflowClosing` is false, it will fire a "close-overflow" event.
-	 * @param {Event} e
 	 */
 	onClick(e: Event): void {
 		e.stopImmediatePropagation();
