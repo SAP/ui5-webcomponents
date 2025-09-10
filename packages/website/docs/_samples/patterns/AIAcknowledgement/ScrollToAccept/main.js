@@ -22,14 +22,14 @@ acceptButton.addEventListener("click", function (event) {
 });
 
 checkbox.addEventListener("mousedown", (event) => {
-		if (!hasScrolledToBottom) {
-			event.preventDefault();
-		}
-	});
+	if (!hasScrolledToBottom) {
+		event.preventDefault();
+	}
+});
 
 checkbox.addEventListener("change", () => {
-		acceptButton.disabled = !(hasScrolledToBottom && checkbox.checked);
-	});
+	acceptButton.disabled = !(hasScrolledToBottom && checkbox.checked);
+});
 
 termsPanel.addEventListener("scroll", function () {
 	const scrollTop = termsPanel.scrollTop,
