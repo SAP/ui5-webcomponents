@@ -839,10 +839,9 @@ class Calendar extends CalendarPart {
 	 * Helper method to format year range text
 	 * @private
 	 */
-	_formatYearRangeText(yearRange: CalendarYearRangeT, calendarType?: string) {
-		const actualCalendarType = calendarType || this.primaryCalendarType;
-		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: actualCalendarType as any });
-		const { rangeStart, rangeEnd } = this._createYearRangeDates(yearRange, actualCalendarType);
+	_formatYearRangeText(yearRange: CalendarYearRangeT) {
+		const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
+		const { rangeStart, rangeEnd } = this._createYearRangeDates(yearRange, this.primaryCalendarType);
 
 		const rangeStartText = yearFormat.format(rangeStart.toLocalJSDate());
 		const rangeEndText = yearFormat.format(rangeEnd.toLocalJSDate());

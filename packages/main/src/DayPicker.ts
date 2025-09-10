@@ -460,19 +460,11 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_isRangeEndDate(timestamp: number): boolean {
-		if (this.selectionMode === CalendarSelectionMode.Range) {
-			return timestamp === this.selectedDates[1];
-		}
-
-		return false;
+		return this.selectionMode === CalendarSelectionMode.Range && timestamp === this.selectedDates[1];
 	}
 
 	_isRangeStartDate(timestamp: number): boolean {
-		if (this.selectionMode === CalendarSelectionMode.Range) {
-			return timestamp === this.selectedDates[0];
-		}
-
-		return false;
+		return this.selectionMode === CalendarSelectionMode.Range && timestamp === this.selectedDates[0];
 	}
 
 	/**
