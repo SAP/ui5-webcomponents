@@ -50,7 +50,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/SAP/ui5-webcomponents.git",
+    "url": "https://github.com/UI5/webcomponents.git",
     "directory": "packages/fiori"
   },
   "dependencies": {
@@ -63,7 +63,7 @@
   "devDependencies": {
     "@ui5/cypress-internal": "0.0.0",
     "@ui5/webcomponents-tools": "2.14.0",
-    "chromedriver": "^138.0.5",
+    "chromedriver": "^139.0.3",
     "lit": "^2.0.0"
   }
 }
