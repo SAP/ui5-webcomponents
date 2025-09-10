@@ -133,16 +133,13 @@ class ToolbarItem extends UI5Element {
 		};
 	}
 
-	_onClick = this.onClick.bind(this);
-
 	constructor() {
 		super();
 	}
 
 	/**
 	 * Handles the click event on the toolbar item.
-	 * It stops the event propagation and fires a "click" event with the target reference.
-	 * If `preventOverflowClosing` is false, it will also fire a "close-overflow" event.
+	 * If `preventOverflowClosing` is false, it will fire a "close-overflow" event.
 	 * @param {Event} e - The click event
 	 */
 	onClick(e: Event): void {
