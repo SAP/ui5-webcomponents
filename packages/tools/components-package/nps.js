@@ -4,9 +4,9 @@ const LIB = path.join(__dirname, `../lib/`);
 let websiteBaseUrl = "/";
 
 if (process.env.DEPLOY) {
-	websiteBaseUrl = "/ui5-webcomponents/";
+	websiteBaseUrl = "/webcomponents/";
 } else if (process.env.DEPLOY_NIGHTLY) {
-	websiteBaseUrl = "/ui5-webcomponents/nightly/";
+	websiteBaseUrl = "/webcomponents/nightly/";
 }
 
 const cypressEnvVariables = (options, predefinedVars) => {
