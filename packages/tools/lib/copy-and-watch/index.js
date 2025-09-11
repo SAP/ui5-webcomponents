@@ -30,38 +30,14 @@ const globParent = require('glob-parent');
 
 /* CODE */
 
-const args = process.argv.slice(2);
-const options = {};
-
-['watch', 'clean', 'skip-initial-copy', 'safe',  'silent'].forEach(key => {
-	const index = args.indexOf(`--${key}`);
-	if (index >= 0) {
-		options[key] = true;
-		args.splice(index, 1);
-	}
-});
-
-if (args.length < 2) {
-	console.error('Not enough arguments: copy-and-watch [options] <sources> <target>'.red);
-	process.exit(1);
-}
-
-if (options['skip-initial-copy'] && !options['watch']) {
-	console.error('--skip-initial-copy argument is meant to be used with --watch, otherwise no files will be copied'.red);
-	process.exit(1);
-}
-
-const target = args.pop();
-const sources = args;
-const parents = [...new Set(sources.map(globParent))];
-
-const findTarget = from => {
+const findTarget = (from, parents, target) => {
 	const parent = parents
 		.filter(p => from.indexOf(p) >= 0)
 		.sort()
 		.reverse()[0];
 	return path.join(target, path.relative(parent, from));
 };
+
 const createDirIfNotExist = to => {
 	'use strict';
 
@@ -79,21 +55,26 @@ const createDirIfNotExist = to => {
 		}
 	});
 };
-const copy = from => {
-	const to = findTarget(from);
+
+const copy = (from, parents, target, silent = false) => {
+	const to = findTarget(from, parents, target);
 	createDirIfNotExist(to);
 	const stats = fs.statSync(from);
 	if (stats.isDirectory()) {
 		return;
 	}
 	fs.writeFileSync(to, fs.readFileSync(from));
-	options.silent || console.log('[COPY]'.yellow, from, 'to'.yellow, to);
+	silent || console.log('[COPY]'.yellow, from, 'to'.yellow, to);
 };
-const remove = from => {
-	const to = findTarget(from);
-	fs.unlinkSync(to);
-	options.silent || console.log('[DELETE]'.yellow, to);
+
+const remove = (from, parents, target, silent = false) => {
+	const to = findTarget(from, parents, target);
+	if (fs.existsSync(to)) {
+		fs.unlinkSync(to);
+		silent || console.log('[DELETE]'.yellow, to);
+	}
 };
+
 const rimraf = dir => {
 	if (fs.existsSync(dir)) {
 		fs.readdirSync(dir).forEach(entry => {
@@ -108,38 +89,67 @@ const rimraf = dir => {
 	}
 };
 
-// clean
-if (options.clean) {
-	rimraf(target);
-}
+const copyAndWatch = (sources, target, options = {}) => {
+	const {
+		watch = false,
+		clean = false,
+		skipInitialCopy = false,
+		safe = false,
+		silent = false
+	} = options;
 
-// initial copy
-if (!options['skip-initial-copy']) {
-	sources.forEach(s => glob.sync(s).forEach(copy));
-}
-
-// watch
-if (options.watch) {
-	const chokidarOptions = {
-		ignoreInitial: true
-	};
-
-	if (options.safe) {
-		chokidarOptions.awaitWriteFinish = {
-			stabilityThreshold: 500,
-			pollInterval: 100
-		};
+	if (!sources || !target) {
+		throw new Error('Sources and target are required');
 	}
 
-	chokidar
-		.watch(sources, chokidarOptions)
-		.on('ready', () => sources.forEach(s => {
-			options.silent || console.log('[WATCH]'.yellow, s);
-		}))
-		.on('add', copy)
-		.on('addDir', copy)
-		.on('change', copy)
-		.on('unlink', remove)
-		.on('unlinkDir', remove)
-		.on('error', e => console.log('[ERROR]'.red, e));
-}
+	const sourceArray = Array.isArray(sources) ? sources : [sources];
+	const parents = [...new Set(sourceArray.map(globParent))];
+
+	// clean
+	if (clean) {
+		rimraf(target);
+	}
+
+	// initial copy
+	if (!skipInitialCopy) {
+		sourceArray.forEach(s => glob.sync(s).forEach(file => copy(file, parents, target, silent)));
+	}
+
+	// watch
+	if (watch) {
+		const chokidarOptions = {
+			ignoreInitial: true
+		};
+
+		if (safe) {
+			chokidarOptions.awaitWriteFinish = {
+				stabilityThreshold: 500,
+				pollInterval: 100
+			};
+		}
+
+		const watcher = chokidar
+			.watch(sourceArray, chokidarOptions)
+			.on('ready', () => sourceArray.forEach(s => {
+				silent || console.log('[WATCH]'.yellow, s);
+			}))
+			.on('add', file => copy(file, parents, target, silent))
+			.on('addDir', file => copy(file, parents, target, silent))
+			.on('change', file => copy(file, parents, target, silent))
+			.on('unlink', file => remove(file, parents, target, silent))
+			.on('unlinkDir', file => remove(file, parents, target, silent))
+			.on('error', e => console.log('[ERROR]'.red, e));
+
+		return watcher;
+	}
+
+	return null;
+};
+
+module.exports = copyAndWatch;
+module.exports.copyAndWatch = copyAndWatch;
+module.exports.rimraf = rimraf;
+module.exports.copy = copy;
+module.exports.remove = remove;
+module.exports.createDirIfNotExist = createDirIfNotExist;
+module.exports.findTarget = findTarget;

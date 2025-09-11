@@ -42,6 +42,8 @@ const generate = async () => {
 	]);
 }
 
-generate().then(() => {
-	console.log("CLDR files generated.");
-});
+// generate().then(() => {
+// 	console.log("CLDR files generated.");
+// });
+
+export default generate;

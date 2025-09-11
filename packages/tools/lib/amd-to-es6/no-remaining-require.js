@@ -1,6 +1,5 @@
 const fs = require("fs").promises;
 const path = require("path");
-const basePath = process.argv[2];
 const babelCore = require("@babel/core");
 const babelParser = require("@babel/parser");
 const babelGenerator = require("@babel/generator").default;
@@ -12,11 +11,11 @@ const checkHasRequire = (filePath, code) => {
 	const tree = babelParser.parse(code, { sourceType: "module" });
 	walk(tree, {
 		CallExpression: function (node) {
-            if (node.type === "CallExpression" && node?.callee?.name === "unhandledRequire") {
-                throw new Error(`sap.ui.require found in ${filePath}`);
-            }
-    	}
-    });
+			if (node.type === "CallExpression" && node?.callee?.name === "unhandledRequire") {
+				throw new Error(`sap.ui.require found in ${filePath}`);
+			}
+		}
+	});
 }
 
 const checkFile = async (filePath) => {
@@ -24,10 +23,14 @@ const checkFile = async (filePath) => {
 	checkHasRequire(filePath, code);
 }
 
-const checkAll = async () => {
+const checkAll = async (distFolder) => {
+	const basePath = distFolder;
+
 	const { globby } = await import("globby");
 	const fileNames = await globby(basePath.replace(/\\/g, "/") + "**/*.js");
 	return Promise.all(fileNames.map(checkFile).filter(x => !!x));
 };
 
-checkAll();
+// checkAll();
+
+module.exports = checkAll;

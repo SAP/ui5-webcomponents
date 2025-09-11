@@ -1,5 +1,6 @@
-import fs from "fs/promises";
-import assets from "@ui5/webcomponents-tools/assets-meta.js";
+const fs = require("fs").promises;
+const assets = require("@ui5/webcomponents-tools/assets-meta.js");
+
 
 const fileContent = `const assetParameters = ${JSON.stringify(assets)};
 
@@ -22,6 +23,8 @@ const generate = async () => {
 	return fs.writeFile("src/generated/AssetParameters.ts", fileContent);
 }
 
-generate().then(() => {
-	console.log("Assets parameters generated.");
-});
+// generate().then(() => {
+// 	console.log("Assets parameters generated.");
+// });
+
+module.exports = generate;
