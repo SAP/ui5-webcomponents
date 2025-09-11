@@ -13,6 +13,7 @@
   "scripts": {},
   "bin": {
     "wc-dev": "bin/dev.js",
+    "ui5nps": "bin/ui5nps.js",
     "wc-create-ui5-element": "bin/create-ui5-element.js"
   },
   "repository": {
