@@ -410,7 +410,7 @@ describe("Items selection", () => {
             .eq(0)
             .shadow()
             .find("[ui5-checkbox]")
-            .click({ force: true });
+            .realClick();
 
         cy.get("[ui5-multi-combobox]")
             .shadow()
@@ -428,9 +428,10 @@ describe("Items selection", () => {
 
     it("Should not allow additional selection when readonly", () => {
         cy.mount(
-            <MultiComboBox>
+            <MultiComboBox readonly>
                 <MultiComboBoxItem text="Compact" selected />
                 <MultiComboBoxItem text="Cosy" />
+                <MultiComboBoxItem text="Condensed" selected />
                 <MultiComboBoxItem text="Some text" selected />
             </MultiComboBox>
         );
@@ -453,7 +454,7 @@ describe("Items selection", () => {
             .eq(1)
             .shadow()
             .find("[ui5-checkbox]")
-            .click({ force: true });
+            .realClick();
 
         cy.get("[ui5-multi-combobox]")
             .shadow()
@@ -466,7 +467,7 @@ describe("Items selection", () => {
             .shadow()
             .find("[ui5-tokenizer]")
             .find("[ui5-token]")
-            .should("have.length", 2);
+            .should("have.length", 3);
     });
 
     it("Should select all items when clicking select all", () => {
