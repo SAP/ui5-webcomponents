@@ -350,7 +350,11 @@ class Tokenizer extends UI5Element {
 	_previousToken: Token | null = null;
 	_focusedElementBeforeOpen?: HTMLElement | null;
 	_deletedDialogItems!: Token[];
-	_focusedToken?: Token;
+	/**
+	 * Scroll to end when tokenizer is expanded
+	 * @private
+	 */
+	_scrollToEndOnExpand = false;
 
 	_handleResize() {
 		this._nMoreCount = this.overflownTokens.length;
@@ -408,7 +412,6 @@ class Tokenizer extends UI5Element {
 
 		this._tokens.forEach(token => {
 			token.forcedTabIndex = "-1";
-			this._focusedToken = token;
 		});
 
 		this._skipTabIndex = true;
@@ -484,8 +487,8 @@ class Tokenizer extends UI5Element {
 	 * @protected
 	 */
 	_scrollToEndIfNeeded() {
-		// if token is focused skip scroll to the end
-		if (this._focusedToken) {
+		// if scroll to end is prevented, skip scroll to the end
+		if (!this._scrollToEndOnExpand) {
 			return;
 		}
 
@@ -917,7 +920,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	_addTokenToNavigation(token: Token) {
-		this._focusedToken = token;
+		this._scrollToEndOnExpand = false;
 		this._itemNav.setCurrentItem(token);
 	}
 
@@ -929,7 +932,6 @@ class Tokenizer extends UI5Element {
 		});
 
 		this._itemNav._currentIndex = -1;
-		this._focusedToken = undefined;
 		this._skipTabIndex = true;
 
 		if (!this.contains(relatedTarget)) {
@@ -1034,7 +1036,7 @@ class Tokenizer extends UI5Element {
 
 		const tokenRect = token.getBoundingClientRect();
 		const tokenContainerRect = this.contentDom.getBoundingClientRect();
-		const oneSideBborderAndPaddingOffset = 5;
+		const oneSideBorderAndPaddingOffset = 5;
 
 		const isLastToken = this._tokens.indexOf(token as Token) === this._tokens.length - 1;
 		if (isLastToken) {
@@ -1043,9 +1045,9 @@ class Tokenizer extends UI5Element {
 		}
 
 		if (tokenRect.left < tokenContainerRect.left) {
-			this._scrollEnablement?.scrollTo(this.contentDom.scrollLeft - (tokenContainerRect.left - tokenRect.left + oneSideBborderAndPaddingOffset), 0);
+			this._scrollEnablement?.scrollTo(this.contentDom.scrollLeft - (tokenContainerRect.left - tokenRect.left + oneSideBorderAndPaddingOffset), 0);
 		} else if (tokenRect.right > tokenContainerRect.right) {
-			this._scrollEnablement?.scrollTo(this.contentDom.scrollLeft + (tokenRect.right - tokenContainerRect.right + oneSideBborderAndPaddingOffset), 0);
+			this._scrollEnablement?.scrollTo(this.contentDom.scrollLeft + (tokenRect.right - tokenContainerRect.right + oneSideBorderAndPaddingOffset), 0);
 		}
 	}
 

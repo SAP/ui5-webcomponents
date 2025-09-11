@@ -663,6 +663,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_showFilteredItems() {
 		this.filterSelected = true;
 		this._showMorePressed = true;
+		this._tokenizer._scrollToEndOnExpand = true;
 
 		this._toggleTokenizerPopover();
 	}
@@ -1749,6 +1750,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		this._tokenizer.preventInitialFocus = true;
 
 		if (this.open && !isPhone()) {
+			this._tokenizer._scrollToEndOnExpand = true;
 			this._tokenizer.expanded = true;
 		}
 
@@ -1849,6 +1851,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	inputFocusIn(e: FocusEvent) {
 		if (!isPhone()) {
 			this.focused = true;
+			this._tokenizer._scrollToEndOnExpand = true;
 			this._tokenizer.expanded = true;
 		} else {
 			this._innerInput.blur();

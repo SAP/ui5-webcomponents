@@ -209,12 +209,17 @@ class MultiInput extends Input implements IFormInputElement {
 	}
 
 	innerFocusIn() {
+		this.tokenizer._scrollToEndOnExpand = true;
 		this.tokenizer.expanded = true;
 		this.focused = true;
 
 		this.tokens.forEach(token => {
 			token.selected = false;
 		});
+	}
+
+	_showMoreItemsPress() {
+		this.tokenizer._scrollToEndOnExpand = true;
 	}
 
 	_onkeydown(e: KeyboardEvent) {
