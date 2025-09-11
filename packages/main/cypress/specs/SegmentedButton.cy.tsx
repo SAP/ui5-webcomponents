@@ -376,6 +376,21 @@ describe("SegmentedButton Accessibility", () => {
 			.find(".ui5-segmented-button-root")
 			.should("have.attr", "aria-description", `${DESCRIPTION} ${SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIBEDBY)}`);
 	});
+
+	it("segmented button should have correct aria multiselectable and aria orientation attributes set", () => {
+		cy.mount(
+			<SegmentedButton selectionMode="Multiple">
+				<SegmentedButtonItem>First</SegmentedButtonItem>
+				<SegmentedButtonItem>Second</SegmentedButtonItem>
+			</SegmentedButton>
+		);
+
+		cy.get("[ui5-segmented-button]")
+			.shadow()
+			.find(".ui5-segmented-button-root")
+			.should("have.attr", "aria-multiselectable", "false")
+			.and("have.attr", "aria-orientation", "horizontal");
+	})
 });
 
 

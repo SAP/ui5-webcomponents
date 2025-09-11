@@ -10,10 +10,11 @@ export default function SegmentedButtonTemplate(this: SegmentedButton) {
 			onKeyDown={this._onkeydown}
 			onKeyUp={this._onkeyup}
 			onFocusIn={this._onfocusin}
-			aria-multiselectable="true"
+			aria-multiselectable="false"
 			aria-description={this.ariaDescriptionText}
 			aria-label={this.ariaLabelText}
 			aria-roledescription={this.ariaRoleDescription}
+			aria-orientation="horizontal"
 		>
 			<slot></slot>
 		</ul>
