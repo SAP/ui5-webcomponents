@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.4](https://github.com/UI5/webcomponents/compare/v2.13.3...v2.13.4) (2025-09-11)
+
+
+### Bug Fixes
+
+* **ui5-toast:** fix toast spacing in safari ([3c7c9b2](https://github.com/UI5/webcomponents/commit/3c7c9b27597e2814a730bb6c9171d9a51c95e25a))
+
+
+
+
+
 ## [2.13.3](https://github.com/SAP/ui5-webcomponents/compare/v2.13.2...v2.13.3) (2025-08-22)
 
 
