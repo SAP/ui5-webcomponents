@@ -310,7 +310,7 @@ describe("Items selection", () => {
             .as("token");
 
         cy.get("@token")
-            .should("have.length", 1)
+            .should("have.length", 1);
 
         cy.get("@token")
             .shadow()
@@ -385,6 +385,7 @@ describe("Items selection", () => {
             .shadow()
             .find("[ui5-tokenizer]")
             .find("[ui5-token]")
+            .should("have.length", 1);
     });
 
     it("Should not allow deselection when readonly", () => {
@@ -599,6 +600,7 @@ describe("Value state header", () => {
 
         cy.get("@respPopover")
             .find("[ui5-input]")
+            .should("have.attr", "value-state", "Negative");
     });
 });
 
