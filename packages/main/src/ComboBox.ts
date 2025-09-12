@@ -960,7 +960,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		if (isEscape(e)) {
 			this.focused = true;
-			this.value = !this.open ? this._lastValue : this.value;
+			if (!this.open && this.value !== this._lastValue) {
+				this.value = this._lastValue;
+				e.stopPropagation();
+			}
 		}
 
 		if ((isTabNext(e) || isTabPrevious(e)) && this.open) {
