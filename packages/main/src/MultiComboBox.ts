@@ -908,12 +908,22 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		});
 	}
 
-	_handlePaste(e: ClipboardEvent) {
-		if (this.readonly || !e.clipboardData) {
+	async _handlePaste(e: ClipboardEvent) {
+		if (this.readonly) {
 			return;
 		}
 
-		const pastedText = (e.clipboardData).getData("text/plain");
+		e.preventDefault();
+
+		const pastedText = await navigator.clipboard.readText();
+		document.execCommand("insertText", true, pastedText ?? "");
+		const inputEvent = new Event("input", {
+			bubbles: true,
+			cancelable: true,
+		});
+
+		// Dispatch it
+		this._innerInput.dispatchEvent(inputEvent);
 
 		if (!pastedText) {
 			return;
@@ -936,8 +946,17 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		if (this.readonly || isFirefox()) {
 			return;
 		}
+		e.preventDefault();
 
 		const pastedText = await navigator.clipboard.readText();
+		document.execCommand("insertText", true, pastedText ?? "");
+		const inputEvent = new Event("input", {
+			bubbles: true,
+			cancelable: true,
+		});
+
+		// Dispatch it
+		this._innerInput.dispatchEvent(inputEvent);
 
 		if (!pastedText) {
 			return;
@@ -2000,7 +2019,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const links: Array<HTMLElement> = [];
 		if (this.valueStateMessage) {
 			this.valueStateMessage.forEach(element => {
-				if (element.children.length)	{
+				if (element.children.length) {
 					element.querySelectorAll("ui5-link").forEach(link => {
 						links.push(link as HTMLElement);
 					});
