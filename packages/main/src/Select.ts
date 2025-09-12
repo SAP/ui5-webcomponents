@@ -868,7 +868,12 @@ class Select extends UI5Element implements IFormInputElement {
 
 	_applyFocusToSelectedItem() {
 		this.options.forEach(option => {
-			option.focused = option.selected;
+			if (option.selected) {
+				option.focused = true;
+				option.focus();
+			} else {
+				option.focused = false;
+			}
 		});
 	}
 

@@ -461,6 +461,42 @@ describe("Select - Popover", () => {
 			.should("be.visible")
 			.should("have.text", "Custom message");
 	});
+
+	it("ResponsivePopover should not have accessible name on desktop", () => {
+		cy.mount(
+			<Select id="desktopSelect">
+				<Option value="option1">Option 1</Option>
+				<Option value="option2">Option 2</Option>
+				<Option value="option3">Option 3</Option>
+			</Select>
+		);
+
+		// Open the popover
+		cy.get("#desktopSelect").realClick();
+
+		// Check that the ResponsivePopover does not have an accessible name on desktop
+		cy.get("#desktopSelect")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.should("not.have.attr", "accessible-name");
+	});
+
+	it("should focus the selected option when popover opens", () => {
+		cy.mount(
+			<Select id="select" value="option2">
+				<Option id="opt1" value="option1">Option 1</Option>
+				<Option id="opt2" value="option2">Option 2</Option>
+				<Option id="opt3" value="option3">Option 3</Option>
+			</Select>
+		);
+
+        cy.get("#select").realClick();
+
+		cy.get("#opt2").should("have.attr", "focused");
+		cy.get("#opt2").shadow()
+            .find(".ui5-li-root")
+            .should("be.focused");
+	});
 });
 
 describe("Select - Properties", () => {
