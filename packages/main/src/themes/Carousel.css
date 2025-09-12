@@ -8,8 +8,8 @@
     height: 100%;
 }
 
-:host([desktop]) .ui5-carousel-root:focus,
-.ui5-carousel-root:focus-visible {
+:host([desktop]) .ui5-carousel-item:focus,
+.ui5-carousel-item:focus-visible {
     outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 }
 
