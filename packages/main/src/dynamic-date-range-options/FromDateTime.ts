@@ -1,14 +1,14 @@
-import DateRangeTemplate from "./DateRangeTemplate.js";
+import FromDateTimeTemplate from "./FromDateTimeTemplate.js";
 import type { DynamicDateRangeValue, IDynamicDateRangeOption } from "../DynamicDateRange.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+// import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 import {
     DATETIME_PICKER_DATE_BUTTON,
     DATETIME_PICKER_TIME_BUTTON,
 	DYNAMIC_DATE_RANGE_DATERANGE_TEXT,
 } from "../generated/i18n/i18n-defaults.js";
-import { dateRangeOptionToDates } from "./toDates.js";
+import { dateTimeOptionToDates } from "./toDates.js";
 import DynamicDateRange from "../DynamicDateRange.js";
 
 /**
@@ -20,26 +20,20 @@ import DynamicDateRange from "../DynamicDateRange.js";
 
 class FromDateTime implements IDynamicDateRangeOption {
 	template: JsxTemplate;
-
-	/**
-	 * Defines the visibility of the time view in `phoneMode`.
-	 * For more information, see the `phoneMode` property.
-	 *
-	 * **Note:** The date view would be displayed by default.
-	 * @default false
-	 * @private
-	 */
-	_showTimeView = false
+	private _showTimeView: boolean;
+	private _currentDateValue: Date;
 
 	constructor() {
-		this.template = DateRangeTemplate;
+		this.template = FromDateTimeTemplate;
+		this._showTimeView = false;
+		this._currentDateValue = new Date();
 	}
 
 	parse(value: string): DynamicDateRangeValue {
+		const date = this.getFormat().parse(value) as Date;
 		const returnValue = { operator: "", values: [] } as DynamicDateRangeValue;
-
 		returnValue.operator = this.operator;
-		returnValue.values = this.getFormat().parse(value) as Date[];
+		returnValue.values = [date];
 
 		return returnValue;
 	}
@@ -47,17 +41,21 @@ class FromDateTime implements IDynamicDateRangeOption {
 	format(value: DynamicDateRangeValue) {
 		const valuesArray = value?.values as Array<Date>;
 
-		if (!valuesArray || valuesArray.length !== 2 || !valuesArray[1]) {
+		if (!valuesArray || valuesArray.length === 0) {
 			return "";
 		}
 
-		const formattedValue = this.getFormat().format(valuesArray);
+		const formattedValue = this.getFormat().format(valuesArray[0]);
 
 		return formattedValue;
 	}
 
 	toDates(value: DynamicDateRangeValue): Array<Date> {
-		return dateRangeOptionToDates(value);
+		return dateTimeOptionToDates(value);
+	}
+
+	resetState?: (() => void) | undefined = () => {
+		this._showTimeView = false;
 	}
 
 	get text(): string {
@@ -89,14 +87,30 @@ class FromDateTime implements IDynamicDateRangeOption {
 		return DynamicDateRange.i18nBundle.getText(DATETIME_PICKER_TIME_BUTTON);
 	}
 
+	getDateValue(date: Date | undefined) : string {
+		if (date) {
+			return this.getDateFormat().format(date);
+		}
+
+		return this._currentDateValue ? this.getDateFormat().format(this._currentDateValue) : "";
+	}
+
+	getTimeValue(date: Date | undefined) : string	 {
+		if (date) {
+			return this.getFormat().format(date);
+		}
+
+		return this._currentDateValue ? this.getFormat().format(this._currentDateValue) : "";
+	}
+
 	_dateTimeSwitchChange() {
 		this._showTimeView = !this._showTimeView;
 	}
 
 	isValidString(value: string): boolean {
-		const dates = this.getFormat().parse(value) as Array<Date>;
+		const date = this.getFormat().parse(value) as Date;
 
-		if (!dates[0] || !dates[1] || Number.isNaN(dates[0].getTime()) || Number.isNaN(dates[1].getTime())) {
+		if (!date || Number.isNaN(date.getTime())) {
 			return false;
 		}
 
@@ -104,36 +118,56 @@ class FromDateTime implements IDynamicDateRangeOption {
 	}
 
 	getFormat(): DateFormat {
-		return DateFormat.getDateInstance({
+		return DateFormat.getDateTimeInstance({
 			strictParsing: true,
-			interval: true,
-			intervalDelimiter: " - ",
 		});
 	}
 
-	handleSelectionChange(e: CustomEvent): DynamicDateRangeValue | undefined {
-		const currentValue = { operator: "", values: [] } as DynamicDateRangeValue;
-		currentValue.values = [];
+	getDateFormat(): DateFormat {
+		return DateFormat.getDateInstance({
+			strictParsing: true,
+		});
+	}
+
+	getTimeFormat(): DateFormat {
+		return DateFormat.getTimeInstance({
+			strictParsing: true,
+		});
+	}
+
+	handleSelectionChange(e: CustomEvent, value: DynamicDateRangeValue | undefined): DynamicDateRangeValue | undefined {
+		const currentValue = value || { operator: "", values: [] } as DynamicDateRangeValue;
+		const target = e.target as HTMLElement;
+		currentValue.values = this._currentDateValue ? [this._currentDateValue] : [];
 		currentValue.operator = this.operator;
 
-		if (e.detail.selectedDates[0]) {
-			currentValue.values[0] = UI5Date.getInstance(e.detail.selectedDates[0] * 1000);
+		if (target.hasAttribute("ui5-segmented-button")) {
+			this._dateTimeSwitchChange();
+			return currentValue;
 		}
 
-		if (e.detail.selectedDates[1]) {
-			currentValue.values[1] = UI5Date.getInstance(e.detail.selectedDates[1] * 1000);
-		}
-
-		// Handle backwards date ranges by automatically flipping them
-		if (currentValue.values.length === 2 && currentValue.values[0] && currentValue.values[1]) {
-			const startDate = currentValue.values[0] as UI5Date;
-			const endDate = currentValue.values[1] as UI5Date;
-
-			// If start date is after end date, flip them
-			if (startDate.getTime() > endDate.getTime()) {
-				currentValue.values = [endDate, startDate];
+		if (target.hasAttribute("ui5-calendar")) {
+			if (e.detail.selectedDates[0]) {
+				const tempDate = new Date(e.detail.selectedDates[0] * 1000);
+				this._currentDateValue.setFullYear(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
+				currentValue.values = [this._currentDateValue];
 			}
 		}
+
+		if (target.hasAttribute("ui5-time-selection-clocks")) {
+			const tempValue = e.detail.value as string;
+			const tempDate = this.getFormat().parse(tempValue) as Date;
+			if (!this._currentDateValue && value?.values?.length) {
+				this._currentDateValue = value?.values[0] as Date;
+			}
+
+			if (tempDate) {
+				this._currentDateValue.setHours(tempDate.getHours(), tempDate.getMinutes(), tempDate.getSeconds());
+				currentValue.values = [this._currentDateValue];
+			}
+		}
+
+		this._showTimeView = true;
 
 		return currentValue;
 	}
