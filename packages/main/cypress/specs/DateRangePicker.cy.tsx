@@ -806,14 +806,14 @@ describe("Validation inside a form", () => {
 		cy.get("@submit")
 			.should("have.not.been.called");
 
-		cy.get("#dateRangePicker").as("dateRangePicker").then($el => {
-			const picker = $el[0] as any;
-			expect(picker.formValidity.valueMissing).to.be.true;
-			expect(picker.validity.valueMissing).to.be.true;
-			expect(picker.validity.valid).to.be.false;
-			expect(picker.checkValidity()).to.be.false;
-			expect(picker.reportValidity()).to.be.false;
-		});
+		cy.get("#dateRangePicker")
+			.as("dateRangePicker")
+			.ui5AssertValidityState({
+				formValidity: { valueMissing: true },
+				validity: { valueMissing: true, valid: false },
+				checkValidity: false,
+				reportValidity: false
+			});
 
 		cy.get("#dateRangePicker:invalid")
 			.should("exist");
@@ -821,14 +821,13 @@ describe("Validation inside a form", () => {
 		cy.get("@dateRangePicker")
 			.ui5DatePickerTypeDate("09/09/2020 - 10/10/2020");
 
-		cy.get("@dateRangePicker").then($el => {
-			const picker = $el[0] as any;
-			expect(picker.formValidity.valueMissing).to.be.false;
-			expect(picker.validity.valueMissing).to.be.false;
-			expect(picker.validity.valid).to.be.true;
-			expect(picker.checkValidity()).to.be.true;
-			expect(picker.reportValidity()).to.be.true;
-		});
+		cy.get("@dateRangePicker")
+			.ui5AssertValidityState({
+				formValidity: { valueMissing: false },
+				validity: { valueMissing: false, valid: true },
+				checkValidity: true,
+				reportValidity: true
+			});
 
 		cy.get("#dateRangePicker:invalid")
 			.should("not.exist");
@@ -856,14 +855,13 @@ describe("Validation inside a form", () => {
 		cy.get("@submit")
 			.should("have.not.been.called");
 
-		cy.get("@dateRangePicker").then($el => {
-			const picker = $el[0] as any;
-			expect(picker.formValidity.patternMismatch).to.be.true;
-			expect(picker.validity.patternMismatch).to.be.true;
-			expect(picker.validity.valid).to.be.false;
-			expect(picker.checkValidity()).to.be.false;
-			expect(picker.reportValidity()).to.be.false;
-		});
+		cy.get("@dateRangePicker")
+			.ui5AssertValidityState({
+				formValidity: { patternMismatch: true },
+				validity: { patternMismatch: true, valid: false },
+				checkValidity: false,
+				reportValidity: false
+			});
 
 		cy.get("#dateRangePicker:invalid")
 			.should("exist");
@@ -871,14 +869,13 @@ describe("Validation inside a form", () => {
 		cy.get("@dateRangePicker")
 			.ui5DatePickerTypeDate("09/09/2020 - 10/10/2020");
 
-		cy.get("@dateRangePicker").then($el => {
-			const picker = $el[0] as any;
-			expect(picker.formValidity.patternMismatch).to.be.false;
-			expect(picker.validity.patternMismatch).to.be.false;
-			expect(picker.validity.valid).to.be.true;
-			expect(picker.checkValidity()).to.be.true;
-			expect(picker.reportValidity()).to.be.true;
-		});
+		cy.get("@dateRangePicker")
+			.ui5AssertValidityState({
+				formValidity: { patternMismatch: false },
+				validity: { patternMismatch: false, valid: true },
+				checkValidity: true,
+				reportValidity: true
+			});
 
 		cy.get("#dateRangePicker:invalid")
 			.should("not.exist");
@@ -900,14 +897,13 @@ describe("Validation inside a form", () => {
 			.as("dateRangePicker")
 			.ui5DatePickerTypeDate("01/10/2020 - 02/10/2020");
 
-		cy.get("@dateRangePicker").then($el => {
-			const picker = $el[0] as any;
-			expect(picker.formValidity.rangeUnderflow).to.be.true;
-			expect(picker.validity.rangeUnderflow).to.be.true;
-			expect(picker.validity.valid).to.be.false;
-			expect(picker.checkValidity()).to.be.false;
-			expect(picker.reportValidity()).to.be.false;
-		});
+		cy.get("@dateRangePicker")
+			.ui5AssertValidityState({
+				formValidity: { rangeUnderflow: true },
+				validity: { rangeUnderflow: true, valid: false },
+				checkValidity: false,
+				reportValidity: false
+			});
 
 		cy.get("#dateRangePicker:invalid")
 			.should("exist");
@@ -915,14 +911,13 @@ describe("Validation inside a form", () => {
 		cy.get("@dateRangePicker")
 			.ui5DatePickerTypeDate("11/10/2020 - 12/10/2020");
 
-		cy.get("@dateRangePicker").then($el => {
-			const picker = $el[0] as any;
-			expect(picker.formValidity.rangeUnderflow).to.be.false;
-			expect(picker.validity.rangeUnderflow).to.be.false;
-			expect(picker.validity.valid).to.be.true;
-			expect(picker.checkValidity()).to.be.true;
-			expect(picker.reportValidity()).to.be.true;
-		});
+		cy.get("@dateRangePicker")
+			.ui5AssertValidityState({
+				formValidity: { rangeUnderflow: false },
+				validity: { rangeUnderflow: false, valid: true },
+				checkValidity: true,
+				reportValidity: true
+			});
 
 		cy.get("#dateRangePicker:invalid")
 			.should("not.exist");
@@ -944,14 +939,13 @@ describe("Validation inside a form", () => {
 			.as("dateRangePicker")
 			.ui5DatePickerTypeDate("11/10/2020 - 12/10/2020");
 
-		cy.get("@dateRangePicker").then($el => {
-			const picker = $el[0] as any;
-			expect(picker.formValidity.rangeOverflow).to.be.true;
-			expect(picker.validity.rangeOverflow).to.be.true;
-			expect(picker.validity.valid).to.be.false;
-			expect(picker.checkValidity()).to.be.false;
-			expect(picker.reportValidity()).to.be.false;
-		});
+		cy.get("@dateRangePicker")
+			.ui5AssertValidityState({
+				formValidity: { rangeOverflow: true },
+				validity: { rangeOverflow: true, valid: false },
+				checkValidity: false,
+				reportValidity: false
+			});
 
 		cy.get("#dateRangePicker:invalid")
 			.should("exist");
@@ -959,14 +953,13 @@ describe("Validation inside a form", () => {
 		cy.get("@dateRangePicker")
 			.ui5DatePickerTypeDate("07/09/2020 - 09/10/2020");
 
-		cy.get("@dateRangePicker").then($el => {
-			const picker = $el[0] as any;
-			expect(picker.formValidity.rangeOverflow).to.be.false;
-			expect(picker.validity.rangeOverflow).to.be.false;
-			expect(picker.validity.valid).to.be.true;
-			expect(picker.checkValidity()).to.be.true;
-			expect(picker.reportValidity()).to.be.true;
-		});
+		cy.get("@dateRangePicker")
+			.ui5AssertValidityState({
+				formValidity: { rangeOverflow: false },
+				validity: { rangeOverflow: false, valid: true },
+				checkValidity: true,
+				reportValidity: true
+			});
 
 		cy.get("#dateRangePicker:invalid")
 			.should("not.exist");

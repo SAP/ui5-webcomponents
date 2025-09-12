@@ -72,7 +72,7 @@ describe("StepInput keyboard interaction tests", () => {
 		cy.realPress(['Shift', 'PageDown']);
 
 		cy.get<StepInput>("@stepInput")
-			.should("have.prop",  "value", 0);
+			.should("have.prop", "value", 0);
 	});
 
 	it("should set the value to the 'max' with 'Ctrl+Shift+ArrowUp'", () => {
@@ -108,7 +108,7 @@ describe("StepInput keyboard interaction tests", () => {
 		cy.realPress(['Control', 'Shift', 'ArrowDown']);
 
 		cy.get<StepInput>("@stepInput")
-			.should("have.prop",  "value", 0);
+			.should("have.prop", "value", 0);
 	});
 
 	it("should restore the previous value with 'Escape'", () => {
@@ -378,7 +378,7 @@ describe("StepInput events", () => {
 		cy.realPress("Escape");
 
 		cy.get<StepInput>("@stepInput")
-		.should("have.prop", "value", 0);
+			.should("have.prop", "value", 0);
 
 		cy.get("@change")
 			.should("not.have.been.called");
@@ -392,7 +392,7 @@ describe("StepInput events", () => {
 		cy.get("[ui5-step-input]")
 			.as("stepInput");
 
-			cy.get<StepInput>("@stepInput")
+		cy.get<StepInput>("@stepInput")
 			.ui5StepInputAttachHandler("ui5-change", "change");
 
 		cy.get<StepInput>("@stepInput")
@@ -407,7 +407,7 @@ describe("StepInput events", () => {
 			.should("have.been.calledOnce");
 
 		cy.get<StepInput>("@stepInput")
-            .should("have.prop", "value", 1);
+			.should("have.prop", "value", 1);
 	});
 
 	it("should fire 'change' when using 'Increase' button'", () => {
@@ -433,7 +433,7 @@ describe("StepInput events", () => {
 			.should("have.been.calledOnce");
 
 		cy.get<StepInput>("@stepInput")
-            .should("have.prop", "value", 1);
+			.should("have.prop", "value", 1);
 	});
 
 	it("should fire 'change' when using 'Decrease' button'", () => {
@@ -630,7 +630,7 @@ describe("StepInput property propagation", () => {
 
 		cy.get("[ui5-step-input]")
 			.ui5StepInputCheckInnerInputProperty("placeholder", "Enter number");
-    });
+	});
 
 	it("should propagate 'min' property to inner input", () => {
 		cy.mount(
@@ -639,9 +639,9 @@ describe("StepInput property propagation", () => {
 
 		cy.get("[ui5-step-input]")
 			.ui5StepInputCheckInnerInputProperty("min", "0");
-    });
+	});
 
-    it("should propagate 'max' property to inner input", () => {
+	it("should propagate 'max' property to inner input", () => {
 		cy.mount(
 			<StepInput max={10}></StepInput>
 		);
@@ -715,13 +715,11 @@ describe("Validation inside form", () => {
 			.should("have.not.been.called");
 
 		cy.get("@stepInput")
-			.then($el => {
-				const stepInput = $el[0] as StepInput;
-				expect(stepInput.formValidity.patternMismatch, "StepInput without formatted value should have formValidity with patternMismatch=true").to.be.true;
-				expect(stepInput.validity.patternMismatch, "StepInput without formatted value should have validity with patternMismatch=true").to.be.true;
-				expect(stepInput.validity.valid, "StepInput without formatted value should have validity with valid=false").to.be.false;
-				expect(stepInput.checkValidity(), "StepInput without formatted value fail validity check").to.be.false;
-				expect(stepInput.reportValidity(), "StepInput without formatted value should fail report validity").to.be.false;
+			.ui5AssertValidityState({
+				formValidity: { patternMismatch: true },
+				validity: { patternMismatch: true, valid: false },
+				checkValidity: false,
+				reportValidity: false
 			});
 
 		cy.get("#stepInput:invalid")
@@ -731,15 +729,12 @@ describe("Validation inside form", () => {
 			.ui5StepInputTypeNumber(2.345);
 
 		cy.get("@stepInput")
-			.then($el => {
-				const stepInput = $el[0] as StepInput;
-				expect(stepInput.formValidity.patternMismatch, "StepInput with formatted value should have formValidity with patternMismatch=false").to.be.false;
-				expect(stepInput.validity.patternMismatch, "StepInput with formatted value should have validity with patternMismatch=true").to.be.false;
-				expect(stepInput.validity.valid, "StepInput with formatted value should have validity with valid=true").to.be.true;
-				expect(stepInput.checkValidity(), "StepInput with formatted value pass validity check").to.be.true;
-				expect(stepInput.reportValidity(), "StepInput with formatted value should pass report validity").to.be.true;
+			.ui5AssertValidityState({
+				formValidity: { patternMismatch: false },
+				validity: { patternMismatch: false, valid: true },
+				checkValidity: true,
+				reportValidity: true
 			});
-
 		cy.get("#stepInput:invalid")
 			.should("not.exist", "StepInput with formatted value should not have :invalid CSS class");
 	});
@@ -771,13 +766,11 @@ describe("Validation inside form", () => {
 			.should("have.not.been.called");
 
 		cy.get("@stepInput")
-			.then($el => {
-				const stepInput = $el[0] as StepInput;
-				expect(stepInput.formValidity.rangeUnderflow, "StepInput without value lower than min should have formValidity with rangeUnderflow=true").to.be.true;
-				expect(stepInput.validity.rangeUnderflow, "StepInput without value lower than min should have validity with rangeUnderflow=true").to.be.true;
-				expect(stepInput.validity.valid, "StepInput without value lower than min should have validity with valid=false").to.be.false;
-				expect(stepInput.checkValidity(), "StepInput without value lower than min should fail validity check").to.be.false;
-				expect(stepInput.reportValidity(), "StepInput without value lower than min fail should report validity").to.be.false;
+			.ui5AssertValidityState({
+				formValidity: { rangeUnderflow: true },
+				validity: { rangeUnderflow: true, valid: false },
+				checkValidity: false,
+				reportValidity: false
 			});
 
 		cy.get("#stepInput:invalid")
@@ -787,13 +780,11 @@ describe("Validation inside form", () => {
 			.ui5StepInputTypeNumber(4);
 
 		cy.get("@stepInput")
-			.then($el => {
-				const stepInput = $el[0] as StepInput;
-				expect(stepInput.formValidity.rangeUnderflow, "StepInput with value higher than min should have formValidity with rangeUnderflow=false").to.be.false;
-				expect(stepInput.validity.rangeUnderflow, "StepInput with value higher than min should have validity with rangeUnderflow=true").to.be.false;
-				expect(stepInput.validity.valid, "StepInput with value higher than min should have validity with valid=true").to.be.true;
-				expect(stepInput.checkValidity(), "StepInput with value higher than min pass validity check").to.be.true;
-				expect(stepInput.reportValidity(), "StepInput with value higher than min should pass report validity").to.be.true;
+			.ui5AssertValidityState({
+				formValidity: { rangeUnderflow: false },
+				validity: { rangeUnderflow: false, valid: true },
+				checkValidity: true,
+				reportValidity: true
 			});
 
 		cy.get("#stepInput:invalid")
@@ -827,13 +818,11 @@ describe("Validation inside form", () => {
 			.should("have.not.been.called");
 
 		cy.get("@stepInput")
-			.then($el => {
-				const stepInput = $el[0] as StepInput;
-				expect(stepInput.formValidity.rangeOverflow, "StepInput with value higher than max should have formValidity with rangeOverflow=true").to.be.true;
-				expect(stepInput.validity.rangeOverflow, "StepInput with value higher than max should have validity with rangeOverflow=true").to.be.true;
-				expect(stepInput.validity.valid, "StepInput with value higher than max should have validity with valid=false").to.be.false;
-				expect(stepInput.checkValidity(), "StepInput with value higher than max should fail validity check").to.be.false;
-				expect(stepInput.reportValidity(), "StepInput with value higher than max fail should report validity").to.be.false;
+			.ui5AssertValidityState({
+				formValidity: { rangeOverflow: true },
+				validity: { rangeOverflow: true, valid: false },
+				checkValidity: false,
+				reportValidity: false
 			});
 
 		cy.get("#stepInput:invalid")
@@ -843,13 +832,11 @@ describe("Validation inside form", () => {
 			.ui5StepInputTypeNumber(2);
 
 		cy.get("@stepInput")
-			.then($el => {
-				const stepInput = $el[0] as StepInput;
-				expect(stepInput.formValidity.rangeOverflow, "StepInput with value lower than max should have formValidity with rangeOverflow=false").to.be.false;
-				expect(stepInput.validity.rangeOverflow, "StepInput with value lower than max should have validity with rangeOverflow=true").to.be.false;
-				expect(stepInput.validity.valid, "StepInput with value lower than max should have validity with valid=true").to.be.true;
-				expect(stepInput.checkValidity(), "StepInput with value lower than max pass validity check").to.be.true;
-				expect(stepInput.reportValidity(), "StepInput with value lower than max should pass report validity").to.be.true;
+			.ui5AssertValidityState({
+				formValidity: { rangeOverflow: false },
+				validity: { rangeOverflow: false, valid: true },
+				checkValidity: true,
+				reportValidity: true
 			});
 
 		cy.get("#stepInput:invalid")

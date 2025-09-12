@@ -553,7 +553,7 @@ describe("DateTimePicker general interaction", () => {
 describe("Accessibility", () => {
 	it("picker popover accessible name", () => {
 		const LABEL = "Deadline";
-		cy.mount(<DateTimePicker accessible-name={LABEL}/>);
+		cy.mount(<DateTimePicker accessible-name={LABEL} />);
 
 		cy.get<DateTimePicker>("[ui5-datetime-picker]")
 			.ui5DateTimePickerGetPopover()
@@ -634,13 +634,11 @@ describe("Validation inside a form", () => {
 
 		cy.get("[ui5-datetime-picker]")
 			.as("dateTimePicker")
-			.then($el => {
-				const dateTimePicker = $el[0] as DateTimePicker;
-				expect(dateTimePicker.formValidity.valueMissing, "Required DateTimePicker without value should have formValidity with valueMissing=true").to.be.true;
-				expect(dateTimePicker.validity.valueMissing, "Required DateTimePicker without value should have validity with valueMissing=true").to.be.true;
-				expect(dateTimePicker.validity.valid, "Required DateTimePicker without value should have validity with valid=false").to.be.false;
-				expect(dateTimePicker.checkValidity(), "Required DateTimePicker without value fail validity check").to.be.false;
-				expect(dateTimePicker.reportValidity(), "Required DateTimePicker without value should fail report validity").to.be.false;
+			.ui5AssertValidityState({
+				formValidity: { valueMissing: true },
+				validity: { valueMissing: true, valid: false },
+				checkValidity: false,
+				reportValidity: false
 			});
 
 		cy.get("#dateTimePicker:invalid")
@@ -650,13 +648,11 @@ describe("Validation inside a form", () => {
 			.ui5DatePickerTypeDate("now");
 
 		cy.get("@dateTimePicker")
-			.then($el => {
-				const dateTimePicker = $el[0] as DateTimePicker;
-				expect(dateTimePicker.formValidity.valueMissing, "Required DateTimePicker with value should have formValidity with valueMissing=false").to.be.false;
-				expect(dateTimePicker.validity.valueMissing, "Required DateTimePicker with value should have validity with valueMissing=false").to.be.false;
-				expect(dateTimePicker.validity.valid, "Required DateTimePicker with value have validity with valid=true").to.be.true;
-				expect(dateTimePicker.checkValidity(), "Required DateTimePicker with value pass validity check").to.be.true;
-				expect(dateTimePicker.reportValidity(), "Required DateTimePicker with value pass report validity").to.be.true;
+			.ui5AssertValidityState({
+				formValidity: { valueMissing: false },
+				validity: { valueMissing: false, valid: true },
+				checkValidity: true,
+				reportValidity: true
 			});
 
 		cy.get("#dateTimePicker:invalid").should("not.exist", "Required DatePicker with value should not have :invalid CSS class");
@@ -686,13 +682,11 @@ describe("Validation inside a form", () => {
 			.should("have.not.been.called");
 
 		cy.get("@dateTimePicker")
-			.then($el => {
-				const dateTimePicker = $el[0] as DateTimePicker;
-				expect(dateTimePicker.formValidity.patternMismatch, "DateTimePicker without correct formatted value should have formValidity with patternMismatch=true").to.be.true;
-				expect(dateTimePicker.validity.patternMismatch, "DateTimePicker without correct formatted value should have validity with patternMismatch=true").to.be.true;
-				expect(dateTimePicker.validity.valid, "DateTimePicker without correct formatted value should have validity with valid=false").to.be.false;
-				expect(dateTimePicker.checkValidity(), "DateTimePicker without correct formatted value fail validity check").to.be.false;
-				expect(dateTimePicker.reportValidity(), "DateTimePicker without correct formatted value should fail report validity").to.be.false;
+			.ui5AssertValidityState({
+				formValidity: { patternMismatch: true },
+				validity: { patternMismatch: true, valid: false },
+				checkValidity: false,
+				reportValidity: false
 			});
 
 		cy.get("#dateTimePicker:invalid")
@@ -702,13 +696,11 @@ describe("Validation inside a form", () => {
 			.ui5DatePickerTypeDate("Apr 12, 2024 12:00:00");
 
 		cy.get("@dateTimePicker")
-			.then($el => {
-				const dateTimePicker = $el[0] as DateTimePicker;
-				expect(dateTimePicker.formValidity.patternMismatch, "DateTimePicker with correct formatted value should have formValidity with patternMismatch=false").to.be.false;
-				expect(dateTimePicker.validity.patternMismatch, "DateTimePicker with correct formatted value should have validity with patternMismatch=false").to.be.false;
-				expect(dateTimePicker.validity.valid, "DateTimePicker with correct formatted value have validity with valid=true").to.be.true;
-				expect(dateTimePicker.checkValidity(), "DateTimePicker with correct formatted value pass validity check").to.be.true;
-				expect(dateTimePicker.reportValidity(), "DateTimePicker with correct formatted value pass report validity").to.be.true;
+			.ui5AssertValidityState({
+				formValidity: { patternMismatch: false },
+				validity: { patternMismatch: false, valid: true },
+				checkValidity: true,
+				reportValidity: true
 			});
 
 		cy.get("#dateTimePicker:invalid")
@@ -733,13 +725,11 @@ describe("Validation inside a form", () => {
 			.ui5DatePickerTypeDate("Jan 5, 2024 08:00:00");
 
 		cy.get("@dateTimePicker")
-			.then($el => {
-				const dateTimePicker = $el[0] as DateTimePicker;
-				expect(dateTimePicker.formValidity.rangeUnderflow, "DateTimePicker with value below minDate should have formValidity with rangeUnderflow=true").to.be.true;
-				expect(dateTimePicker.validity.rangeUnderflow, "DateTimePicker with value below minDate should have validity with rangeUnderflow=true").to.be.true;
-				expect(dateTimePicker.validity.valid, "DateTimePicker with value below minDate should have validity with valid=false").to.be.false;
-				expect(dateTimePicker.checkValidity(), "DateTimePicker with value below minDate should fail validity check").to.be.false;
-				expect(dateTimePicker.reportValidity(), "DateTimePicker with value below minDate should fail report validity").to.be.false;
+			.ui5AssertValidityState({
+				formValidity: { rangeUnderflow: true },
+				validity: { rangeUnderflow: true, valid: false },
+				checkValidity: false,
+				reportValidity: false
 			});
 
 		cy.get("#dateTimePicker:invalid")
@@ -749,13 +739,11 @@ describe("Validation inside a form", () => {
 			.ui5DatePickerTypeDate("Jan 20, 2024 08:00:00");
 
 		cy.get("@dateTimePicker")
-			.then($el => {
-				const dateTimePicker = $el[0] as DateTimePicker;
-				expect(dateTimePicker.formValidity.rangeUnderflow, "DateTimePicker with value above minDate should have formValidity with rangeUnderflow=false").to.be.false;
-				expect(dateTimePicker.validity.rangeUnderflow, "DateTimePicker with value above minDate should have validity with rangeUnderflow=false").to.be.false;
-				expect(dateTimePicker.validity.valid, "DateTimePicker with value above minDate should have validity with valid=true").to.be.true;
-				expect(dateTimePicker.checkValidity(), "DateTimePicker with value above minDate should pass validity check").to.be.true;
-				expect(dateTimePicker.reportValidity(), "DateTimePicker with value above minDate should pass report validity").to.be.true;
+			.ui5AssertValidityState({
+				formValidity: { rangeUnderflow: false },
+				validity: { rangeUnderflow: false, valid: true },
+				checkValidity: true,
+				reportValidity: true
 			});
 
 		cy.get("#dateTimePicker:invalid")
@@ -780,13 +768,11 @@ describe("Validation inside a form", () => {
 			.ui5DatePickerTypeDate("Jan 15, 2024 08:00:00");
 
 		cy.get("@dateTimePicker")
-			.then($el => {
-				const dateTimePiicker = $el[0] as DateTimePicker;
-				expect(dateTimePiicker.formValidity.rangeOverflow, "DateTimePicker with value above maxDate should have formValidity with rangeOverflow=true").to.be.true;
-				expect(dateTimePiicker.validity.rangeOverflow, "DateTimePicker with value above maxDate should have validity with rangeOverflow=true").to.be.true;
-				expect(dateTimePiicker.validity.valid, "DateTimePicker with value above maxDate should have validity with valid=false").to.be.false;
-				expect(dateTimePiicker.checkValidity(), "DateTimePicker with value above maxDate should fail validity check").to.be.false;
-				expect(dateTimePiicker.reportValidity(), "DateTimePicker with value above maxDate should fail report validity").to.be.false;
+			.ui5AssertValidityState({
+				formValidity: { rangeOverflow: true },
+				validity: { rangeOverflow: true, valid: false },
+				checkValidity: false,
+				reportValidity: false
 			});
 
 		cy.get("#dateTimePicker:invalid")
@@ -796,13 +782,11 @@ describe("Validation inside a form", () => {
 			.ui5DatePickerTypeDate("Jan 5, 2024 08:00:00");
 
 		cy.get("@dateTimePicker")
-			.then($el => {
-				const dateTimePiicker = $el[0] as DateTimePicker;
-				expect(dateTimePiicker.formValidity.rangeOverflow, "DateTimePicker with value below maxDate should have formValidity with rangeOverflow=false").to.be.false;
-				expect(dateTimePiicker.validity.rangeOverflow, "DateTimePicker with value below maxDate should have validity with rangeOverflow=false").to.be.false;
-				expect(dateTimePiicker.validity.valid, "DateTimePicker with value below maxDate should have validity with valid=true").to.be.true;
-				expect(dateTimePiicker.checkValidity(), "DateTimePicker with value below maxDate should pass validity check").to.be.true;
-				expect(dateTimePiicker.reportValidity(), "DateTimePicker with value below maxDate should pass report validity").to.be.true;
+			.ui5AssertValidityState({
+				formValidity: { rangeOverflow: false },
+				validity: { rangeOverflow: false, valid: true },
+				checkValidity: true,
+				reportValidity: true
 			});
 
 		cy.get("#dateTimePicker:invalid")

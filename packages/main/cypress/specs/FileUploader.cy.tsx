@@ -155,7 +155,7 @@ describe("Interaction", () => {
 			</>
 		);
 
-	   cy.get("[ui5-label]")
+		cy.get("[ui5-label]")
 			.realClick();
 
 		cy.get("[ui5-file-uploader]")
@@ -437,7 +437,7 @@ describe("Interaction", () => {
 				},
 				{
 					contents: Cypress.Buffer.from("file2 content"),
-					fileName: "file11.txt", 
+					fileName: "file11.txt",
 					mimeType: "text/plain"
 				},
 				{
@@ -569,14 +569,14 @@ describe("Validation inside form", () => {
 		cy.get("@submit")
 			.should("have.not.been.called");
 
-		cy.get("#uploader").as("uploader").then($el => {
-			const uploader = $el[0] as any;
-			expect(uploader.formValidity.valueMissing).to.be.true;
-			expect(uploader.validity.valueMissing).to.be.true;
-			expect(uploader.validity.valid).to.be.false;
-			expect(uploader.checkValidity()).to.be.false;
-			expect(uploader.reportValidity()).to.be.false;
-		});
+		cy.get("#uploader")
+			.as("uploader")
+			.ui5AssertValidityState({
+				formValidity: { valueMissing: true },
+				validity: { valueMissing: true, valid: false },
+				checkValidity: false,
+				reportValidity: false
+			});
 
 		cy.get("#uploader:invalid")
 			.should("exist");
@@ -592,14 +592,13 @@ describe("Validation inside form", () => {
 				}
 			], { force: true });
 
-		cy.get("@uploader").then($el => {
-			const uploader = $el[0] as any;
-			expect(uploader.formValidity.valueMissing).to.be.false;
-			expect(uploader.validity.valueMissing).to.be.false;
-			expect(uploader.validity.valid).to.be.true;
-			expect(uploader.checkValidity()).to.be.true;
-			expect(uploader.reportValidity()).to.be.true;
-		});
+		cy.get("@uploader")
+			.ui5AssertValidityState({
+				formValidity: { valueMissing: false },
+				validity: { valueMissing: false, valid: true },
+				checkValidity: true,
+				reportValidity: true
+			});
 
 		cy.get("#uploader:invalid")
 			.should("not.exist");

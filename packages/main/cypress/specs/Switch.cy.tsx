@@ -142,13 +142,11 @@ describe("General interactions in form", () => {
 			.should("have.not.been.called");
 
 		cy.get("#requiredTestSwitch")
-			.then($el => {
-				const switchElement = $el[0] as Switch;
-				expect(switchElement.formValidity.valueMissing, "Unchecked required Switch should have formValidity with valueMissing=true").to.be.true;
-				expect(switchElement.validity.valueMissing, "Unchecked required Switch should have validity with valueMissing=true").to.be.true;
-				expect(switchElement.validity.valid, "Unchecked required Switch should have validity with valid=false").to.be.false;
-				expect(switchElement.checkValidity(), "Unchecked required Switch should fail validity check").to.be.false;
-				expect(switchElement.reportValidity(), "Unchecked required Switch should fail report validity").to.be.false;
+			.ui5AssertValidityState({
+				formValidity: { valueMissing: true },
+				validity: { valueMissing: true, valid: false },
+				checkValidity: false,
+				reportValidity: false
 			});
 
 		cy.get("#requiredTestSwitch:invalid")
@@ -158,13 +156,11 @@ describe("General interactions in form", () => {
 			.realClick();
 
 		cy.get("#requiredTestSwitch")
-			.then($el => {
-				const switchElement = $el[0] as Switch;
-				expect(switchElement.formValidity.valueMissing, "Checked required Switch should have formValidity with valueMissing=false").to.be.false;
-				expect(switchElement.validity.valueMissing, "Checked required Switch should have validity with valueMissing=false").to.be.false;
-				expect(switchElement.validity.valid, "Checked required Switch should have validity with valid=true").to.be.true;
-				expect(switchElement.checkValidity(), "Checked required Switch should pass validity check").to.be.true;
-				expect(switchElement.reportValidity(), "Checked required Switch should pass report validity").to.be.true;
+			.ui5AssertValidityState({
+				formValidity: { valueMissing: false },
+				validity: { valueMissing: false, valid: true },
+				checkValidity: true,
+				reportValidity: true
 			});
 
 		cy.get("#requiredTestSwitch:invalid").should("not.exist", "Checked required Switch should not have :invalid CSS class");
