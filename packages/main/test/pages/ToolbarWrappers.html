@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Toolbar</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+	<link rel="stylesheet" type="text/css" href="./styles/Toolbar.css">
+</head>
+
+<body>
+	<div id="toolbars-container">
+		<ui5-title level="H3">Standard Toolbar with ToolbarSelect and ToolbarButton</ui5-title>
+		<br />
+		<section>
+			<ui5-toolbar id="otb_standard">
+				<ui5-toolbar-button icon="add" stable-dom-ref="otb_button_1" text="Left 1 (long)"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="decline" text="Mid 2"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
+				<ui5-toolbar-button overflow-priority="NeverOverflow" icon="employee" text="Right 4"></ui5-toolbar-button>
+				<ui5-toolbar-select id="toolbar-select">
+					<ui5-toolbar-select-option>1</ui5-toolbar-select-option>
+					<ui5-toolbar-select-option selected>2</ui5-toolbar-select-option>
+					<ui5-toolbar-select-option>3</ui5-toolbar-select-option>
+				</ui5-toolbar-select>
+				<ui5-toolbar-separator></ui5-toolbar-separator>
+				<ui5-toolbar-separator></ui5-toolbar-separator>
+				<ui5-toolbar-button overflow-priority="AlwaysOverflow" icon="employee" prevent-overflow-closing text="Call me later" ></ui5-toolbar-button>
+			</ui5-toolbar>
+		</section>
+		<ui5-title level="H3">Toolbar with ui5-select and ui5-button wrapped in ui5-toolbar-item</ui5-title>
+		<br />
+		<section>
+			<ui5-toolbar id="otb_standard">
+				<ui5-toolbar-item><ui5-button icon="add" stable-dom-ref="otb_button_1">Left 1 (long)</ui5-button></ui5-toolbar-item>
+				<ui5-toolbar-item><ui5-button icon="decline">Left 2</ui5-button></ui5-toolbar-item>
+				<ui5-toolbar-item><ui5-button icon="employee">Left 3</ui5-button></ui5-toolbar-item>
+				<ui5-toolbar-item><ui5-button icon="decline">Left 4</ui5-button></ui5-toolbar-item>
+				<ui5-toolbar-item><ui5-button icon="add">Mid 1</ui5-button></ui5-toolbar-item>
+				<ui5-toolbar-item><ui5-button icon="decline">Mid 2</ui5-button></ui5-toolbar-item>
+				<ui5-toolbar-item><ui5-button icon="add">Right 1</ui5-button></ui5-toolbar-item>
+				<ui5-toolbar-item overflow-priority="NeverOverflow"><ui5-button icon="employee">Right 4</ui5-button></ui5-toolbar-item>
+				<ui5-toolbar-item>
+					<ui5-select id="toolbar-select">
+						<ui5-option>1</ui5-option>
+						<ui5-option selected>2</ui5-option>
+						<ui5-option>3</ui5-option>
+					</ui5-select>
+				</ui5-toolbar-item>
+				<ui5-toolbar-separator></ui5-toolbar-separator>
+				<ui5-toolbar-separator></ui5-toolbar-separator>
+				<ui5-toolbar-item overflow-priority="AlwaysOverflow" prevent-overflow-closing >
+					<ui5-button icon="employee">Call me later</ui5-button>
+				</ui5-toolbar-item>
+			</ui5-toolbar>
+		</section>
+	</div>
+</body>
+
+</html>
