@@ -3906,7 +3906,7 @@ describe("Keyboard Handling", () => {
 			.should("not.have.attr", "open")
 	});
 
-	describe.only("Copy/Cut/Paste keyboard shortcuts", () => {
+	describe("Copy/Cut/Paste keyboard shortcuts", () => {
 		const dispatchCopyEvent = () => {
 			cy.get("@input").then($input => {
 				const input = $input.get(0) as HTMLInputElement;
