@@ -16,10 +16,27 @@ type OpenUI5Popup = {
 	}
 };
 
+type OpenUI5Element = {
+	prototype: {
+		_handleEvent: (e: Event) => void,
+		isA: (type: string) => boolean,
+		oPopup: OpenUI5Popup,
+	}
+};
+
 type PopupInfo = {
 	type: "OpenUI5" | "WebComponent";
 	instance: object;
 };
+
+const openUI5PopupTypes = [
+	"sap.m.Popover",
+	"sap.m.Dialog",
+];
+
+const openUI5Events = [
+	"sapescape",
+];
 
 // contains all OpenUI5 and Web Component popups that are currently opened
 const AllOpenedPopupsRegistry = getSharedResource<{ openedRegistry: Array<PopupInfo> }>("AllOpenedPopupsRegistry", { openedRegistry: [] });
@@ -40,17 +57,16 @@ const getTopmostPopup = () => {
 };
 
 /**
- * Original OpenUI5 popup focus event is triggered only
- * if there are no Web Component popups opened on top of it.
+ * Checks if Web Component popups opened on top of it.
  *
- * @param {object} popup - The popup instance to check.
- * @returns {boolean} True if the focus event should be triggered, false otherwise.
+ * @param {object} popup The popup instance to check against.
+ * @returns {boolean} `true` if a Web Component popup is stacked above; otherwise `false`.
  */
-const shouldCallOpenUI5FocusEvent = (popup: object) => {
+const hasWebComponentPopupAbove = (popup: object) => {
 	for (let i = AllOpenedPopupsRegistry.openedRegistry.length - 1; i >= 0; i--) {
 		const popupInfo = AllOpenedPopupsRegistry.openedRegistry[i];
-		if (popupInfo.type !== "OpenUI5") {
-			return false;
+		if (popupInfo.type === "WebComponent") {
+			return true;
 		}
 
 		if (popupInfo.instance === popup) {
@@ -58,7 +74,7 @@ const shouldCallOpenUI5FocusEvent = (popup: object) => {
 		}
 	}
 
-	return true;
+	return false;
 };
 
 const openNativePopover = (domRef: HTMLElement) => {
@@ -82,6 +98,19 @@ const isNativePopoverOpen = (root: Document | ShadowRoot = document): boolean =>
 		const shadowRoot = element.shadowRoot;
 		return shadowRoot && isNativePopoverOpen(shadowRoot);
 	});
+};
+
+const patchElementHandleEvent = (Element: OpenUI5Element) => {
+	const origHandleEvent = Element.prototype._handleEvent;
+	Element.prototype._handleEvent = function _handleEvent(e: Event) {
+		if (openUI5Events.includes(e.type)
+			&& openUI5PopupTypes.some(PopupType => this.isA(PopupType))
+			&& hasWebComponentPopupAbove(this.oPopup)) {
+			return;
+		}
+
+		origHandleEvent.call(this, e);
+	};
 };
 
 const patchOpen = (Popup: OpenUI5Popup) => {
@@ -124,7 +153,7 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 const patchFocusEvent = (Popup: OpenUI5Popup) => {
 	const origFocusEvent = Popup.prototype.onFocusEvent;
 	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
-		if (shouldCallOpenUI5FocusEvent(this)) {
+		if (!hasWebComponentPopupAbove(this)) {
 			origFocusEvent.call(this, e);
 		}
 	};
@@ -136,7 +165,8 @@ const createGlobalStyles = () => {
 	document.adoptedStyleSheets = [...document.adoptedStyleSheets, stylesheet];
 };
 
-const patchPopup = (Popup: OpenUI5Popup) => {
+const patchPopup = (Element: OpenUI5Element, Popup: OpenUI5Popup) => {
+	patchElementHandleEvent(Element); // Element.prototype._handleEvent
 	patchOpen(Popup); // Popup.prototype.open
 	patchClosed(Popup); // Popup.prototype._closed
 	createGlobalStyles(); // Ensures correct popover positioning by OpenUI5 (otherwise 0,0 is the center of the screen)
@@ -150,4 +180,4 @@ export {
 	getTopmostPopup,
 };
 
-export type { OpenUI5Popup, PopupInfo };
+export type { OpenUI5Element, OpenUI5Popup, PopupInfo };
