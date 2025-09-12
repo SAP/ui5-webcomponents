@@ -37,10 +37,6 @@ function TableRenderer({ multipleSelection }: { multipleSelection: boolean }) {
 }
 
 describe("Table general interaction", () => {
-	// before(() => {
-	// 	await browser.url(`test/pages/TableGrouping.html`);
-	// });
-
 	it("Table group rows should be rendered", () => {
 		cy.mount(<TableRenderer multipleSelection={false} />);
 

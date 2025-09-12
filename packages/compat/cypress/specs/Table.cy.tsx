@@ -1109,10 +1109,6 @@ describe("Table general interaction", () => {
 			cy.get("#firstCellFirstRowMSLabel").as("firstCellFirstRowLabel");
 			cy.get("#firstCellThirdRowMSLabel").as("firstCellThirdRowLabel");
 			cy.get("#button2").as("contentButton");
-			// cy.get("#rowClickMSCountField").as("rowClickCount");
-			// cy.get("#selectionChangeMSCountField").as("selectionChangeCount");
-			// cy.get("#selectionChangeMSSelectedValueField").as("selectedRow");
-			// cy.get("#selectionChangeMSPreviousRowField").as("previouslySelectedRows");
 			cy.get("@firstRow").shadow().find(".ui5-multi-select-checkbox").shadow().find(".ui5-checkbox-root").as("checkBoxFirstCell");
 
 			cy.get("@firstCellFirstRowLabel").realClick();
@@ -1176,7 +1172,6 @@ describe("Table general interaction", () => {
 			cy.get("@contentButton").should("be.focused");
 
 			cy.realPress("Enter");
-			// 	await contentButton.keys("Enter");
 
 			cy.get("@rowClick").should("have.been.calledOnce");
 			cy.get("@selectionChange").should("have.not.been.called");
