@@ -1,4 +1,4 @@
-[popover] {
+[data-sap-ui-popup][popover] {
 	border: none;
 	overflow: visible;
 	margin: 0;
