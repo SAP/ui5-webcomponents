@@ -360,7 +360,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
-		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
+		this.getFocusDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
 	_onmouseenter() {
@@ -368,7 +368,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
-		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
+		this.getFocusDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
 	_onmouseleave() {
@@ -376,7 +376,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
-		this.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
+		this.getFocusDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
 	/**

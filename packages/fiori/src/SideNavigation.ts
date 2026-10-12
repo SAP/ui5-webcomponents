@@ -417,7 +417,7 @@ class SideNavigation extends UI5Element {
 		this._selectItem(associatedItem);
 
 		this.closePicker();
-		this._popoverContents.item?.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
+		this._popoverContents.item?.getFocusDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
 	getOverflowPopover() {
