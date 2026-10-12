@@ -61,7 +61,9 @@ const buildParentMdx = (packageName, componentName, samplesPrefix) => {
     const allSamples = getSamples(packageName);
     const componentSamples = allSamples[componentName]?.samples;
 
-    let fileContent = ``;
+    const slugLine = packageName === "main" ? `---\nslug: /components/${componentName}/\n---\n\n` : "";
+
+    let fileContent = slugLine;
 
     if (componentSamples?.length) {
         fileContent += buildSamplesImports(packageName, componentName, componentSamples, samplesPrefix);
@@ -74,8 +76,9 @@ const buildParentMdx = (packageName, componentName, samplesPrefix) => {
     return fileContent;
 };
 
-const buildSubcomponentMdx = () => {
-    return `<%COMPONENT_OVERVIEW%>\n\n<%COMPONENT_METADATA%>`;
+const buildSubcomponentMdx = (packageName, subName) => {
+    const slugPath = packageName === "main" ? `/components/${subName}/` : `/components/${packageName}/${subName}/`;
+    return `---\nslug: ${slugPath}\n---\n\n<%COMPONENT_OVERVIEW%>\n\n<%COMPONENT_METADATA%>`;
 };
 
 const generateComponents = () => {
@@ -124,7 +127,7 @@ const generateComponents = () => {
                     const subDeclaration = findDeclaration({ package: packageFullName, name: subName });
                     if (!subDeclaration) return;
 
-                    const subMdx = buildSubcomponentMdx();
+                    const subMdx = buildSubcomponentMdx(packageName, subName);
                     const subContent = parseComponentDeclaration(subDeclaration, subMdx);
                     fs.writeFileSync(path.join(folderPath, `${subName}.mdx`), subContent);
                 });

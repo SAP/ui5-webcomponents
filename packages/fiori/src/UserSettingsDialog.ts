@@ -58,6 +58,9 @@ type UserSettingsBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
  * @ui5subcomponent UserSettingsAppearanceViewGroup
  * @ui5subcomponent UserSettingsAppearanceViewItem
  * @ui5subcomponent UserSettingsItem
+ * @ui5subcomponent UserSettingsNotificationsView
+ * @ui5subcomponent UserSettingsNotificationsViewGroup
+ * @ui5subcomponent UserSettingsNotificationsViewItem
  * @ui5subcomponent UserSettingsView
  */
 @customElement({
