@@ -642,8 +642,7 @@ class Calendar extends CalendarPart {
 		}
 	}
 
-	async onAfterRendering() {
-		await renderFinished(); // Await for the current picker to render and then ask if it has previous/next pages
+	onAfterRendering() {
 		this._previousButtonDisabled = !this._currentPickerDOM._hasPreviousPage();
 		this._nextButtonDisabled = !this._currentPickerDOM._hasNextPage();
 

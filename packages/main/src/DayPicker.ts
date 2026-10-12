@@ -47,6 +47,7 @@ import type {
 
 import {
 	DAY_PICKER_WEEK_NUMBER_TEXT,
+	DAY_PICKER_CALENDAR_WEEK,
 	DAY_PICKER_NON_WORKING_DAY,
 	DAY_PICKER_TODAY,
 	LIST_ITEM_SELECTED,
@@ -513,11 +514,13 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			target = target.parentNode as HTMLElement;
 		}
 
-		if (!this._isDayPressed(target)) {
+		const pendingMouseTimestamp = !setTimestamp ? this._mousedownTimestamp : undefined;
+
+		if (!this._isDayPressed(target) && pendingMouseTimestamp === undefined) {
 			return;
 		}
 
-		const timestamp = setTimestamp ? this._getTimestampFromDom(target) : (this._mousedownTimestamp ?? this.timestamp!);
+		const timestamp = setTimestamp ? this._getTimestampFromDom(target) : (pendingMouseTimestamp ?? this.timestamp!);
 		this._mousedownTimestamp = undefined;
 
 		if (setTimestamp) {
@@ -1001,6 +1004,10 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		return this.hasSecondaryCalendarType
 			? `${this._primaryCalendarType} calendar with secondary ${this.secondaryCalendarType as string} calendar`
 			: `${this._primaryCalendarType} calendar`;
+	}
+
+	_getCalendarWeekLabel(weekNum: number): string {
+		return DayPicker.i18nBundle.getText(DAY_PICKER_CALENDAR_WEEK, weekNum);
 	}
 
 	get _formatLong() {

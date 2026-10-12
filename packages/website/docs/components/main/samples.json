@@ -57,6 +57,24 @@
 			}
 		]
 	},
+	"AvatarBadge": {
+		"samples": [
+			{
+				"name": "Basic",
+				"isBasic": true
+			},
+			{
+				"name": "ValueStates",
+				"title": "States",
+				"description": "The AvatarBadge supports different states to indicate status or notifications."
+			},
+			{
+				"name": "ColorSchemes",
+				"title": "Extended Color Palette",
+				"description": "The AvatarBadge supports an extended color palette via the `colorScheme` property. Use values `\"1\"` through `\"10\"` to apply indication colors."
+			}
+		]
+	},
 	"AvatarGroup": {
 		"samples": [
 			{
@@ -417,6 +435,11 @@
 				"name": "CustomItems",
 				"title": "Custom Items with Rich Content",
 				"description": "Use `ui5-cb-item-custom` to create custom item templates with complex layouts, multiple icons, images, or any HTML content."
+			},
+			{
+				"name": "LazyLoading",
+				"title": "Lazy Loaded Items",
+				"description": "Use the `load-items` event to load items on demand. Its detail carries the `reason` (`\"open\"` when the picker is opened with no items, `\"input\"` when the user types) and the current `value`."
 			}
 		]
 	},
@@ -1416,7 +1439,12 @@
 			{
 				"name": "MaxLength",
 				"title": "Max Length",
-				"description": "You can use the `maxlength` and `showExceededText` properties to define a characters limit and to indicate how many characters are remaining before or exceeding the limit."
+				"description": "You can use the `maxlength` and `counterMode` properties to define a characters limit and to indicate how many characters are remaining before or exceeding the limit. Set `counterMode` to `\"Always\"` to keep the counter permanently visible."
+			},
+			{
+				"name": "ExceededText",
+				"title": "Exceeded Text",
+				"description": "Set `counterMode` to `\"Auto\"` to show the character counter only when the TextArea is focused or when the character limit is exceeded."
 			},
 			{
 				"name": "States",
@@ -1548,6 +1576,11 @@
 				"name": "ToolbarItem",
 				"title": "ToolbarItem",
 				"description": "ToolbarItem wrapper used to add any component to Toolbar."
+			},
+			{
+				"name": "GroupedOverflow",
+				"title": "Grouped Overflow",
+				"description": "Items that share the same non-empty `overflow-group` string overflow together as one atomic unit — either all visible in the bar or all in the overflow popover, never split."
 			}
 		]
 	},

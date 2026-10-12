@@ -218,6 +218,9 @@ class ColorPalette extends UI5Element {
 	@query(".ui5-cp-more-colors")
 	_moreColorsButton!: Button;
 
+	@query("[ui5-color-picker]")
+	_colorPicker?: ColorPicker;
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -869,6 +872,10 @@ class ColorPalette extends UI5Element {
 			this.colorPickerValue = value;
 		}
 		this.dialogOpen = true;
+	}
+
+	_onColorPickerDialogOpen() {
+		this._colorPicker?.focus();
 	}
 
 	_onDefaultColorClick() {

@@ -1,8 +1,12 @@
 import { customElement, property } from "@ui5/webcomponents-base/dist/decorators.js";
 import TableSelectionBase from "./TableSelectionBase.js";
+import CheckBox from "./CheckBox.js";
+import Icon from "./Icon.js";
+import ClearAll from "@ui5/webcomponents-icons/dist/clear-all.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { isSelectionCell, isHeaderSelectionCell, findRowInPath } from "./TableUtils.js";
 import { isUpShift } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { VNode } from "@ui5/webcomponents-base/dist/jsx-runtime.js";
 import type Table from "./Table.js";
 import type TableRow from "./TableRow.js";
 import type TableRowBase from "./TableRowBase.js";
@@ -13,6 +17,9 @@ import {
 	CHECKBOX_CHECKED,
 	CHECKBOX_NOT_CHECKED,
 	ACC_STATE_DISABLED,
+	TABLE_ROW_SELECTOR,
+	TABLE_SELECT_ALL_ROWS,
+	TABLE_DESELECT_ALL_ROWS,
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -92,6 +99,38 @@ class TableSelectionMulti extends TableSelectionBase {
 
 	isMultiSelectable(): boolean {
 		return true;
+	}
+
+	renderRowSelectionCell(row: TableRow): VNode {
+		const i18nBundle = (row.constructor as typeof TableRowBase).i18nBundle;
+		return <CheckBox id="selection-component"
+			tabindex={-1}
+			checked={this.isSelected(row)}
+			onChange={() => this._onRowSelectionChange(row)}
+			accessibleName={i18nBundle.getText(TABLE_ROW_SELECTOR)}
+		></CheckBox>;
+	}
+
+	renderHeaderSelectionCell(row: TableRowBase): VNode {
+		const i18nBundle = (row.constructor as typeof TableRowBase).i18nBundle;
+		if (this.headerSelector === "ClearAll") {
+			return <Icon
+				name={ClearAll}
+				mode="Decorative"
+				showTooltip={true}
+				accessibleName={i18nBundle.getText(TABLE_DESELECT_ALL_ROWS)}
+				design={this.getSelectedRows().length > 0 ? "Default" : "NonInteractive"}
+				onClick={() => this._onRowSelectionChange(row)}
+			></Icon>;
+		}
+
+		return <CheckBox id="selection-component"
+			tabindex={-1}
+			checked={this.isSelected(row)}
+			onChange={() => this._onRowSelectionChange(row)}
+			accessibleName={i18nBundle.getText(TABLE_ROW_SELECTOR)}
+			title={this.isSelected(row) ? i18nBundle.getText(TABLE_DESELECT_ALL_ROWS) : i18nBundle.getText(TABLE_SELECT_ALL_ROWS)}
+		></CheckBox>;
 	}
 
 	isSelected(row: TableRowBase): boolean {
@@ -193,7 +232,9 @@ class TableSelectionMulti extends TableSelectionBase {
 		return description;
 	}
 
-	_onkeydown(e: KeyboardEvent) {
+	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
+		super._onkeydown(e, eventOrigin);
+
 		if (!this._table || !e.shiftKey) {
 			return;
 		}
