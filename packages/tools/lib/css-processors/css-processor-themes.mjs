@@ -102,7 +102,7 @@ const generate = async (argv) => {
 
                 const darkPath = lightPath.replace(lightPattern, (match) => match.replace(light, dark));
                 const darkCSS = processedCSS.get(darkPath);
-                if (!darkCSS) continue;
+                if (darkCSS === undefined) continue;
 
                 const selector = isThemingPackage(lightPath) ? ":root" : CSS_VARIABLES_TARGET ? ":host" : ":root";
                 let autoCSS = mergeLightDark(lightCSS, darkCSS, selector);
