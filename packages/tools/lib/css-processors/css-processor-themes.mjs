@@ -5,7 +5,6 @@ import * as path from "path";
 import { writeFile, mkdir } from "fs/promises";
 import postcss from "postcss";
 import combineDuplicatedSelectors from "../postcss-combine-duplicated-selectors/index.js"
-import postcssPlugin from "./postcss-plugin.mjs";
 import { writeFileIfChanged, getFileContent } from "./shared.mjs";
 import scopeVariables from "./scope-variables.mjs";
 import { mergeLightDark } from "./merge-light-dark.mjs";
@@ -75,8 +74,7 @@ const generate = async (argv) => {
     const processComponentPackageFile = async (f) => {
         if (CSS_VARIABLES_TARGET) {
             const result = await postcss([
-                combineDuplicatedSelectors,
-                postcssPlugin
+                combineDuplicatedSelectors
             ]).process(f.text, { from: undefined });
 
             return { css: result.css };
