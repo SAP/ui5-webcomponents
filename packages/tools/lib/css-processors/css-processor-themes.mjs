@@ -104,7 +104,7 @@ const generate = async (argv) => {
                 const darkCSS = processedCSS.get(darkPath);
                 if (!darkCSS) continue;
 
-                const selector = isThemingPackage(lightPath) ? ":root" : ":host";
+                const selector = isThemingPackage(lightPath) ? ":root" : CSS_VARIABLES_TARGET ? ":host" : ":root";
                 let autoCSS = mergeLightDark(lightCSS, darkCSS, selector);
 
                 // For the theming package, add color-scheme and toggle setup
