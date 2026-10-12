@@ -3,8 +3,7 @@
 		"samples": [
 			{
 				"name": "ButtonMenu",
-				"title": "AI Button With Menu",
-				"isBasic": true
+				"title": "AI Button With Menu"
 			},
 			{
 				"name": "ButtonSplitMenu",
@@ -19,24 +18,21 @@
 	"Input": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			}
 		]
 	},
 	"PromptInput": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			}
 		]
 	},
 	"TextArea": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Extended",

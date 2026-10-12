@@ -2,8 +2,7 @@
 	"Table": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "ActiveRows",

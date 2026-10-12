@@ -2,8 +2,7 @@
 	"Avatar": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Shapes",
@@ -60,8 +59,7 @@
 	"AvatarBadge": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "ValueStates",
@@ -78,8 +76,7 @@
 	"AvatarGroup": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "TypesAndSizes",
@@ -98,8 +95,7 @@
 	"Bar": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "AccessibleRole",
@@ -110,8 +106,7 @@
 	"Breadcrumbs": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "BreadcrumbsOverflow",
@@ -138,8 +133,7 @@
 	"BusyIndicator": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Sizes",
@@ -161,8 +155,7 @@
 	"Button": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Design",
@@ -206,8 +199,7 @@
 	"Calendar": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "SelectionModes",
@@ -249,8 +241,7 @@
 	"CalendarLegend": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "ItemTypes",
@@ -266,8 +257,7 @@
 	"Card": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "WithList",
@@ -290,8 +280,7 @@
 	"Carousel": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Cyclic",
@@ -328,8 +317,7 @@
 	"CheckBox": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Indeterminate",
@@ -356,16 +344,14 @@
 	"ColorPalette": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			}
 		]
 	},
 	"ColorPalettePopover": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "DefaultColor",
@@ -381,8 +367,7 @@
 	"ColorPicker": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Simplified",
@@ -393,8 +378,7 @@
 	"ComboBox": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "ClearIcon",
@@ -446,8 +430,7 @@
 	"DatePicker": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "State",
@@ -488,8 +471,7 @@
 	"DateRangePicker": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "DateFormat",
@@ -520,8 +502,7 @@
 	"DateTimePicker": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "MinMax",
@@ -548,8 +529,7 @@
 	"Dialog": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "DraggableAndResizable",
@@ -575,8 +555,7 @@
 	"DynamicDateRange": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "DynamicDateRangeValueSample",
@@ -587,8 +566,7 @@
 	"ExpandableText": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "OverflowModePopover",
@@ -599,8 +577,7 @@
 	"FileUploader": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "MultipleFiles",
@@ -627,8 +604,7 @@
 	"Form": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Layout",
@@ -684,8 +660,7 @@
 	"Icon": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Design",
@@ -717,8 +692,7 @@
 	"Input": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "ClearIcon",
@@ -776,8 +750,7 @@
 	"Label": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "TextWrapping",
@@ -799,8 +772,7 @@
 	"Link": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Design",
@@ -827,8 +799,7 @@
 	"List": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Growing",
@@ -900,8 +871,7 @@
 	"Menu": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "SubMenu",
@@ -929,8 +899,7 @@
 	"MessageStrip": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Design",
@@ -954,8 +923,7 @@
 	"MultiComboBox": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "SelectedValues",
@@ -1002,8 +970,7 @@
 	"MultiInput": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "TokenCreation",
@@ -1019,8 +986,7 @@
 	"Panel": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Fixed",
@@ -1042,8 +1008,7 @@
 	"Popover": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Placement",
@@ -1060,8 +1025,7 @@
 	"ProgressIndicator": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "DisplayValue",
@@ -1078,8 +1042,7 @@
 	"RadioButton": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "States",
@@ -1096,8 +1059,7 @@
 	"RangeSlider": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "ShowTickmarks",
@@ -1119,8 +1081,7 @@
 	"RatingIndicator": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Sizes",
@@ -1137,8 +1098,7 @@
 	"ResponsivePopover": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Placement",
@@ -1150,8 +1110,7 @@
 	"SegmentedButton": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "SelectionModes",
@@ -1168,8 +1127,7 @@
 	"Select": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Selection",
@@ -1201,8 +1159,7 @@
 	"Slider": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "ShowTickmarks",
@@ -1224,8 +1181,7 @@
 	"SplitButton": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Design",
@@ -1242,8 +1198,7 @@
 	"StepInput": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "MinMax",
@@ -1263,8 +1218,7 @@
 	"Switch": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Design",
@@ -1275,8 +1229,7 @@
 	"TabContainer": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "TabLayout",
@@ -1318,8 +1271,7 @@
 	"Table": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "ScrollMode",
@@ -1360,8 +1312,7 @@
 	"Tag": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Designs",
@@ -1395,8 +1346,7 @@
 	"Text": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "MaxLines",
@@ -1428,8 +1378,7 @@
 	"TextArea": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Growing",
@@ -1456,8 +1405,7 @@
 	"TimePicker": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "CustomFormatting",
@@ -1479,8 +1427,7 @@
 	"Title": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "WrappingType",
@@ -1491,8 +1438,7 @@
 	"Toast": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Duration",
@@ -1507,8 +1453,7 @@
 	"ToggleButton": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Design",
@@ -1524,8 +1469,7 @@
 	"Token": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "TokenInMultiInput",
@@ -1537,8 +1481,7 @@
 	"Tokenizer": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "MultiLine",
@@ -1550,8 +1493,7 @@
 	"Toolbar": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "AlwaysOverflowingItems",
@@ -1587,8 +1529,7 @@
 	"Tree": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "CustomTreeItems",

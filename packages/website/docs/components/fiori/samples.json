@@ -2,8 +2,7 @@
 	"BarcodeScannerDialog": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			}
 		]
 	},
@@ -11,16 +10,14 @@
 		"samples": [
 			{
 				"name": "Basic",
-				"title": "Basic Usage",
-				"isBasic": true
+				"title": "Basic Usage"
 			}
 		]
 	},
 	"DynamicSideContent": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "SideContentPosition",
@@ -37,8 +34,7 @@
 	"FlexibleColumnLayout": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "LayoutsConfiguration",
@@ -50,8 +46,7 @@
 	"HeroBanner": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "ColumnsRatio",
@@ -74,8 +69,7 @@
 	"IllustratedMessage": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "CustomTitle",
@@ -92,8 +86,7 @@
 	"MediaGallery": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Vertical",
@@ -134,16 +127,14 @@
 	"NavigationLayout": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			}
 		]
 	},
 	"NotificationList": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "GroupItems",
@@ -159,8 +150,7 @@
 	"Page": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "FixedFooter",
@@ -171,8 +161,7 @@
 	"ProductSwitch": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "WithShellBar",
@@ -190,8 +179,7 @@
 			{
 				"name": "Basic",
 				"title": "Basic Sample",
-				"description": "A Search component with enabled scope and items and filtering by scope.",
-				"isBasic": true
+				"description": "A Search component with enabled scope and items and filtering by scope."
 			},
 			{
 				"name": "Advanced",
@@ -230,8 +218,7 @@
 			{
 				"name": "Basic",
 				"title": "Basic Sample",
-				"description": "The ShellBar includes Back button, Logo, Title and Profile image.",
-				"isBasic": true
+				"description": "The ShellBar includes Back button, Logo, Title and Profile image."
 			},
 			{
 				"name": "Advanced",
@@ -268,8 +255,7 @@
 	"SideNavigation": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "UnselectableParentItems",
@@ -301,8 +287,7 @@
 	"Timeline": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Horizontal",
@@ -341,8 +326,7 @@
 	"UploadCollection": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "RenamingFiles",
@@ -361,8 +345,7 @@
 	"UserMenu": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "Advanced",
@@ -373,8 +356,7 @@
 	"UserSettingsDialog": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "SaveMode",
@@ -386,8 +368,7 @@
 	"ViewSettingsDialog": {
 		"samples": [
 			{
-				"name": "Basic",
-				"isBasic": true
+				"name": "Basic"
 			},
 			{
 				"name": "CustomTabs",
@@ -401,8 +382,7 @@
 			{
 				"name": "Basic",
 				"title": "Basic Sample",
-				"description": "By default the navigation to another step happens with scrolling or pressing the given step in the Wizard header.",
-				"isBasic": true
+				"description": "By default the navigation to another step happens with scrolling or pressing the given step in the Wizard header."
 			},
 			{
 				"name": "PageMode",
