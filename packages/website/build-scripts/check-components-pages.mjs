@@ -30,10 +30,14 @@
  *   yarn generate-api-reference
  */
 
-import { readdirSync, statSync } from "fs";
+import { existsSync, readdirSync, statSync } from "fs";
 import path from "path";
 
 const root = "./docs/_components_pages";
+
+if (!existsSync(root)) {
+	process.exit(0);
+}
 
 const collect = (dir) => {
 	let found = [];
