@@ -34,7 +34,7 @@ export default function SplitButtonTemplate(this: SplitButton) {
 				tooltip={this._computedAccessibilityAttributes?.root?.title}
 			>
 				{this.isTextButton && (
-					<span class="ui5-split-button-text"><slot></slot></span>
+					<slot></slot>
 				)}
 			</Button>
 
