@@ -869,12 +869,9 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 			return this.placeholder;
 		}
 
-		try {
-			// @ts-expect-error getPlaceholderText is a runtime API not exposed in type definitions
-			return (this.getFormat()?.getPlaceholderText(this._minDate.toLocalJSDate(), this._maxDate.toLocalJSDate())) as string;
-		} catch {
-			return "";
-		}
+		// translatable placeholder – for example "e.g. 2025-12-31"
+		// @ts-expect-error getPlaceholderText is a runtime API not exposed in type definitions
+		return (this.getFormat()?.getPlaceholderText(this._minDate.toLocalJSDate(), this._maxDate.toLocalJSDate())) as string;
 	}
 
 	get _headerTitleText() {

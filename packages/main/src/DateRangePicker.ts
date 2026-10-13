@@ -284,18 +284,14 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		if (this.placeholder) {
 			return this.placeholder;
 		}
-		try {
-			const delimiter = ` ${this._effectiveDelimiter} `;
-			const placeHolderFormatter = this.getFormat({
-				interval: true,
-				singleIntervalValue: true,
-				intervalDelimiter: delimiter,
-			});
-			// @ts-expect-error getPlaceholderText is a runtime API not exposed in type definitions
-			return placeHolderFormatter.getPlaceholderText(this._minDate.toLocalJSDate(), this._maxDate.toLocalJSDate()) as string;
-		} catch {
-			return "";
-		}
+		const delimiter = ` ${this._effectiveDelimiter} `;
+		const placeHolderFormatter = this.getFormat({
+			interval: true,
+			singleIntervalValue: true,
+			intervalDelimiter: delimiter,
+		});
+		// @ts-expect-error getPlaceholderText is a runtime API not exposed in type definitions
+		return placeHolderFormatter.getPlaceholderText(this._minDate.toLocalJSDate(), this._maxDate.toLocalJSDate()) as string;
 	}
 
 	get _submitDisabled() {
