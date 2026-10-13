@@ -33,7 +33,9 @@ export default function SplitButtonTemplate(this: SplitButton) {
 				onFocusOut={this._onFocusOut}
 				tooltip={this._computedAccessibilityAttributes?.root?.title}
 			>
-				{this.isTextButton && <slot></slot> }
+				{this.isTextButton && (
+					<span class="ui5-split-button-text"><slot></slot></span>
+				)}
 			</Button>
 
 			{!this._hideArrowButton && (

@@ -151,6 +151,8 @@
 	background-color: var(--_ui5_split_text_button_background_color);
 	vertical-align: top;
 	flex-grow: 1;
+	min-width: 0;
+	overflow: hidden;
 }
 
 .ui5-split-text-button:hover {
@@ -390,6 +392,19 @@
 }
 
 .ui5-split-text-button::part(button) {
-    justify-content: flex-start;
+	justify-content: flex-start;
 	padding: 0 var(--_ui5_button_base_padding);
+	min-width: 0;
+	overflow: hidden;
+}
+
+.ui5-split-button-text {
+	display: -webkit-inline-box;
+	-webkit-line-clamp: 1;
+	line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	white-space: normal;
+	word-break: break-all;
+	vertical-align: middle;
 }
