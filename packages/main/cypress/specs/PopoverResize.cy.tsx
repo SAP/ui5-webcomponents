@@ -1708,6 +1708,26 @@ describe("Popover Resize Functionality", () => {
 				.and("have.attr", "role", "img");
 		});
 
+		it("should focus the keyboard resize handle when there are no focusable elements in the popover", () => {
+			cy.mount(
+				<>
+					<Button id="btnOpen" style={{ position: "absolute", left: "300px", top: "300px" }}>
+						Open
+					</Button>
+					<Popover id="popover" opener="btnOpen" placement="End" resizable open={true}>
+						<div style={{ width: "200px", height: "100px", padding: "10px" }}>Non-focusable content</div>
+					</Popover>
+				</>
+			);
+
+			cy.get<Popover>("[ui5-popover]").ui5PopoverOpened();
+
+			cy.get("[ui5-popover]")
+				.shadow()
+				.find(".ui5-popover-keyboard-resize-handle:focus")
+				.should("exist");
+		});
+
 		it("should increase width with Shift+Right on End (right) placement", () => {
 			cy.mount(
 				<>
@@ -2141,6 +2161,136 @@ describe("Popover Resize Functionality", () => {
 				expect(rect.width).to.equal(initialWidth);
 				expect(rect.height).to.equal(initialHeight);
 			});
+		});
+	});
+
+	describe("Keyboard Resize — Accessibility", () => {
+		it("should set aria-label, role and aria-roledescription on the keyboard resize handle", () => {
+			cy.mount(
+				<>
+					<Button id="btnOpen" style={{ position: "absolute", left: "300px", top: "300px" }}>
+						Open
+					</Button>
+					<Popover id="popover" opener="btnOpen" placement="End" resizable open={true}>
+						<div style={{ width: "200px", height: "100px", padding: "10px" }}>Content</div>
+					</Popover>
+				</>
+			);
+
+			cy.get<Popover>("[ui5-popover]").ui5PopoverOpened();
+
+			cy.get("[ui5-popover]")
+				.shadow()
+				.find(".ui5-popover-keyboard-resize-handle")
+				.should("have.attr", "role", "img")
+				.and("have.attr", "aria-label", "Resize popover")
+				.and("have.attr", "aria-roledescription", "Handle");
+		});
+
+		it("should reference the hidden description span via aria-describedby", () => {
+			cy.mount(
+				<>
+					<Button id="btnOpen" style={{ position: "absolute", left: "300px", top: "300px" }}>
+						Open
+					</Button>
+					<Popover id="popover" opener="btnOpen" placement="End" resizable open={true}>
+						<div style={{ width: "200px", height: "100px", padding: "10px" }}>Content</div>
+					</Popover>
+				</>
+			);
+
+			cy.get<Popover>("[ui5-popover]").ui5PopoverOpened();
+
+			cy.get("[ui5-popover]")
+				.shadow()
+				.find(".ui5-popover-keyboard-resize-handle")
+				.invoke("attr", "aria-describedby")
+				.should("match", /-resizeDescr$/);
+
+			// aria-describedby must point to an existing element holding the usage hint.
+			cy.get("[ui5-popover]").then($popover => {
+				const handle = $popover[0].shadowRoot!.querySelector(".ui5-popover-keyboard-resize-handle")!;
+				const describedById = handle.getAttribute("aria-describedby")!;
+				const descr = $popover[0].shadowRoot!.getElementById(describedById);
+
+				expect(descr, "aria-describedby target exists").to.not.be.null;
+				expect(descr!.textContent).to.equal("Use Shift+Arrow keys to resize");
+				expect(descr!.getAttribute("aria-hidden")).to.equal("true");
+			});
+		});
+
+		it("should not render the keyboard resize handle or its description when not resizable", () => {
+			cy.mount(
+				<>
+					<Button id="btnOpen" style={{ position: "absolute", left: "300px", top: "300px" }}>
+						Open
+					</Button>
+					<Popover id="popover" opener="btnOpen" placement="End" resizable={false} open={true}>
+						<div style={{ width: "200px", height: "100px", padding: "10px" }}>Content</div>
+					</Popover>
+				</>
+			);
+
+			cy.get<Popover>("[ui5-popover]").ui5PopoverOpened();
+
+			cy.get("[ui5-popover]")
+				.shadow()
+				.find(".ui5-popover-keyboard-resize-handle")
+				.should("not.exist");
+
+			cy.get("[ui5-popover]").then($popover => {
+				const descr = $popover[0].shadowRoot!.querySelector(`#${$popover[0].id}-resizeDescr`);
+				expect(descr, "no description span when not resizable").to.be.null;
+			});
+		});
+	});
+
+	describe("Keyboard Resize — Focus Forwarding", () => {
+		it("should forward focus to the keyboard resize handle on forwardToLast() when resizable", () => {
+			cy.mount(
+				<>
+					<Button id="btnOpen" style={{ position: "absolute", left: "300px", top: "300px" }}>
+						Open
+					</Button>
+					<Popover id="popover" opener="btnOpen" placement="End" resizable open={true}>
+						<div style={{ width: "200px", height: "100px", padding: "10px" }}>
+							<Button id="innerBtn">Inner</Button>
+						</div>
+					</Popover>
+				</>
+			);
+
+			cy.get<Popover>("[ui5-popover]").ui5PopoverOpened();
+
+			cy.get<Popover>("[ui5-popover]").then($popover => $popover[0].forwardToLast());
+
+			// Even though a focusable button exists, the resize handle is the last focusable stop.
+			cy.get("[ui5-popover]")
+				.shadow()
+				.find(".ui5-popover-keyboard-resize-handle:focus")
+				.should("exist");
+		});
+
+		it("should forward focus to the last content element on forwardToLast() when not resizable", () => {
+			cy.mount(
+				<>
+					<Button id="btnOpen" style={{ position: "absolute", left: "300px", top: "300px" }}>
+						Open
+					</Button>
+					<Popover id="popover" opener="btnOpen" placement="End" resizable={false} open={true}>
+						<div style={{ width: "200px", height: "100px", padding: "10px" }}>
+							<Button id="innerBtn">Inner</Button>
+						</div>
+					</Popover>
+				</>
+			);
+
+			cy.get<Popover>("[ui5-popover]").ui5PopoverOpened();
+
+			cy.get<Popover>("[ui5-popover]").then($popover => $popover[0].forwardToLast());
+
+			// No resize handle — focus lands on the last focusable content element instead.
+			cy.get("#innerBtn").should("be.focused");
 		});
 	});
 

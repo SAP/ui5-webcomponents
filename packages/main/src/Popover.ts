@@ -1049,7 +1049,7 @@ class Popover extends Popup {
 		return this._showResizeHandle ? Popover.i18nBundle.getText(POPOVER_RESIZE_HANDLE_TOOLTIP) : undefined;
 	}
 
-	get _resizeHandle() {
+	get _keyboardResizeHandle() {
 		if (!this._showResizeHandle) {
 			return null;
 		}
@@ -1058,7 +1058,7 @@ class Popover extends Popup {
 	}
 
 	async forwardToLast() {
-		const resizeHandle = this._resizeHandle;
+		const resizeHandle = this._keyboardResizeHandle;
 
 		if (resizeHandle) {
 			resizeHandle.focus();
@@ -1068,7 +1068,7 @@ class Popover extends Popup {
 	}
 
 	async _getFirstFocusableElement() {
-		return await super._getFirstFocusableElement() || this._resizeHandle;
+		return await super._getFirstFocusableElement() || this._keyboardResizeHandle;
 	}
 
 	_onResizeKeyDown(e: KeyboardEvent) {
