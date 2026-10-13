@@ -190,10 +190,17 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
+      - name: Generate App Token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ secrets.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_APP_KEY }}
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
 
       - name: Setup Node
@@ -210,7 +217,7 @@ jobs:
 
       - name: Version Bump
         env:
-          GH_TOKEN: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           git config user.name "${{ secrets.UI5_WEBCOMP_BOT_NAME }}"
           git config user.email "${{ secrets.UI5_WEBCOMP_BOT_EMAIL }}"
@@ -231,7 +238,7 @@ jobs:
       # release as latest by default, so flip it back here.
       - name: Mark GitHub release as not latest
         env:
-          GH_TOKEN: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           gh release edit "v${{ github.event.inputs.new_version }}" \
             --latest=false \
