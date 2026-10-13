@@ -33,7 +33,7 @@ export default function SplitButtonTemplate(this: SplitButton) {
 				onFocusOut={this._onFocusOut}
 				tooltip={this._computedAccessibilityAttributes?.root?.title}
 			>
-				{this.isTextButton && <slot></slot>}
+				{this.isTextButton && <slot></slot> }
 			</Button>
 
 			{!this._hideArrowButton && (

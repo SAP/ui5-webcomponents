@@ -154,8 +154,6 @@
 	background-color: var(--_ui5_split_text_button_background_color);
 	vertical-align: top;
 	flex-grow: 1;
-	min-width: 0;
-	overflow: hidden;
 }
 
 .ui5-split-text-button:hover {
@@ -398,5 +396,4 @@
 	justify-content: flex-start;
 	padding: 0 var(--_ui5_button_base_padding);
 	min-width: 0;
-	overflow: hidden;
 }
