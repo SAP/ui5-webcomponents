@@ -482,7 +482,7 @@ abstract class Popup extends UI5Element {
 	 * @private
 	 */
 	async forwardToFirst() {
-		const firstFocusable = await getFirstFocusableElement(this);
+		const firstFocusable = await this._getFirstFocusableElement();
 
 		if (firstFocusable) {
 			firstFocusable.focus();

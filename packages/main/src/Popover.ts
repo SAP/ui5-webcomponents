@@ -1049,15 +1049,26 @@ class Popover extends Popup {
 		return this._showResizeHandle ? Popover.i18nBundle.getText(POPOVER_RESIZE_HANDLE_TOOLTIP) : undefined;
 	}
 
+	get _resizeHandle() {
+		if (!this._showResizeHandle) {
+			return null;
+		}
+
+		return this.shadowRoot!.querySelector<HTMLElement>(`#${this._id}-keyboardResizeHandle`);
+	}
+
 	async forwardToLast() {
-		if (this._showResizeHandle) {
-			const resizeHandler = this.shadowRoot!.querySelector<HTMLElement>(`#${this._id}-keyboardResizeHandle`);
-			if (resizeHandler) {
-				resizeHandler.focus();
-				return;
-			}
+		const resizeHandle = this._resizeHandle;
+
+		if (resizeHandle) {
+			resizeHandle.focus();
+			return;
 		}
 		await super.forwardToLast();
+	}
+
+	async _getFirstFocusableElement() {
+		return await super._getFirstFocusableElement() || this._resizeHandle;
 	}
 
 	_onResizeKeyDown(e: KeyboardEvent) {
