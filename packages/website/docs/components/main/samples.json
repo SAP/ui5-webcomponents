@@ -983,6 +983,28 @@
 			}
 		]
 	},
+	"NumericInput": {
+		"samples": [
+			{
+				"name": "Basic"
+			},
+			{
+				"name": "MinMax",
+				"title": "Min and Max",
+				"description": "Use the `min`, `max` and `step` properties to constrain the value and define the increment/decrement step."
+			},
+			{
+				"name": "ValuePrecision",
+				"title": "Value Precision",
+				"description": "Use the `value-precision` property to control the number of decimal places displayed."
+			},
+			{
+				"name": "States",
+				"title": "States",
+				"description": "NumericInput supports disabled, readonly, and several semantic value states such as Positive, Negative, Critical and Information."
+			}
+		]
+	},
 	"Panel": {
 		"samples": [
 			{
