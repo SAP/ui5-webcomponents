@@ -68,7 +68,7 @@ class TableSelectionMulti extends TableSelectionBase {
 	 *
 	 * @default "SelectAll"
 	 * @public
-	 * @since 2.12
+	 * @since 2.12.0
 	 */
 	@property()
 	headerSelector: `${TableSelectionMultiHeaderSelector}` = "SelectAll";

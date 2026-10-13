@@ -91,7 +91,7 @@ type NumericInputValueStateChangeEventDetail = {
  * `import "@ui5/webcomponents/dist/NumericInput.js";`
  * @constructor
  * @extends UI5Element
- * @since 2.27.0
+ * @since 2.28.0
  * @experimental
  * @public
  */

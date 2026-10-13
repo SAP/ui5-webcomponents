@@ -46,7 +46,7 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Defines the secondary calendar type.
 	 * If not set, the calendar will only show the primary calendar type.
-	 * @since 1.0.0-rc.16
+	 * @since 1.0.0
 	 * @default undefined
 	 * @public
 	 */
@@ -85,7 +85,7 @@ class DateComponentBase extends UI5Element {
 	 *
 	 * **Note:** If the formatPattern property is not set, the minDate value must be provided in the ISO date format (yyyy-MM-dd).
 	 * @default ""
-	 * @since 1.0.0-rc.6
+	 * @since 1.0.0
 	 * @public
 	 */
 	@property()
@@ -96,7 +96,7 @@ class DateComponentBase extends UI5Element {
 	 *
 	 * **Note:** If the formatPattern property is not set, the maxDate value must be provided in the ISO date format (yyyy-MM-dd).
 	 * @default ""
-	 * @since 1.0.0-rc.6
+	 * @since 1.0.0
 	 * @public
 	 */
 	@property()
