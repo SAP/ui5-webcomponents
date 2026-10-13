@@ -30,8 +30,7 @@ import type { AriaRole } from "@ui5/webcomponents-base/dist/types.js";
  *
  * **Note:** Do not place a Bar inside another Bar or inside any bar-like component. Doing so may cause unpredictable behavior.
  *
- * **Note:** The Bar is a structural layout component for organizing page areas (header, footer, subheader).
- * It is not an action-oriented toolbar. For grouping action controls with full keyboard navigation support, use the Toolbar component instead.
+ * **Note:** The Bar is a structural layout component for organizing page areas (header, footer, subheader) and not an action-oriented toolbar. To group action controls with full keyboard navigation support, use the Toolbar component instead.
  *
  * ### Responsive Behavior
  * The default slot will be centered in the available space between the startContent and the endContent areas,
@@ -75,12 +74,12 @@ class Bar extends UI5Element {
 	/**
 	 * Specifies the ARIA role applied to the component for accessibility purposes.
 	 *
-	 * **Note:** By default no ARIA role is applied ("None"), as the Bar derives its semantics
+	 * **Note:** By default, no ARIA role is applied ("None"). The Bar derives its semantics
 	 * from the container it is placed in, such as a page header or footer.
 	 *
 	 * **Note:** The "Toolbar" value is deprecated. The Bar is a structural layout container and does not
-	 * provide toolbar keyboard interactions (such as arrow-key navigation between controls). If you need to
-	 * group more than two interactive elements, use the Toolbar component instead, as it offers the proper
+	 * support toolbar keyboard interactions (such as arrow-key navigation between controls). To group
+	 * more than two interactive elements, use the Toolbar component instead. It provides the correct
 	 * accessibility semantics and user interactions.
 	 *
 	 * @public
