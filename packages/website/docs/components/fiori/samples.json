@@ -281,6 +281,11 @@
 				"name": "Tags",
 				"title": "Indication Tags",
 				"description": "Navigation items can display indication tags to highlight status or phases such as \"New\", \"Beta\", or \"Deprecated\"."
+			},
+			{
+				"name": "Search",
+				"title": "Search",
+				"description": "A search field in the filter section and filterable navigation items."
 			}
 		]
 	},
