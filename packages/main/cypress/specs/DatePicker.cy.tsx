@@ -1012,6 +1012,8 @@ describe("Date Picker Tests", () => {
 		cy.get("[ui5-date-picker]")
 			.ui5DatePickerGetInnerInput()
 			.should("have.attr", "placeholder", "e.g. Apr 30, 2025");
+	});
+
 	it("placeholder is not set on inner input when value is present", () => {
 		cy.mount(<DatePicker value="Sep 9, 2026" formatPattern="MMM d, y"></DatePicker>);
 
