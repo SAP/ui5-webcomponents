@@ -1040,7 +1040,7 @@
 			{
 				"name": "Resizable",
 				"title": "Resizable",
-				"description": "The Resizable sample demonstrates how the Popover component can be resized by dragging its edges."
+				"description": "The Resizable sample demonstrates how the Popover component can be resized by mouse and keyboard (Shift + arrow keys)."
 			}
 		]
 	},
