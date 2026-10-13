@@ -481,6 +481,10 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 			});
 	}
 
+	get _valueFormat() {
+		return this.valueFormat || "";
+	}
+
 	getValueFormat() {
 		if (!this._valueFormat) {
 			return this.getISOFormat();
