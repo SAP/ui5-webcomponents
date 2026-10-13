@@ -8,6 +8,24 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
+* **release:** add missing extractChangelog.mjs action ([#14155](https://github.com/UI5/webcomponents/issues/14155)) ([a0211f6](https://github.com/UI5/webcomponents/commit/a0211f6c1c74a7f8ba2317eab9e65085e2996107))
+* **release:** backport App token + workflow fixes to all jobs ([#14154](https://github.com/UI5/webcomponents/issues/14154)) ([5e4fe39](https://github.com/UI5/webcomponents/commit/5e4fe39448637729e8960114213838cfce1b2e7a))
+* **release:** use GitHub App token in hotfix-release job ([#14153](https://github.com/UI5/webcomponents/issues/14153)) ([b76d9d2](https://github.com/UI5/webcomponents/commit/b76d9d22b72abbe684b6f1765bc17b8cb5fe3f86))
+
+
+### Features
+
+* **ui5-user-menu:** support non-interactive avatar state ([#14138](https://github.com/UI5/webcomponents/issues/14138)) ([1a1b7aa](https://github.com/UI5/webcomponents/commit/1a1b7aa2f0f3c6e2803d01771f9488fa466b4972)), closes [#13732](https://github.com/UI5/webcomponents/issues/13732) [#13943](https://github.com/UI5/webcomponents/issues/13943)
+
+
+
+
+
+## [2.16.4](https://github.com/UI5/webcomponents/compare/v2.16.3...v2.16.4) (2026-10-13)
+
+
+### Bug Fixes
+
 * **release:** backport App token + workflow fixes to all jobs ([#14154](https://github.com/UI5/webcomponents/issues/14154)) ([5e4fe39](https://github.com/UI5/webcomponents/commit/5e4fe39448637729e8960114213838cfce1b2e7a))
 * **release:** use GitHub App token in hotfix-release job ([#14153](https://github.com/UI5/webcomponents/issues/14153)) ([b76d9d2](https://github.com/UI5/webcomponents/commit/b76d9d22b72abbe684b6f1765bc17b8cb5fe3f86))
 

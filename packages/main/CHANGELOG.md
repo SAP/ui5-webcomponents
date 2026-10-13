@@ -14,6 +14,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [2.16.4](https://github.com/UI5/webcomponents/compare/v2.16.3...v2.16.4) (2026-10-13)
+
+
+### Features
+
+* **ui5-user-menu:** support non-interactive avatar state ([#14138](https://github.com/UI5/webcomponents/issues/14138)) ([1a1b7aa](https://github.com/UI5/webcomponents/commit/1a1b7aa2f0f3c6e2803d01771f9488fa466b4972)), closes [#13732](https://github.com/UI5/webcomponents/issues/13732) [#13943](https://github.com/UI5/webcomponents/issues/13943)
+
+
+
+
+
 ## [2.16.3](https://github.com/UI5/webcomponents/compare/v2.16.2...v2.16.3) (2026-05-11)
 
 **Note:** Version bump only for package @ui5/webcomponents
