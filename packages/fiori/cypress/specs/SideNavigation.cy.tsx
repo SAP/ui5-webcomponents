@@ -2110,6 +2110,112 @@ describe("Side Navigation no match", () => {
 			.find(".ui5-sn-item-no-match")
 			.should("not.exist");
 	});
+
+	it("ignores key presses on the no match item (no selection-change fired)", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" highlightedText="abc" />
+		);
+
+		cy.get("#sideNav").then($el => {
+			$el[0].addEventListener("ui5-selection-change", cy.stub().as("selectionChange"));
+		});
+
+		// Focus the no match item and press the activation keys.
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-item-no-match")
+			.shadow()
+			.find(".ui5-sn-item")
+			.as("noMatchItem");
+
+		cy.get("@noMatchItem").focus();
+		cy.realPress("Enter");
+		cy.realPress("Space");
+
+		cy.get("@selectionChange").should("not.be.called");
+
+		// The no match item stays present and is never marked selected.
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-item-no-match")
+			.should("exist")
+			.should("not.have.attr", "selected");
+	});
+});
+
+describe("Side Navigation filterSection slot", () => {
+	it("renders the filter section slot when expanded", () => {
+		cy.mount(
+			<SideNavigation id="sideNav">
+				<SideNavigationSearchField slot="filterSection" id="search" />
+				<SideNavigationItem text="Item 1" />
+			</SideNavigation>
+		);
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-filter-section")
+			.should("exist");
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-filter-section slot[name='filterSection']")
+			.should("exist");
+
+		// the slotted search field is assigned to the filterSection slot
+		cy.get("#search")
+			.should("have.attr", "slot", "filterSection");
+	});
+
+	it("does not render the filter section when collapsed", () => {
+		cy.mount(
+			<SideNavigation id="sideNav" collapsed={true}>
+				<SideNavigationSearchField slot="filterSection" id="search" />
+				<SideNavigationItem text="Item 1" />
+			</SideNavigation>
+		);
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-filter-section")
+			.should("not.exist");
+	});
+
+	it("does not render the filter section when the slot is empty", () => {
+		cy.mount(
+			<SideNavigation id="sideNav">
+				<SideNavigationItem text="Item 1" />
+			</SideNavigation>
+		);
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-filter-section")
+			.should("not.exist");
+	});
+
+	it("hides the filter section when the component is collapsed at runtime", () => {
+		cy.mount(
+			<SideNavigation id="sideNav">
+				<SideNavigationSearchField slot="filterSection" id="search" />
+				<SideNavigationItem text="Item 1" />
+			</SideNavigation>
+		);
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-filter-section")
+			.should("exist");
+
+		cy.get<SideNavigation>("#sideNav").then($el => {
+			$el[0].collapsed = true;
+		});
+
+		cy.get("#sideNav")
+			.shadow()
+			.find(".ui5-sn-filter-section")
+			.should("not.exist");
+	});
 });
 
 describe("Side Navigation highlightedText", () => {
