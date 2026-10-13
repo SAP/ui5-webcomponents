@@ -395,5 +395,4 @@
 .ui5-split-text-button::part(button) {
 	justify-content: flex-start;
 	padding: 0 var(--_ui5_button_base_padding);
-	min-width: 0;
 }
