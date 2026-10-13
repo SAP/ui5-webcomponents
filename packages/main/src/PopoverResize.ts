@@ -301,7 +301,7 @@ class PopoverResize {
 	}
 
 	onResizeKeyDown(e: KeyboardEvent) {
-		if (!isUpShift(e) && !isDownShift(e) && !isLeftShift(e) && !isRightShift(e)) {
+		if (!this._popover.resizable || (!isUpShift(e) && !isDownShift(e) && !isLeftShift(e) && !isRightShift(e))) {
 			return;
 		}
 
