@@ -87,6 +87,8 @@
 [data-theme='dark'] {
   --playground-code-cursor-color: #fff;
   --playground-code-background: #212121;
+  --playground-code-linenumber-color: #999999;
+  --playground-code-selection-background: rgba(128, 203, 196, 0.4);
   --playground-code-default-color: #eeffff;
   --playground-code-keyword-color: #c792ea;
   --playground-code-atom-color: #f78c6c;
