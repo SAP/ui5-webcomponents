@@ -48,12 +48,15 @@ import NumericInputCss from "./generated/themes/NumericInput.css.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { attachLanguageChange, detachLanguageChange } from "@ui5/webcomponents-base/dist/locale/languageChange.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 
 // Spin variables
 const INITIAL_WAIT_TIMEOUT = 500; // milliseconds
 const ACCELERATION = 0.8;
 const MIN_WAIT_TIMEOUT = 50; // milliseconds
 const INITIAL_SPEED = 120; // milliseconds
+
+const MOBILE_DEVICES_DELIMITER = "."; // The decimal delimiter for mobile devices is always a dot, regardless of the locale.
 
 type NumericInputValueStateChangeEventDetail = {
 	valueState: `${ValueState}`,
@@ -356,7 +359,7 @@ class NumericInput extends UI5Element implements IFormInputElement {
 	}
 
 	get type() {
-		return InputType.Text;
+		return InputType.Text;//isDesktop() ? InputType.Text : InputType.Number;
 	}
 
 	// icons-related
@@ -420,11 +423,15 @@ class NumericInput extends UI5Element implements IFormInputElement {
 	}
 
 	onEnterDOM() {
-		this._setupLanguageChangeHandler();
+		if (isDesktop()) {
+			this._setupLanguageChangeHandler();
+		}
 	}
 
 	onExitDOM() {
-		this._cleanupLanguageChangeHandler();
+		if (isDesktop()) {
+			this._cleanupLanguageChangeHandler();
+		}
 		this._resetSpin();
 	}
 
@@ -462,6 +469,10 @@ class NumericInput extends UI5Element implements IFormInputElement {
 	}
 
 	get delimiter() {
+		if (!isDesktop()) {
+			this._delimiter = MOBILE_DEVICES_DELIMITER;
+		}
+
 		if (!this._delimiter) {
 			const localeData = getCachedLocaleDataInstance(getLocale());
 			this._delimiter = localeData.getNumberSymbol("decimal") || ".";
@@ -471,6 +482,10 @@ class NumericInput extends UI5Element implements IFormInputElement {
 	}
 
 	get groupSeparator() {
+		if(!isDesktop()) {
+			return "";
+		}
+
 		if (!this._groupSeparator) {
 			const localeData = getCachedLocaleDataInstance(getLocale());
 			this._groupSeparator = localeData.getNumberSymbol("group") || ",";
