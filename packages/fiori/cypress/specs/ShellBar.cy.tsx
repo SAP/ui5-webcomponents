@@ -518,6 +518,33 @@ describe("Slots", () => {
 				.should("exist");
 		});
 
+		// Regression: at narrow widths a legacy search field moves to a full-width overlay, which
+		// removes the in-bar `.ui5-shellbar-search-field` from the DOM. The overflow algorithm keeps
+		// measuring `.ui5-shellbar-search-field-area`, so the `ui5-shellbar-gap-start` (8px) spacing
+		// must sit on that always-present area - not on the inner field. If it sits on the inner
+		// field, the 8px is counted only while in the bar, so the measured width differs by 8px
+		// between the in-bar and full-width states, `showFullWidthSearch` oscillates, and the render
+		// queue throws "Web component processed too many times".
+		it("Test legacy search gap is on the always-present area (prevents full-width render loop)", () => {
+			cy.mount(
+				<ShellBar id="shellbar" showSearchField={true}>
+					<Input slot="searchField"></Input>
+				</ShellBar>
+			);
+
+			cy.get("#shellbar").shadow().as("shellbar");
+
+			// The gap lives on the always-rendered area...
+			cy.get("@shellbar")
+				.find(".ui5-shellbar-search-field-area")
+				.should("have.class", "ui5-shellbar-gap-start");
+
+			// ...and not on the inner field that is removed when the search goes full-width.
+			cy.get("@shellbar")
+				.find(".ui5-shellbar-search-field")
+				.should("not.have.class", "ui5-shellbar-gap-start");
+		});
+
 		it("Test search button is not visible when a self-collapsible search field slot is empty", () => {
 			cy.mount(
 				<ShellBar id="shellbar">
