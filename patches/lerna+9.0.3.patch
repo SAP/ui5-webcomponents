@@ -1,0 +1,15 @@
+diff --git a/node_modules/lerna/dist/index.js b/node_modules/lerna/dist/index.js
+index 0860a73..5bc22b5 100644
+--- a/node_modules/lerna/dist/index.js
++++ b/node_modules/lerna/dist/index.js
+@@ -5678,8 +5678,8 @@ async function oidc({ packageName, registry, opts, config }) {
+       if (headerB64 && payloadB64) {
+         const payloadJson = Buffer.from(payloadB64, "base64").toString("utf8");
+         const payload = JSON.parse(payloadJson);
+-        if (import_ci_info.default.GITHUB_ACTIONS && payload.repository_visibility === "public" || // only set provenance for gitlab if the repo is public and SIGSTORE_ID_TOKEN is available
+-        import_ci_info.default.GITLAB && payload.project_visibility === "public" && process.env["SIGSTORE_ID_TOKEN"]) {
++        if (process.env["NPM_CONFIG_PROVENANCE"] !== "false" && (import_ci_info.default.GITHUB_ACTIONS && payload.repository_visibility === "public" || // only set provenance for gitlab if the repo is public and SIGSTORE_ID_TOKEN is available
++        import_ci_info.default.GITLAB && payload.project_visibility === "public" && process.env["SIGSTORE_ID_TOKEN"])) {
+           const visibility = await import_libnpmaccess.default.getVisibility(packageName, opts);
+           if (visibility?.public) {
+             npmlog_default.verbose("oidc", `Enabling provenance`);
