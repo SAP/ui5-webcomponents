@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.30](https://github.com/UI5/webcomponents/compare/v1.24.29...v1.24.30) (2026-10-15)
+
+
+### Bug Fixes
+
+* **ui5-tokenizer:** fix render loop ([#14115](https://github.com/UI5/webcomponents/issues/14115)) ([8e71017](https://github.com/UI5/webcomponents/commit/8e710178a658c5c5a6a62cf4ff77a61f75afaf20))
+
+
+
+
+
 ## [1.24.29](https://github.com/UI5/webcomponents/compare/v1.24.28...v1.24.29) (2026-07-13)
 
 **Note:** Version bump only for package @ui5/webcomponents-tools
