@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.31](https://github.com/UI5/webcomponents/compare/v1.24.30...v1.24.31) (2026-10-15)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
 ## [1.24.30](https://github.com/UI5/webcomponents/compare/v1.24.29...v1.24.30) (2026-10-15)
 
 **Note:** Version bump only for package @ui5/webcomponents-icons-tnt
