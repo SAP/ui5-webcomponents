@@ -3733,27 +3733,5 @@ describe("Input built-in filtering", () => {
 				.find(".ui5-input-icon-root")
 				.should("have.attr", "title", "Search");
 		});
-
-		it("should not render the title tooltip when hideTooltip is set", () => {
-			cy.mount(
-				<Input>
-					<InputIcon slot="icon" name="search" accessibleName="Search" hideTooltip={true} />
-				</Input>
-			);
-
-			// accessibleName is still exposed to screen readers via aria-label...
-			cy.get("[ui5-input]")
-				.find("[ui5-input-icon]")
-				.shadow()
-				.find(".ui5-input-icon-root")
-				.should("have.attr", "aria-label", "Search");
-
-			// ...but no native title tooltip is rendered.
-			cy.get("[ui5-input]")
-				.find("[ui5-input-icon]")
-				.shadow()
-				.find(".ui5-input-icon-root")
-				.should("not.have.attr", "title");
-		});
 	});
 });

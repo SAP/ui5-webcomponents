@@ -213,7 +213,7 @@ class NumericInput extends UI5Element implements IFormInputElement {
 	 * **Note:** When no placeholder is set, the format pattern is displayed as a placeholder.
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 	 * @default undefined
-	 * @private
+	 * @public
 	 */
 	@property()
 	placeholder?: string;
