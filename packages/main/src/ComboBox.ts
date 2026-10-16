@@ -275,6 +275,7 @@ type ComboBoxLoadItemsEventDetail = {
 /**
  * Fired when the application should provide items for the component to render.
  * The event is fired either when text is input or when the user presses arrow down on a combo-box with no items.
+ * @since 2.28.0
  * @param {string} reason the reason the event was fired - "input" when text is typed, "open" when the picker is about to open
  * @param {string} value value of the input
  * @public
