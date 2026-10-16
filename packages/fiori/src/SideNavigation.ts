@@ -447,7 +447,7 @@ class SideNavigation extends UI5Element {
 		this._selectItem(associatedItem);
 
 		this.closePicker();
-		this._popoverContents.item?.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
+		this._popoverContents.item?.getFocusDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
 	getOverflowPopover() {
@@ -551,7 +551,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (!this.getDomRef()?.matches(":focus-within")) {
+		if (!this.getFocusDomRef()?.matches(":focus-within")) {
 			let selectedItem = this._findSelectedItem(this.items);
 			if (selectedItem) {
 				this._flexibleItemNavigation.setCurrentItem(selectedItem);
@@ -595,7 +595,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	_updateOverflowItems() {
-		const domRef = this.getDomRef();
+		const domRef = this.getFocusDomRef();
 		if (!this.collapsed || !domRef) {
 			return null;
 		}
@@ -643,8 +643,8 @@ class SideNavigation extends UI5Element {
 
 			let itemDomRef = itemRef;
 
-			if (isInstanceOfSideNavigationItemBase(itemRef) && itemRef.getDomRef()) {
-				itemDomRef = itemRef.getDomRef()!;
+			if (isInstanceOfSideNavigationItemBase(itemRef) && itemRef.getFocusDomRef()) {
+				itemDomRef = itemRef.getFocusDomRef()!;
 			}
 
 			const { marginTop, marginBottom } = window.getComputedStyle(itemDomRef);
@@ -661,7 +661,7 @@ class SideNavigation extends UI5Element {
 		let height = 0;
 
 		if (selectedItem) {
-			const selectedItemDomRef = selectedItem.getDomRef();
+			const selectedItemDomRef = selectedItem.getFocusDomRef();
 
 			if (selectedItemDomRef) {
 				const { marginTop, marginBottom } = window.getComputedStyle(selectedItemDomRef);

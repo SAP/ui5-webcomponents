@@ -284,6 +284,30 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		}
 	}
 
+	get _hasToggleIcon() {
+		if (!this.items.length || this.inPopover) {
+			return false;
+		}
+
+		return this.sideNavCollapsed;
+	}
+
+	get _hasToggleButtonUnSelectable() {
+		if (!this.items.length || this.inPopover || this.sideNavCollapsed) {
+			return false;
+		}
+
+		return this.unselectable;
+	}
+
+	get _hasToggleButtonSelectable() {
+		if (!this.items.length || this.inPopover || this.sideNavCollapsed) {
+			return false;
+		}
+
+		return !this.unselectable;
+	}
+
 	_onToggleClick(e: CustomEvent) {
 		e.stopPropagation();
 
@@ -360,7 +384,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
-		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
+		this.getFocusDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
 	_onmouseenter() {
@@ -368,7 +392,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
-		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
+		this.getFocusDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
 	_onmouseleave() {
@@ -376,7 +400,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 			return;
 		}
 
-		this.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
+		this.getFocusDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
 	/**

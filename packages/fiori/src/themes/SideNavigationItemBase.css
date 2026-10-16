@@ -13,6 +13,7 @@
 	align-items: center;
 	width: auto;
 	min-width: 0;
+	flex: 1;
 	box-sizing: border-box;
 	text-decoration: none;
 	position: relative;
@@ -332,7 +333,7 @@ and there is an additional border that appears on hover. */
 	right: var(--_ui5_side_navigation_item_expand_icon_hover_right);
 }
 
-.ui5-sn-item[aria-expanded=false] ~  .ui5-sn-item-ul {
+:host(:not([expanded])) .ui5-sn-item-ul {
 	display: none;
 }
 
