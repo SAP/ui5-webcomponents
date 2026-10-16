@@ -57,7 +57,7 @@ abstract class TableSelectionBase extends UI5Element implements ITableFeature {
 	 *
 	 * @default "RowSelector"
 	 * @public
-	 * @since 2.11
+	 * @since 2.11.0
 	 */
 	@property()
 	behavior: `${TableSelectionBehavior}` = "RowSelector";
