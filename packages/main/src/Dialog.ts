@@ -237,7 +237,7 @@ class Dialog extends Popup {
 	_cancelHandler: (e: Event) => void;
 	_nativeCloseHandler: (e: Event) => void;
 	_modalitySuspended = false;
-	_suspendingModality = false;
+	_ignoreNativeClose = false;
 	_focusBeforeSuspend?: HTMLElement | null;
 	_y?: number;
 	_x?: number;
@@ -726,12 +726,11 @@ class Dialog extends Popup {
 	}
 
 	_onNativeClose() {
-		// The native <dialog> can close without a cancelable "cancel" (e.g. the
-		// CloseWatcher force-closes on a second Escape). Reconcile through the
-		// close lifecycle if it closes while we still think we're open; a no-op
-		// when we closed it ourselves (_opened is already false by then).
-		// Ignore the close() we trigger ourselves while switching modality.
-		if (this._suspendingModality) {
+		// Reconcile a genuine native close through our lifecycle, but skip the
+		// async "close" _suspendModality fires to drop modality (the one-shot
+		// flag matches that event however late it arrives).
+		if (this._ignoreNativeClose) {
+			this._ignoreNativeClose = false;
 			return;
 		}
 		if (this._opened) {
@@ -767,10 +766,10 @@ class Dialog extends Popup {
 		// element inside the control's shadow root, outside this.contains().
 		const activeElement = document.activeElement as HTMLElement | null;
 		this._focusBeforeSuspend = activeElement && this.contains(activeElement) ? activeElement : null;
-		// close() exits the top layer and fires "close" - suppress our teardown.
-		this._suspendingModality = true;
+		// close() exits the top layer and fires "close" asynchronously - flag it
+		// so _onNativeClose ignores exactly that event and does not tear us down.
+		this._ignoreNativeClose = true;
 		dialog.close();
-		this._suspendingModality = false;
 		// Re-enter the top layer as a non-modal popover (below any popup promoted
 		// above us, since the caller promotes that popup afterwards).
 		dialog.setAttribute("popover", "manual");
@@ -1110,7 +1109,9 @@ class Dialog extends Popup {
 	 * @private
 	 */
 	async forwardToLast() {
-		if (this._skipFocusForward) {
+		// While modality is suspended a popup above us owns focus; our focus-trap
+		// sentinels must not forward focus back into this dialog and steal it.
+		if (this._skipFocusForward || this._modalitySuspended) {
 			return;
 		}
 
@@ -1123,6 +1124,18 @@ class Dialog extends Popup {
 		}
 
 		await super.forwardToLast();
+	}
+
+	/**
+	 * @override
+	 */
+	async forwardToFirst() {
+		// See forwardToLast: do not trap focus while a popup above owns it.
+		if (this._modalitySuspended) {
+			return;
+		}
+
+		await super.forwardToFirst();
 	}
 }
 
