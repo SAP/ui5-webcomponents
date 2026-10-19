@@ -23,7 +23,7 @@ const handle = (slider: Slider) => {
 				desktop={slider._isDesktop}
 				aria-orientation="horizontal"
 				part="handle"
-				exportparts="icon: handle-icon"
+				exportparts="icon: handle-icon, handle-container: handle-container"
 				role="slider"
 				aria-valuemin={slider.min}
 				aria-valuemax={slider.max}

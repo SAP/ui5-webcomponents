@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>UI5 Slider CSS Parts</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+	<style>
+		body {
+			font-family: "72", Arial, sans-serif;
+			background: var(--sapBackgroundColor, #f5f6f7);
+			padding: 1rem 2rem;
+			margin: 0;
+		}
+
+		.control-panel {
+			display: flex;
+			gap: 1.5rem;
+			flex-wrap: wrap;
+			background: var(--sapTile_Background, #fff);
+			border: 1px solid var(--sapTile_BorderColor, #d9d9d9);
+			border-radius: 0.5rem;
+			padding: 0.75rem 1rem;
+			margin-bottom: 2rem;
+		}
+
+		.control-group {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+		}
+
+		.control-group label { font-weight: bold; font-size: 0.875rem; }
+
+		.control-group button {
+			padding: 0.25rem 0.75rem;
+			border: 1px solid var(--sapButton_BorderColor, #0070f2);
+			border-radius: 0.25rem;
+			background: transparent;
+			cursor: pointer;
+			font-size: 0.8rem;
+		}
+
+		.control-group button.active {
+			background: var(--sapButton_Background, #0070f2);
+			color: var(--sapButton_TextColor, #fff);
+		}
+
+		h1 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+		h2 { font-size: 1rem; margin: 1.5rem 0 0.4rem; color: var(--sapContent_LabelColor, #6a6d70); }
+
+		.section {
+			background: var(--sapTile_Background, #fff);
+			border: 1px solid var(--sapTile_BorderColor, #d9d9d9);
+			border-radius: 0.5rem;
+			padding: 1rem 1.5rem 1.5rem;
+			margin-bottom: 1.5rem;
+		}
+
+		.section h3 {
+			font-size: 1rem;
+			margin: 0 0 0.5rem;
+			border-bottom: 1px solid var(--sapTile_BorderColor, #d9d9d9);
+			padding-bottom: 0.5rem;
+		}
+
+		pre {
+			font-size: 0.8rem;
+			background: #f8f8f8;
+			border: 1px solid #e0e0e0;
+			border-radius: 4px;
+			padding: 0.75rem 1rem;
+			margin: 0.75rem 0 0;
+			overflow-x: auto;
+		}
+
+		/* show host boundary */
+		.show-boundary ui5-slider,
+		.show-boundary ui5-range-slider {
+			outline: 1px dashed coral;
+		}
+
+		/* ── Dense layout: control height directly on the host ── */
+		.demo-dense ui5-slider,
+		.demo-dense ui5-range-slider {
+			height: 2rem;
+		}
+
+		/* ── root-container: custom background to prove the part is reachable ── */
+		.demo-bg ui5-slider::part(root-container) {
+			background: linear-gradient(90deg, #e8f4ff 0%, #f0e8ff 100%);
+			border-radius: 0.5rem;
+		}
+
+		/* ── root-container: reduced inline padding ── */
+		.demo-padding ui5-slider::part(root-container),
+		.demo-padding ui5-range-slider::part(root-container) {
+			padding-inline: 0.25rem;
+			background: rgba(255, 100, 0, 0.07);
+		}
+
+		/* ── progress: custom progress bar color ── */
+		.demo-progress ui5-slider::part(progress),
+		.demo-progress ui5-range-slider::part(progress) {
+			background: #e00;
+		}
+
+		/* ── handle: custom handle appearance ── */
+		.demo-handle ui5-slider::part(handle),
+		.demo-handle ui5-range-slider::part(handle) {
+			background: #0070f2;
+			border-color: #0070f2;
+			border-radius: 4px;
+		}
+
+		/* ── scale-inner: custom track color ── */
+		.demo-scale-inner ui5-slider::part(scale-inner),
+		.demo-scale-inner ui5-range-slider::part(scale-inner) {
+			background: rgba(0, 112, 242, 0.15);
+			border-radius: 4px;
+		}
+
+		/* ── handle-icon: custom icon color ── */
+		.demo-handle-icon ui5-slider::part(handle-icon),
+		.demo-handle-icon ui5-range-slider::part(handle-icon) {
+			color: #ff6600;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>Slider & RangeSlider — CSS Parts + Height Control</h1>
+	<p style="font-size:0.875rem;color:var(--sapContent_LabelColor,#6a6d70);margin:0 0 1.5rem">
+		Documents the approach for issue <strong>#10800</strong>. The coral outline shows the component host boundary.
+	</p>
+
+	<div class="control-panel">
+		<div class="control-group">
+			<label>Theme:</label>
+			<div id="theme-buttons">
+				<button data-theme="sap_horizon" class="active">Horizon</button>
+				<button data-theme="sap_horizon_dark">Horizon Dark</button>
+				<button data-theme="sap_fiori_3">Quartz</button>
+				<button data-theme="sap_fiori_3_dark">Quartz Dark</button>
+				<button data-theme="sap_horizon_hcb">HCB</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- ─────────────────────────────────────────────────────────────── -->
+	<div class="section">
+		<h3>Baseline — default height (2.75rem = 44px)</h3>
+		<div class="show-boundary">
+			<h2>ui5-slider</h2>
+			<ui5-slider min="0" max="100" value="40" show-tooltip></ui5-slider>
+			<h2>ui5-slider with tickmarks + labels</h2>
+			<ui5-slider min="0" max="100" value="40" show-tickmarks label-interval="5"></ui5-slider>
+			<h2>ui5-range-slider</h2>
+			<ui5-range-slider min="0" max="100" start-value="20" end-value="70" show-tooltip></ui5-range-slider>
+		</div>
+	</div>
+
+	<!-- ─────────────────────────────────────────────────────────────── -->
+	<div class="section">
+		<h3>Dense layout — reduce height by setting it directly on the host (#10800)</h3>
+		<p style="font-size:0.8rem;color:var(--sapContent_LabelColor,#6a6d70);margin:0 0 0.75rem">
+			Outer document styles override shadow DOM <code>:host</code> styles — no custom property needed.
+			Compare the coral outline to the baseline above.
+		</p>
+		<div class="demo-dense show-boundary">
+			<h2>ui5-slider — height: 2rem</h2>
+			<ui5-slider min="0" max="100" value="40"></ui5-slider>
+			<h2>ui5-slider with labels — height: 2rem</h2>
+			<ui5-slider min="0" max="100" value="60" show-tickmarks label-interval="5"></ui5-slider>
+			<h2>ui5-range-slider — height: 2rem</h2>
+			<ui5-range-slider min="0" max="100" start-value="20" end-value="70"></ui5-range-slider>
+		</div>
+		<pre>
+/* Outer document styles win over :host { height } in shadow DOM */
+ui5-slider,
+ui5-range-slider {
+    height: 2rem;   /* default is 2.75rem cozy, 2rem compact */
+}</pre>
+	</div>
+
+	<!-- ─────────────────────────────────────────────────────────────── -->
+	<div class="section">
+		<h3><code>::part(root-container)</code> — background (proves the part is reachable)</h3>
+		<div class="demo-bg show-boundary">
+			<ui5-slider min="0" max="100" value="55" show-tooltip></ui5-slider>
+		</div>
+		<pre>
+ui5-slider::part(root-container) {
+    background: linear-gradient(90deg, #e8f4ff 0%, #f0e8ff 100%);
+    border-radius: 0.5rem;
+}</pre>
+	</div>
+
+	<!-- ─────────────────────────────────────────────────────────────── -->
+	<div class="section">
+		<h3><code>::part(root-container)</code> — reduced inline padding (orange tint shows the container)</h3>
+		<p style="font-size:0.8rem;color:var(--sapContent_LabelColor,#6a6d70);margin:0 0 0.75rem">
+			Default side padding is <strong>1rem</strong>. Here reduced to <strong>0.25rem</strong> — the handle dots move closer to the edges.
+		</p>
+		<div class="show-boundary">
+			<h2>Default (padding-inline: 1rem)</h2>
+			<ui5-slider min="0" max="100" value="50"></ui5-slider>
+			<h2>Reduced via ::part(root-container)</h2>
+			<div class="demo-padding">
+				<ui5-slider min="0" max="100" value="50"></ui5-slider>
+				<ui5-range-slider min="0" max="100" start-value="25" end-value="75"></ui5-range-slider>
+			</div>
+		</div>
+		<pre>
+ui5-slider::part(root-container) {
+    padding-inline: 0.25rem;
+}</pre>
+	</div>
+
+	<!-- ─────────────────────────────────────────────────────────────── -->
+	<div class="section">
+		<h3><code>::part(progress)</code> — custom progress bar color</h3>
+		<div class="demo-progress show-boundary">
+			<ui5-slider min="0" max="100" value="60"></ui5-slider>
+			<ui5-range-slider min="0" max="100" start-value="20" end-value="70"></ui5-range-slider>
+		</div>
+		<pre>
+ui5-slider::part(progress) {
+    background: #e00;
+}</pre>
+	</div>
+
+	<!-- ─────────────────────────────────────────────────────────────── -->
+	<div class="section">
+		<h3><code>::part(handle)</code> — custom handle appearance</h3>
+		<div class="demo-handle show-boundary">
+			<ui5-slider min="0" max="100" value="50"></ui5-slider>
+			<ui5-range-slider min="0" max="100" start-value="30" end-value="70"></ui5-range-slider>
+		</div>
+		<pre>
+ui5-slider::part(handle) {
+    background: #0070f2;
+    border-color: #0070f2;
+    border-radius: 4px;
+}</pre>
+	</div>
+
+	<!-- ─────────────────────────────────────────────────────────────── -->
+	<div class="section">
+		<h3><code>::part(scale-inner)</code> — custom track background</h3>
+		<div class="demo-scale-inner show-boundary">
+			<ui5-slider min="0" max="100" value="50"></ui5-slider>
+			<ui5-range-slider min="0" max="100" start-value="25" end-value="75"></ui5-range-slider>
+		</div>
+		<pre>
+ui5-slider::part(scale-inner) {
+    background: rgba(0, 112, 242, 0.15);
+    border-radius: 4px;
+}</pre>
+	</div>
+
+	<!-- ─────────────────────────────────────────────────────────────── -->
+	<div class="section">
+		<h3><code>::part(handle-icon)</code> — custom icon color (visible when handle has an icon)</h3>
+		<div class="demo-handle-icon show-boundary">
+			<ui5-slider min="0" max="100" value="50"></ui5-slider>
+			<ui5-range-slider min="0" max="100" start-value="25" end-value="75"></ui5-range-slider>
+		</div>
+		<pre>
+ui5-slider::part(handle-icon) {
+    color: #ff6600;
+}</pre>
+	</div>
+
+	<script>
+		document.getElementById("theme-buttons").addEventListener("click", e => {
+			const btn = e.target.closest("[data-theme]");
+			if (!btn) return;
+			document.querySelectorAll("#theme-buttons button").forEach(b => b.classList.remove("active"));
+			btn.classList.add("active");
+			const Conf = window["sap-ui-webcomponents-bundle"].configuration;
+			Conf.setTheme(btn.dataset.theme);
+		});
+	</script>
+
+</body>
+</html>

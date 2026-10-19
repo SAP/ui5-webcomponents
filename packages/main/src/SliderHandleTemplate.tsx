@@ -10,7 +10,7 @@ export default function SliderHandleTemplate(this: SliderHandle) {
 			"ui5-slider-handle": true,
 			"ui5-slider-handle--start": this.handleType === SliderHandleType.Start,
 			"ui5-slider-handle--end": this.handleType === SliderHandleType.End,
-		}}>
+		}} part="handle-container">
 			<Icon name={directionArrows}
 				mode="Decorative"
 				part="icon"

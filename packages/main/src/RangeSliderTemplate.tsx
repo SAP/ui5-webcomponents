@@ -24,7 +24,7 @@ const startHandle = (slider: RangeSlider) => {
 				handleType={SliderHandleType.Start}
 				aria-orientation="horizontal"
 				part="handle"
-				exportparts="icon: handle-icon"
+				exportparts="icon: handle-icon, handle-container: handle-container"
 				role="slider"
 				aria-valuemin={slider.min}
 				aria-valuemax={slider.max}
@@ -60,7 +60,7 @@ const endHandle = (slider: RangeSlider) => {
 				handleType={SliderHandleType.End}
 				aria-orientation="horizontal"
 				part="handle"
-				exportparts="icon: handle-icon"
+				exportparts="icon: handle-icon, handle-container: handle-container"
 				role="slider"
 				aria-valuemin={slider.min}
 				aria-valuemax={slider.max}
@@ -153,7 +153,7 @@ export default function RangeSliderTemplate(this: RangeSlider) {
 					onFocusIn={this._onfocusin}
 					onFocusOut={this._onfocusout}
 					part="scale"
-					exportparts="inner: scale-inner, progress: progress-bar"
+					exportparts="inner: scale-inner, progress: progress"
 				>
 					{startHandle(this)}
 					{endHandle(this)}

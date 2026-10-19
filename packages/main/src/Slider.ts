@@ -71,9 +71,13 @@ import {
  * @extends SliderBase
  * @since 1.0.0
  * @public
- * @csspart progress-container - Used to style the progress container, the horizontal bar that visually represents the range between the minimum and maximum values, of the `ui5-slider`.
- * @csspart progress-bar - Used to style the progress bar, which shows the progress of the `ui5-slider`.
+ * @csspart root-container - Used to style the outer root container of the `ui5-slider`.
+ * @csspart progress - Used to style the progress bar, which shows the progress of the `ui5-slider`.
  * @csspart handle - Used to style the handle of the `ui5-slider`.
+ * @csspart handle-container - Used to style the container element wrapping the handle of the `ui5-slider`.
+ * @csspart handle-icon - Used to style the icon inside the handle of the `ui5-slider`.
+ * @csspart scale - Used to style the scale sub-component of the `ui5-slider`.
+ * @csspart scale-inner - Used to style the inner element of the scale sub-component.
  */
 @customElement({
 	tag: "ui5-slider",
