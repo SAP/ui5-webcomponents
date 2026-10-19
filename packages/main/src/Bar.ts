@@ -78,9 +78,9 @@ class Bar extends UI5Element {
 	 * from the container it is placed in, such as a page header or footer.
 	 *
 	 * **Note:** The "Toolbar" value is deprecated. The Bar is a structural layout container and does not
-	 * support toolbar keyboard interactions (such as arrow-key navigation between controls). To group
-	 * more than two interactive elements, use the Toolbar component instead. It provides the correct
-	 * accessibility semantics and user interactions.
+	 * support toolbar keyboard interactions (such as arrow-key navigation between components). When 3 or more
+	 * interactive elements are needed, use the `ui5-toolbar` component instead, which provides the correct
+	 * toolbar role and arrow-key navigation between components.
 	 *
 	 * @public
 	 * @default "None"
