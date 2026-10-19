@@ -207,6 +207,10 @@
 	<script>
 		(function () {
 			const search = document.getElementById('search-programmatic');
+			const deleteAllBtn = document.getElementById('prog-delete-all');
+			const closeBtn = document.getElementById('prog-close');
+			const openBtn = document.getElementById('prog-open');
+			const addBtn = document.getElementById('prog-add');
 			let counter = 0;
 
 			function createItem(text) {
@@ -218,23 +222,41 @@
 				return item;
 			}
 
+			// A pressed control button must not close the popover by itself - the
+			// programmatic `open` change below should be what controls it. Two things
+			// would otherwise close the popover before the button's click handler runs:
+			//   1. The global PopoverRegistry handler (document, mousedown, capture phase)
+			//      closes any non-modal popover on an outside press.
+			//   2. Moving focus to the button fires the search's focusout, which also closes.
+			// We register our own document capture mousedown listener now, at load time, so
+			// it runs before the registry handler (which attaches lazily on first open). For
+			// presses on a control button we stop that handler (1) and preventDefault to keep
+			// focus inside the search (2). The click event still fires normally afterwards.
+			const controlButtons = [deleteAllBtn, closeBtn, openBtn, addBtn];
+			document.addEventListener('mousedown', e => {
+				if (controlButtons.some(btn => e.composedPath().includes(btn))) {
+					e.stopImmediatePropagation();
+					e.preventDefault();
+				}
+			}, { capture: true });
+
 			// 1. Delete all suggestions programmatically.
-			document.getElementById('prog-delete-all').addEventListener('click', () => {
+			deleteAllBtn.addEventListener('click', () => {
 				search.getSlottedNodes('items').forEach(item => item.remove());
 			});
 
 			// 2. Close the popover programmatically.
-			document.getElementById('prog-close').addEventListener('click', () => {
+			closeBtn.addEventListener('click', () => {
 				search.open = false;
 			});
 
 			// 3. Open the popover programmatically.
-			document.getElementById('prog-open').addEventListener('click', () => {
+			openBtn.addEventListener('click', () => {
 				search.open = true;
 			});
 
 			// 4. Add suggestion items programmatically.
-			document.getElementById('prog-add').addEventListener('click', () => {
+			addBtn.addEventListener('click', () => {
 				counter += 1;
 				search.appendChild(createItem(`Added item ${counter}`));
 			});
