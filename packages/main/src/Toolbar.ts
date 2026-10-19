@@ -95,6 +95,12 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
  * @extends UI5Element
  * @public
  * @since 1.17.0
+ * @ui5subcomponent ToolbarButton
+ * @ui5subcomponent ToolbarItem
+ * @ui5subcomponent ToolbarSelect
+ * @ui5subcomponent ToolbarSelectOption
+ * @ui5subcomponent ToolbarSeparator
+ * @ui5subcomponent ToolbarSpacer
  */
 @customElement({
 	tag: "ui5-toolbar",
@@ -548,7 +554,7 @@ class Toolbar extends UI5Element {
 			const itemWidth = this.getCachedItemWidth(item._id) || 0;
 			const slotIdx = slotIndex.get(item)!;
 			const groupKey = item.effectiveOverflowGroup;
-			if (groupKey === "") {
+			if (!groupKey) {
 				units.push({
 					members: [item],
 					width: itemWidth,
