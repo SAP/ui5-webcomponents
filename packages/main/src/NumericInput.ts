@@ -358,8 +358,12 @@ class NumericInput extends UI5Element implements IFormInputElement {
 		return this.value.toString();
 	}
 
+	get _isDesktop() {
+		return isDesktop();
+	}
+
 	get type() {
-		return isDesktop() ? InputType.Text : InputType.Number;
+		return this._isDesktop ? InputType.Text : InputType.Number;
 	}
 
 	// icons-related
@@ -423,13 +427,13 @@ class NumericInput extends UI5Element implements IFormInputElement {
 	}
 
 	onEnterDOM() {
-		if (isDesktop()) {
+		if (this._isDesktop) {
 			this._setupLanguageChangeHandler();
 		}
 	}
 
 	onExitDOM() {
-		if (isDesktop()) {
+		if (this._isDesktop) {
 			this._cleanupLanguageChangeHandler();
 		}
 		this._resetSpin();
@@ -462,7 +466,7 @@ class NumericInput extends UI5Element implements IFormInputElement {
 		if (!this._formatter) {
 			this._formatter = NumberFormat.getFloatInstance({
 				decimals: this.valuePrecision,
-				...(!isDesktop() && {
+				...(!this._isDesktop && {
 					decimalSeparator: DEFAULT_DELIMITER,
 					groupingEnabled: false,
 				}),
@@ -473,7 +477,7 @@ class NumericInput extends UI5Element implements IFormInputElement {
 	}
 
 	get delimiter() {
-		if (!isDesktop()) {
+		if (!this._isDesktop) {
 			this._delimiter = DEFAULT_DELIMITER;
 		}
 
@@ -486,7 +490,7 @@ class NumericInput extends UI5Element implements IFormInputElement {
 	}
 
 	get groupSeparator() {
-		if(!isDesktop()) {
+		if (!this._isDesktop) {
 			return "";
 		}
 
@@ -638,6 +642,15 @@ class NumericInput extends UI5Element implements IFormInputElement {
 		return this.formatter.parse(formattedValue) as number;
 	}
 
+	_syncValueFromInput() {
+		const raw = this._isDesktop ? this._removeGroupSeparators(this.input.value) : this.input.value;
+		const parsed = this._parseNumber(raw);
+		if (!Number.isNaN(parsed)) {
+			this.value = parsed;
+			this._inputValue = this.input.value;
+		}
+	}
+
 	_incValue() {
 		if (this._incIconClickable && !this.disabled && !this.readonly) {
 			this._modifyValue(this.step, true);
@@ -668,7 +681,7 @@ class NumericInput extends UI5Element implements IFormInputElement {
 
 	_onInputChange() {
 		this._setDefaultInputValueIfNeeded();
-		const updatedValue = this._removeGroupSeparators(this.input.value);
+		const updatedValue = this._isDesktop ? this._removeGroupSeparators(this.input.value) : this.input.value;
 		const inputValue = this._parseNumber(updatedValue);
 		if (this._isValueChanged(inputValue)) {
 			this._updateValueAndValidate(Number.isNaN(inputValue) ? this.min || 0 : inputValue);
@@ -761,15 +774,13 @@ class NumericInput extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		if (!isDesktop()) {
+		if (!this._isDesktop) {
 			if (preventDefault) {
 				e.preventDefault();
 			}
 
 			return;
 		}
-
-
 
 		const caretPosition = this._getCaretPosition();
 		const inputValue = this.innerInput.value;
@@ -810,6 +821,9 @@ class NumericInput extends UI5Element implements IFormInputElement {
 			e.preventDefault();
 		}
 		if (!this._decIconDisabled) {
+			if (this._isFocused) {
+				this._syncValueFromInput();
+			}
 			this._spinValue(false, true);
 		} else {
 			this.input.focus();
@@ -821,6 +835,9 @@ class NumericInput extends UI5Element implements IFormInputElement {
 			e.preventDefault();
 		}
 		if (!this._incIconDisabled) {
+			if (this._isFocused) {
+				this._syncValueFromInput();
+			}
 			this._spinValue(true, true);
 		} else {
 			this.input.focus();
