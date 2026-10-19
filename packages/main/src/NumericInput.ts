@@ -56,7 +56,7 @@ const ACCELERATION = 0.8;
 const MIN_WAIT_TIMEOUT = 50; // milliseconds
 const INITIAL_SPEED = 120; // milliseconds
 
-const MOBILE_DEVICES_DELIMITER = "."; // The decimal delimiter for mobile devices is always a dot, regardless of the locale.
+const DEFAULT_DELIMITER = ".";
 
 type NumericInputValueStateChangeEventDetail = {
 	valueState: `${ValueState}`,
@@ -359,7 +359,7 @@ class NumericInput extends UI5Element implements IFormInputElement {
 	}
 
 	get type() {
-		return InputType.Text;//isDesktop() ? InputType.Text : InputType.Number;
+		return isDesktop() ? InputType.Text : InputType.Number;
 	}
 
 	// icons-related
@@ -462,6 +462,10 @@ class NumericInput extends UI5Element implements IFormInputElement {
 		if (!this._formatter) {
 			this._formatter = NumberFormat.getFloatInstance({
 				decimals: this.valuePrecision,
+				...(!isDesktop() && {
+					decimalSeparator: DEFAULT_DELIMITER,
+					groupingEnabled: false,
+				}),
 			});
 		}
 
@@ -470,7 +474,7 @@ class NumericInput extends UI5Element implements IFormInputElement {
 
 	get delimiter() {
 		if (!isDesktop()) {
-			this._delimiter = MOBILE_DEVICES_DELIMITER;
+			this._delimiter = DEFAULT_DELIMITER;
 		}
 
 		if (!this._delimiter) {
@@ -756,6 +760,16 @@ class NumericInput extends UI5Element implements IFormInputElement {
 		if (e.key && e.key.length !== 1) {
 			return;
 		}
+
+		if (!isDesktop()) {
+			if (preventDefault) {
+				e.preventDefault();
+			}
+
+			return;
+		}
+
+
 
 		const caretPosition = this._getCaretPosition();
 		const inputValue = this.innerInput.value;
