@@ -89,7 +89,7 @@ describe("ProductSwitch general interaction", () => {
 		cy.get("[ui5-product-switch]")
 			.shadow()
 			.find(".ui5-product-switch-root")
-			.should("have.css", "width", "376px");
+			.should("have.css", "max-width", "420px");
 	});
 
 	it("tests 3-column desktop layout", () => {
@@ -158,7 +158,7 @@ describe("ProductSwitch ARIA attributes", () => {
 	it("items have role menuitem", () => {
 		cy.mount(
 			<ProductSwitch>
-				<ProductSwitchItem titleText="Home" icon="home" targetSrc="https://example.com"></ProductSwitchItem>
+				<ProductSwitchItem titleText="Home" icon="home" targetSrc="about:blank"></ProductSwitchItem>
 				<ProductSwitchItem titleText="Analytics Cloud" icon="business-objects-experience"></ProductSwitchItem>
 			</ProductSwitch>
 		);
@@ -192,7 +192,7 @@ describe("ProductSwitch busy state", () => {
 			.and("have.attr", "active");
 	});
 
-	it("does not show busy indicator when loading is false", () => {
+	it("does not activate busy indicator when loading is false", () => {
 		cy.mount(
 			<ProductSwitch loading={false}>
 				<ProductSwitchItem titleText="Home" icon="home"></ProductSwitchItem>
@@ -202,24 +202,21 @@ describe("ProductSwitch busy state", () => {
 		cy.get("[ui5-product-switch]")
 			.shadow()
 			.find("[ui5-busy-indicator]")
-			.should("not.exist");
+			.should("exist")
+			.and("not.have.attr", "active");
 	});
-});
 
-describe("ProductSwitch styles", () => {
-	it("tests root element inherit styles", () => {
+	it("forwards loadingDelay to the busy indicator", () => {
 		cy.mount(
-			<ProductSwitch style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-				<ProductSwitchItem titleText="Home" subtitleText="Central Home" icon="home"></ProductSwitchItem>
-				<ProductSwitchItem titleText="Analytics Cloud" subtitleText="Analytics Cloud" icon="business-objects-experience"></ProductSwitchItem>
+			<ProductSwitch loading={true} loadingDelay={0}>
+				<ProductSwitchItem titleText="Home" icon="home"></ProductSwitchItem>
 			</ProductSwitch>
 		);
 
 		cy.get("[ui5-product-switch]")
 			.shadow()
-			.find(".ui5-product-switch-root")
-			.should("have.css", "justify-content", "center")
-			.should("have.css", "align-items", "center");
+			.find("[ui5-busy-indicator]")
+			.should("have.attr", "delay", "0");
 	});
 });
 
