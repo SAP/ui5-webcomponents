@@ -98,7 +98,7 @@
     display: none;
 }
 
-[ui5-slider]::part(progress) {
+[ui5-slider]::part(progress-bar) {
     background: transparent;
 }
 
