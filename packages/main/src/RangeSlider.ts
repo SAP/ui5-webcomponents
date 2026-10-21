@@ -92,7 +92,6 @@ type AffectedValue = "startValue" | "endValue";
  * @csspart handle-container - Used to style the container element wrapping the handles of the `ui5-range-slider`.
  * @csspart handle-icon - Used to style the icon inside the handles of the `ui5-range-slider`.
  * @csspart scale - Used to style the scale sub-component of the `ui5-range-slider`.
- * @csspart scale-inner - Used to style the inner element of the scale sub-component.
  */
 @customElement({
 	tag: "ui5-range-slider",

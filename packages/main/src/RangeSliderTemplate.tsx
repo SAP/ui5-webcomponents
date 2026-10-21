@@ -153,7 +153,7 @@ export default function RangeSliderTemplate(this: RangeSlider) {
 					onFocusIn={this._onfocusin}
 					onFocusOut={this._onfocusout}
 					part="scale"
-					exportparts="inner: scale-inner, progress: progress"
+					exportparts="progress: progress"
 				>
 					{startHandle(this)}
 					{endHandle(this)}

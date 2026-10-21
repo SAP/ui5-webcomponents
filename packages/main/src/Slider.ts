@@ -77,7 +77,6 @@ import {
  * @csspart handle-container - Used to style the container element wrapping the handle of the `ui5-slider`.
  * @csspart handle-icon - Used to style the icon inside the handle of the `ui5-slider`.
  * @csspart scale - Used to style the scale sub-component of the `ui5-slider`.
- * @csspart scale-inner - Used to style the inner element of the scale sub-component.
  */
 @customElement({
 	tag: "ui5-slider",
