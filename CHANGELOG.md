@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.28.1](https://github.com/UI5/webcomponents/compare/v2.28.0...v2.28.1) (2026-10-21)
+
+
+### Bug Fixes
+
+* **release:** disable npm provenance for all release jobs ([#14187](https://github.com/UI5/webcomponents/issues/14187)) ([67c99ad](https://github.com/UI5/webcomponents/commit/67c99adfded749b03e930069d33c8b76de48102a))
+
+
+
+
+
 # [2.28.0](https://github.com/UI5/webcomponents/compare/v2.28.0-rc.0...v2.28.0) (2026-10-21)
 
 
