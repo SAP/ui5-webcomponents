@@ -15,7 +15,7 @@ UserMenu
 **AI package:**
 Button (AI)
 
-Most popup families have `Open`/`Opened` state helpers. The `Closed` variant is **not universal**:
+Most popup families have `Open`/`Opened` state helpers (see § Popup Open/Closed Utilities below for implementation patterns). The `Closed` variant is **not universal**:
 - `Menu` and `ResponsivePopover` — have `Closed`
 - `Dialog` and `Popover` — expose only `Opened`; no `Closed` variant
 

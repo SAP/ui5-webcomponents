@@ -1,363 +1,63 @@
 ---
-name: cypress-test-writer
+name: writing-cypress-tests
 description: |
-  Write, review, and improve Cypress component tests for UI5 web components following the project's testing conventions. Use this skill whenever the user asks to:
-  - Write or add Cypress tests for a UI5 component ("write cypress tests for X", "add cypress spec for X", "create tests for X")
-  - Review existing cypress test files for quality or correctness
-  - Add custom Cypress commands for a component ("add cypress commands for X")
-  - Extract repetitive interaction patterns into reusable commands
-  - Check whether tests follow UI5 testing conventions (real events, attribute selectors, async API patterns)
-  Trigger even when the user says things like "test this component", "make sure X works", or "help me write a spec" without saying "Cypress" explicitly — if the context is a UI5 web component in this repo, use this skill.
-user-invocable: false
+  Write and review Cypress component tests for UI5 web components. Triggers: write/add Cypress tests ("write tests for X", "add spec for X"), review test files, create custom commands, debug flaky tests, or implicit "test this component" in UI5 context.
+user-invocable: true
+packages: ["@ui5/webcomponents"]
 ---
 
-# Cypress Test Writer for UI5 Web Components
+# Writing Cypress Tests for UI5 Web Components
 
-## Overview
-
-This skill helps write and review Cypress component tests for UI5 web components. It encodes the project's testing conventions so every test file and command is consistent with the existing codebase.
-
-### Which files to load
-
-`SKILL.md` (this file) is always loaded. Load the additional references below that match your task — combine them when a task spans several.
+Write and review Cypress component tests that match the project's conventions. This main file is always loaded; load the references below that match your task.
 
 | When you are… | Also load |
 |---|---|
-| Writing or restructuring a spec file | [`WRITING-SPECS.md`](./references/WRITING-SPECS.md) |
+| Writing, restructuring, or asserting on a spec file | [`WRITING-SPECS.md`](./references/WRITING-SPECS.md) |
 | Adding or modifying custom commands | [`COMMANDS.md`](./references/COMMANDS.md) |
-| Reviewing an existing spec | [`REVIEWING.md`](./references/REVIEWING.md) (checklist) + [`WRITING-SPECS.md`](./references/WRITING-SPECS.md) (the standard) |
+| Reviewing an existing spec | [`REVIEWING.md`](./references/REVIEWING.md) + [`WRITING-SPECS.md`](./references/WRITING-SPECS.md) |
 | Debugging a flaky or intermittent test | [`FLAKY-TESTS.md`](./references/FLAKY-TESTS.md) |
+| Unsure of the expected structure or conventions | [`EXAMPLES.md`](./references/EXAMPLES.md) |
+
+## Troubleshooting
+
+Tests that pass locally and fail in CI waste PR cycles — if a test is intermittently failing, load [`FLAKY-TESTS.md`](./references/FLAKY-TESTS.md) for debugging guidance on common causes (async focus, animation timing, CPU throttling reproduction).
 
 ---
 
 ## Running tests
 
-Run tests from the package folder (`packages/main`, `packages/fiori`, etc.), scoping the run to the component you are working on rather than the whole suite — the full suite is slow and rarely what you need locally:
+Run from the package folder, scoped to the component — the full suite is slow:
 
 ```bash
 cd packages/main
 yarn test:cypress:single cypress/specs/<Component>.cy.tsx
 ```
 
-While iterating on a single failing case, add `.only` to that `it()` so only it runs, then remove it and run the full spec once before committing.
-
----
-
-## Core Rules
-
-### Interacting — always use real events
-
-| Use | Not |
-|-----|-----|
-| `.realClick()` | `.click()` |
-| `.realPress("Enter")` | `.type("{enter}")` |
-| `.realType("hello")` | `.type("hello")` |
-| `.realHover()` | `.trigger("mouseover")` |
-
-**`realPress` and `realType` take no subject.** They dispatch CDP key events to whatever currently has focus — a piped subject is silently ignored. Focus the target first, then call them as a separate statement:
-
-```typescript
-// Wrong — realType is chained after realClick; the focus change hasn't settled
-cy.get("@input")
-	.realClick()
-	.realType("23");
-
-// Right — two statements
-cy.get("@input")
-	.realClick();
-cy.realType("23");
-```
-
-```typescript
-// Wrong — numeric wait
-cy.wait(3000);
-cy.get("[ui5-responsive-popover]")
-	.ui5ResponsivePopoverClosed();
-
-// Right — assert the condition; should retries
-cy.get("[ui5-responsive-popover]")
-	.ui5ResponsivePopoverClosed();
-```
-
-### Always use attribute selectors
-```typescript
-// Wrong
-cy.get("ui5-button")
-// Right
-cy.get("[ui5-button]")
-```
-
-### Calling async base API methods
-The UI5 base API (`setLanguage`, `setTheme`, etc.) returns Promises. Never call them bare — Cypress won't await them. Always use `cy.wrap({ fn }).then(async ({ fn }) => { await fn(args); })`:
-
-```typescript
-// Wrong — promise not awaited
-setLanguage("bg");
-
-// Wrong — .then(api => ...) does not await the promise
-cy.wrap({ setLanguage })
-	.then(api => api.setLanguage("bg"));
-
-// Correct — async/await inside .then() ensures the promise is resolved before Cypress continues
-cy.wrap({ setLanguage })
-	.then(async ({ setLanguage }) => {
-		await setLanguage("bg");
-	});
-
-// Reading the result after an async call
-cy.wrap({ getLanguage })
-	.then(({ getLanguage }) => getLanguage())
-	.should("equal", "bg");
-```
-
-### Setting properties and attributes
-
-Use `.invoke()` to set a property or attribute on a component:
-
-```typescript
-// Set a property
-cy.get("[ui5-button]")
-	.invoke("prop", "myProp", "newValue");
-
-// Set an attribute
-cy.get("[ui5-button]")
-	.invoke("attr", "open", true);
-```
-
-### DOM traversal
-```typescript
-// Shadow DOM
-cy.get("[ui5-button]")
-	.shadow()
-	.find("button")
-
-// Slots / light DOM children
-cy.get("[ui5-button]")
-	.find("[ui5-icon]")
-```
+Add `.only` to isolate a failing `it()` while iterating; remove it and run the full spec before committing.
 
 ---
 
 ## Formatting
 
-### One method per line
-
-Every chained method gets its own line with a leading tab. Never chain methods on the same line as `cy.get()`:
-
-```typescript
-// Wrong
-cy.get("[ui5-responsive-popover]").ui5ResponsivePopoverClosed();
-cy.get("[ui5-button]").shadow().find("button").should("be.visible");
-
-// Right
-cy.get("[ui5-responsive-popover]")
-	.ui5ResponsivePopoverClosed();
-
-cy.get("[ui5-button]")
-	.shadow()
-	.find("button")
-	.should("be.visible");
-```
-
-### Blank lines between steps
-
-Separate distinct test steps with a blank line:
-
-```typescript
-cy.get("[ui5-button]")
-	.as("button");
-
-cy.get("@button")
-	.realClick();
-
-cy.get("@clicked")
-	.should("have.been.calledOnce");
-```
-
-### `.then()` callbacks
-
-Opening brace on the same line as the arrow function; body indented; closing brace on its own line:
-
-```typescript
-cy.get<Button>("[ui5-button]")
-	.then($button => {
-		const button = $button.get(0);
-		expect(button.accessibilityInfo.role).to.equal("button");
-	});
-```
-
-### `cy.mount()` with JSX
-
-JSX children indented, closing tag aligned with the component opening tag:
-
-```typescript
-cy.mount(
-	<ComboBox valueState="Negative">
-		<ComboBoxItem text="Albania" />
-		<ComboBoxItem text="Bulgaria" />
-	</ComboBox>
-);
-```
-
-### Indentation
-
-Use **tabs**, not spaces.
+One statement per line, tab-indented chains.
 
 ---
 
 ## TypeScript Generics
 
-### Type `cy.get<T>()` at every element boundary
-
-Pass the concrete component type as a generic to `cy.get<T>()` so TypeScript can verify that the commands chained on the result are valid for that element type. Do this for every `cy.get` that selects a UI5 component — both selector strings and aliases.
-
-```typescript
-// Assume the DatePicker was aliased once after mount:
-cy.get<DatePicker>("[ui5-date-picker]")
-	.as("datePicker");
-
-// Wrong — TypeScript cannot verify commands are valid for this element
-cy.get("[ui5-date-picker]")
-	.ui5DatePickerGetCalendar();
-cy.get("@datePicker")
-	.ui5DatePickerGetCalendar();
-
-// Right — TypeScript knows the subject is a DatePicker
-cy.get<DatePicker>("[ui5-date-picker]")
-	.ui5DatePickerGetCalendar();
-cy.get<DatePicker>("@datePicker")
-	.ui5DatePickerGetCalendar();
-
-// When a command returns a typed element, the next get must match
-cy.get<DatePicker>("@datePicker")
-	.ui5DatePickerGetCalendar()
-	.as("calendar");
-cy.get<Calendar>("@calendar")
-	.ui5CalendarGetDayPicker()
-	.should("be.visible");
-```
-
-### `import type` vs plain import
-
-Use `import type` when a name is only used in type positions. Use a plain import when the name is also used as a value (JSX, static property access, `instanceof`, etc.).
-
-```typescript
-// In a spec file:
-import DatePicker from "../../src/DatePicker.js";       // plain — used in JSX and DatePicker.i18nBundle
-import type Calendar from "../../src/Calendar.js";     // type-only — only used in cy.get<Calendar>()
-
-// In a commands file:
-import type DatePicker from "../../../src/DatePicker.js";        // type-only — only used as JQuery<DatePicker>
-import type Calendar from "../../../src/Calendar.js";           // type-only — only used as JQuery<Calendar>
-import type ResponsivePopover from "../../../src/ResponsivePopover.js"; // type-only — only used as .find<ResponsivePopover>()
-```
-
----
-
-## Asserting
-
-Use `have.attr` for reflected properties and ARIA attributes; use `have.prop` for state that is not reflected to an attribute:
-
-```typescript
-// Reflected to DOM attribute — use have.attr
-cy.get("[ui5-button]")
-	.should("have.attr", "title", "my tooltip");
-cy.get("[ui5-input]")
-	.should("have.attr", "aria-label", "Search");
-
-// Non-reflected JS property — use have.prop
-cy.get("#myInput")
-	.should("have.prop", "focused", true);
-```
-
-### Asserting on computed styles and CSS custom properties
-
-When a test needs to verify applied styling — a CSS class is not enough, or the component publishes a CSS custom property (`--_ui5_...`) on its host — read the computed style inside a `.then()` callback with `getComputedStyle(...).getPropertyValue(...)`. Trim the result, since custom-property values are returned with leading whitespace:
-
-```typescript
-cy.get<Input>("[ui5-input]")
-	.shadow()
-	.find("[ui5-icon]")
-	.then($icon => {
-		const padding = getComputedStyle($icon[0])
-			.getPropertyValue("--_ui5_input_icon_state_padding")
-			.trim();
-		expect(padding).to.equal("0.5rem");
-	});
-```
-
-Rules:
-- Assert the specific declared value where one exists (`.to.equal("none")`), not just `.to.not.equal("")`.
-- Only reach for computed styles when a class assertion cannot express the check — prefer `should("have.class", ...)` when a class reflects the state.
-
-### Asserting on events
-
-No global event helper — attach a stub:
-
-```typescript
-cy.get("[ui5-tag]")
-	.then($tag => {
-		$tag[0].addEventListener("click", cy.stub().as("clicked"));
-	});
-
-cy.get("[ui5-tag]")
-	.realClick();
-cy.get("@clicked")
-	.should("have.been.calledOnce");
-
-// Assert event payload
-cy.get("@clickHandler")
-	.should("be.calledWithMatch", { detail: { ctrlKey: true } });
-```
-
-### Asserting on focus
-
-Focus assertions on a saved alias are unreliable across the shadow boundary. When an element inside a shadow root is focused, `document.activeElement` **retargets** to the nearest host — so `have.focus` on a *nested* aliased element fails (its focus is attributed to the outer host), while `have.focus` on a *top-level* host may pass unexpectedly. Assert against the truly-focused element with `cy.focused()`, which drills through shadow roots to the innermost focused node:
-
-```typescript
-// Wrong — @defaultColorButton is nested in a shadow root; focus retargets to the outer host
-cy.get("@defaultColorButton")
-	.should("have.focus");
-
-// Right — cy.focused() drills through shadow roots to the innermost focused element
-cy.focused()
-	.should("have.attr", "aria-label")
-	.and("include", "cyan");
-```
-
-`cy.focused()` returns the innermost shadow focus ref, not the host element — assert `aria-label` or other attributes present on that ref, not host-level properties.
-
----
-
-## Text and i18n
-
-Never compare against English string literals. Compare against the i18n bundle so the test stays correct under locale changes:
-
-```typescript
-// Wrong — breaks if the bundle text ever changes
-cy.get("[ui5-form-group]")
-	.should("have.attr", "aria-label", "Group 1");
-
-// Right — compare against the bundle
-cy.get("[ui5-form-group]")
-	.should(
-		"have.attr",
-		"aria-label",
-		Form.i18nBundle.getText(FORM_GROUP_ACCESSIBLE_NAME, "1")
-	);
-```
-
-For non-default locales, always import `Assets.js` (see "Configuration" above).
+Pass the component type to every `cy.get<T>()` selecting a UI5 component — this lets TypeScript verify chained custom commands (e.g. `.ui5DatePickerGetCalendar()`). See WRITING-SPECS.md § TypeScript generics.
 
 ---
 
 ## Workflow
 
-1. **Read the component source** (`packages/{package}/src/{ComponentName}.ts`) to understand props, events, and shadow DOM structure
+1. **Read the component source** (`packages/{package}/src/{ComponentName}.ts`) if you don't know its props, events, or shadow DOM structure
 2. **Check for existing commands** in `packages/{package}/cypress/support/commands/` — don't duplicate
 3. **Write the spec file** following [`WRITING-SPECS.md`](./references/WRITING-SPECS.md), with `cy.get<T>()` generics throughout
-4. **Extract commands** for any interaction sequence used more than once — see [`COMMANDS.md`](./references/COMMANDS.md)
-5. **Create the commands file** following the template and conventions in [`COMMANDS.md`](./references/COMMANDS.md)
-6. **Update commands.ts** with the import (alphabetical order)
-7. **When reviewing** an existing test file, use the checklist in [`REVIEWING.md`](./references/REVIEWING.md)
-8. Tell the user what was created and where
+4. **Extract repeated sequences into commands** per [`COMMANDS.md`](./references/COMMANDS.md)
+5. **Create the commands file** following the template in [`COMMANDS.md`](./references/COMMANDS.md); update `commands.ts` with the import (alphabetical)
+6. **When reviewing** an existing test file, use the checklist in [`REVIEWING.md`](./references/REVIEWING.md) and verify against [`WRITING-SPECS.md`](./references/WRITING-SPECS.md) conventions
+
+## Reporting
+
+Report created/modified files with relative paths from the package root: `packages/main/cypress/specs/Component.cy.tsx`, `packages/main/cypress/support/commands/Component.commands.ts`.

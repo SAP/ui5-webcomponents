@@ -7,7 +7,18 @@ When reviewing a test file, check:
 3. **Attribute selectors** — are components selected with `[ui5-button]` not `ui5-button`? Does the rule hold inside `.shadow().find(...)` too?
 4. **Async safety** — are base API calls using `async .then()` with explicit `await`, not bare calls or `.then(api => api.method())`?
 5. **Repetition** — are the same 3+ line interaction sequences duplicated across `it()` blocks?
-6. **Shadow DOM** — when asserting on internal structure, is `.shadow().find(...)` used, or better, a POM command?
+6. **Shadow DOM** — when asserting on internal structure, is `.shadow().find(...)` used, or better, a POM command? For **focus**, assert against `cy.focused()` (it drills through shadow roots to the innermost focused node), not `have.focus` on a saved alias — `document.activeElement` retargets to the nearest host, so alias focus assertions are unreliable. Check attributes on the focused ref, not host-level properties:
+
+   ```typescript
+   // Wrong — @defaultColorButton is nested; focus retargets to the outer host
+   cy.get("@defaultColorButton")
+   	.should("have.focus");
+
+   // Right
+   cy.focused()
+   	.should("have.attr", "aria-label")
+   	.and("include", "cyan");
+   ```
 7. **Event testing** — when testing that events fire, is `cy.stub` / `cy.spy` used rather than relying on side effects? Is the payload and call count asserted?
 8. **POM usage** — are raw `.shadow().find("ui5-...")` chains in the spec replaced by POM commands?
 9. **TypeScript generics** — does every `cy.get()` that selects a UI5 component use `cy.get<ComponentType>()`?

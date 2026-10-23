@@ -13,6 +13,8 @@ Detailed conventions for authoring a Cypress spec: file layout, meaningful asser
 | `packages/{package}/cypress/specs/{ComponentName}.cy.tsx` | Main spec |
 | `packages/{package}/cypress/specs/{ComponentName}.mobile.cy.tsx` | Phone-only tests — use when tests require `cy.ui5SimulateDevice("phone")` for the entire file |
 
+**File naming:** the only two valid suffixes are `.cy.tsx` and `.mobile.cy.tsx`. The file name must start with the PascalCase component name — `DatePicker.cy.tsx`, not `date-picker.cy.tsx` or `DatePickerGerman.cy.tsx`. All tests for a component belong in one of these two files.
+
 ### Minimal structure
 ```typescript
 import ComponentName from "../../src/ComponentName.js";
@@ -521,4 +523,156 @@ afterEach(() => {
 - Do not mount in `beforeEach` when tests need different component configurations — use mount helper functions instead (see above).
 - Do not use `afterEach` to reset state that the next `cy.mount()` will implicitly reset anyway (e.g. component-local state).
 - Do not use `beforeEach` for setup that only one or two tests need — keep it inline.
+
+---
+
+## Real events
+
+**CRITICAL: `realPress` and `realType` are global commands that dispatch to the focused element. Never chain them after `.realClick()` on the same line. Always use two separate statements: focus first, then call `cy.realPress()` or `cy.realType()` standalone.**
+
+After `.realClick()` to focus an element, call `cy.realType()` as a separate statement — never chain `.realType()` after `.realClick()` on the same line, as the focus change hasn't settled.
+
+`realPress` and `realType` dispatch CDP key events to whatever currently has focus — a piped subject is silently ignored. Focus the target first, then call them as a separate statement:
+
+```typescript
+// Wrong — realType chained after realClick; the focus change hasn't settled
+cy.get("@input")
+	.realClick()
+	.realType("23");
+
+// Right — two statements
+cy.get("@input")
+	.realClick();
+cy.realType("23");
+```
+
+Never use a numeric `cy.wait(<ms>)` to bridge async UI — assert the condition instead and let `should` retry.
+
+## Async base API methods
+
+The UI5 base API (`setLanguage`, `setTheme`, etc.) returns Promises. Cypress won't await a bare call, and `.then(api => api.method())` does not await either. Use async/await inside `.then()`:
+
+```typescript
+// Correct — promise is resolved before Cypress continues
+cy.wrap({ setLanguage })
+	.then(async ({ setLanguage }) => {
+		await setLanguage("bg");
+	});
+
+// Reading the result after an async call
+cy.wrap({ getLanguage })
+	.then(({ getLanguage }) => getLanguage())
+	.should("equal", "bg");
+```
+
+## Setting properties and attributes
+
+```typescript
+cy.get("[ui5-button]")
+	.invoke("prop", "myProp", "newValue");
+
+cy.get("[ui5-button]")
+	.invoke("attr", "open", true);
+```
+
+## TypeScript generics
+
+Pass the component type to every `cy.get<T>()` selecting a UI5 component — selector strings and aliases — so TypeScript can verify the chained commands. When a command returns a typed element, the next `cy.get` must match. Use `import type` for type-only names; a plain import when the name is also a value (JSX, static access, `instanceof`).
+
+```typescript
+// Wrong — TypeScript cannot verify the command
+cy.get("@datePicker")
+	.ui5DatePickerGetCalendar();
+
+// Right
+cy.get<DatePicker>("@datePicker")
+	.ui5DatePickerGetCalendar()
+	.as("calendar");
+cy.get<Calendar>("@calendar")
+	.ui5CalendarGetDayPicker();
+```
+
+## Asserting
+
+Use `have.attr` for reflected properties and ARIA attributes; use `have.prop` for state not reflected to an attribute:
+
+```typescript
+cy.get("[ui5-button]")
+	.should("have.attr", "title", "my tooltip");
+
+cy.get("#myInput")
+	.should("have.prop", "focused", true);
+```
+
+**ARIA attributes inside shadow DOM** — UI5 components render their accessible markup inside shadow roots. Always traverse `.shadow().find(...)` to reach the native element that carries the ARIA attribute, and verify the exact value from the component source or i18n bundle — never guess literals:
+
+```typescript
+// Wrong — the host element rarely carries ARIA attrs directly
+cy.get("[ui5-input]")
+	.should("have.attr", "aria-roledescription", "Search");
+
+// Right — reach the inner input inside the shadow root
+cy.get("[ui5-input]")
+	.shadow()
+	.find("input")
+	.should("have.attr", "aria-roledescription", "Search")
+	.and("have.attr", "aria-label", "Amount");
+
+// Asserting absence of an ARIA attribute
+cy.get("[ui5-input]")
+	.shadow()
+	.find("input")
+	.should("not.have.attr", "aria-expanded");
+```
+
+Before asserting an ARIA attribute value, read the component source or i18n bundle for the exact string — never guess English literals. Guessed values break under locale changes and fail when the actual text differs. Check `packages/{package}/src/{ComponentName}.ts` or the i18n bundle for the specific attribute value — especially for localised attributes like `aria-label`.
+
+**Events** — no global helper; attach a stub, then assert call count and payload:
+
+```typescript
+cy.get("[ui5-tag]")
+	.then($tag => {
+		$tag[0].addEventListener("click", cy.stub().as("clicked"));
+	});
+
+cy.get("[ui5-tag]")
+	.realClick();
+cy.get("@clicked")
+	.should("have.been.calledOnce");
+
+cy.get("@clickHandler")
+	.should("be.calledWithMatch", { detail: { ctrlKey: true } });
+```
+
+**Computed styles / CSS custom properties** — when a class assertion cannot express the check (or the component publishes a `--_ui5_...` custom property on its host), read the computed style inside a `.then()`. Trim the result — custom-property values come with leading whitespace. Assert the specific declared value, not just `.to.not.equal("")`. Prefer `should("have.class", ...)` when a class reflects the state.
+
+```typescript
+cy.get<Input>("[ui5-input]")
+	.shadow()
+	.find("[ui5-icon]")
+	.then($icon => {
+		const padding = getComputedStyle($icon[0])
+			.getPropertyValue("--_ui5_input_icon_state_padding")
+			.trim();
+		expect(padding).to.equal("0.5rem");
+	});
+```
+
+## Text and i18n
+
+Compare against the i18n bundle, never English literals — the test stays correct under locale changes. Import `Assets.js` for non-default locales.
+
+```typescript
+// Wrong — breaks if the bundle text ever changes
+cy.get("[ui5-form-group]")
+	.should("have.attr", "aria-label", "Group 1");
+
+// Right — compare against the bundle
+cy.get("[ui5-form-group]")
+	.should(
+		"have.attr",
+		"aria-label",
+		Form.i18nBundle.getText(FORM_GROUP_ACCESSIBLE_NAME, "1")
+	);
+```
 
