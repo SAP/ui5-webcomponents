@@ -2172,3 +2172,109 @@ describe("Fullscreen Button", () => {
 		cy.get("#dialog1").should("not.have.attr", "stretch");
 	});
 });
+
+describe("Inert background", () => {
+	it("marks background elements inert while open and restores on close", () => {
+		cy.mount(
+			<>
+				<button id="before"></button>
+				<Dialog id="dialogId">
+					<Button id="inside">Inside</Button>
+				</Dialog>
+				<button id="after"></button>
+			</>
+		);
+
+		cy.get("#before").should("not.have.attr", "inert");
+		cy.get("#after").should("not.have.attr", "inert");
+
+		cy.get("#dialogId").invoke("prop", "open", true);
+		cy.get<Dialog>("#dialogId").ui5DialogOpened();
+
+		// background siblings become inert, the dialog branch does not
+		cy.get("#before").should("have.attr", "inert");
+		cy.get("#after").should("have.attr", "inert");
+		cy.get("#before").should("have.attr", "data-ui5-dialog-old-no-inert");
+		cy.get("#after").should("have.attr", "data-ui5-dialog-old-no-inert");
+		cy.get("#dialogId").should("not.have.attr", "inert");
+
+		cy.get("#dialogId").invoke("prop", "open", false);
+
+		// inert is removed once the dialog is closed
+		cy.get("#before").should("not.have.attr", "inert");
+		cy.get("#after").should("not.have.attr", "inert");
+		cy.get("#before").should("not.have.attr", "data-ui5-dialog-old-no-inert");
+		cy.get("#after").should("not.have.attr", "data-ui5-dialog-old-no-inert");
+	});
+
+	it("prevents focus reaching background elements while open", () => {
+		cy.mount(
+			<>
+				<button id="before"></button>
+				<Dialog id="dialogId">
+					<Button id="inside">Inside</Button>
+				</Dialog>
+			</>
+		);
+
+		cy.get("#dialogId").invoke("prop", "open", true);
+		cy.get<Dialog>("#dialogId").ui5DialogOpened();
+
+		cy.get("#before").then($el => {
+			$el[0].focus();
+		});
+
+		cy.get("#before").should("not.be.focused");
+	});
+
+	it("does not clear author-set inert on close", () => {
+		cy.mount(
+			<>
+				<button id="before" inert></button>
+				<Dialog id="dialogId">
+					<Button id="inside">Inside</Button>
+				</Dialog>
+			</>
+		);
+
+		cy.get("#before").should("have.attr", "inert");
+
+		cy.get("#dialogId").invoke("prop", "open", true);
+		cy.get<Dialog>("#dialogId").ui5DialogOpened();
+
+		// an already-inert element must not be tagged as dialog-managed
+		cy.get("#before").should("not.have.attr", "data-ui5-dialog-old-no-inert");
+
+		cy.get("#dialogId").invoke("prop", "open", false);
+
+		// author-set inert must survive
+		cy.get("#before").should("have.attr", "inert");
+	});
+
+	it("does not inert an already-open dialog when a second dialog opens", () => {
+		cy.mount(
+			<>
+				<Dialog id="dialog1">
+					<Button id="inside1">Inside 1</Button>
+				</Dialog>
+				<Dialog id="dialog2">
+					<Button id="inside2">Inside 2</Button>
+				</Dialog>
+			</>
+		);
+
+		cy.get("#dialog1").invoke("prop", "open", true);
+		cy.get<Dialog>("#dialog1").ui5DialogOpened();
+
+		cy.get("#dialog2").invoke("prop", "open", true);
+		cy.get<Dialog>("#dialog2").ui5DialogOpened();
+
+		// the already-open dialog is a popover and must not be inerted
+		cy.get("#dialog1").should("not.have.attr", "inert");
+		cy.get("#dialog2").should("not.have.attr", "inert");
+
+		cy.get("#dialog2").invoke("prop", "open", false);
+
+		cy.get("#dialog1").should("not.have.attr", "inert");
+	});
+});
