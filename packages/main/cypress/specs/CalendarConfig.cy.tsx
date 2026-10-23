@@ -4,36 +4,35 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import { resetConfiguration } from "@ui5/webcomponents-base/dist/InitialConfiguration.js";
 
+const configureCalendarTypes = (calendarType: string, secondaryCalendarType: string) => {
+	cy.window()
+		.then($el => {
+			const scriptElement = $el.document.createElement("script");
+			scriptElement.type = "application/json";
+			scriptElement.setAttribute("data-ui5-config", "true");
+			scriptElement.innerHTML = JSON.stringify({ calendarType, secondaryCalendarType });
+
+			$el.document.head.append(scriptElement);
+		});
+
+	cy.wrap({ resetConfiguration })
+		.invoke("resetConfiguration", true);
+};
 
 describe("Calendar general interaction", () => {
-	before(() => {
+	afterEach(() => {
 		cy.window()
 			.then($el => {
-				const scriptElement = document.createElement("script");
-				scriptElement.type = "application/json";
-				scriptElement.setAttribute("data-ui5-config", "true");
-				scriptElement.innerHTML = JSON.stringify({
-					"calendarType": "Islamic",
-					"secondaryCalendarType": "Gregorian"
-				});
-
-				return $el.document.head.append(scriptElement);
-			})
+				$el.document.head.querySelector("script[data-ui5-config]")?.remove();
+			});
 
 		cy.wrap({ resetConfiguration })
 			.invoke("resetConfiguration", true);
 	});
 
-	after(() => {
-		cy.window()
-			.then($el => {
-				const scriptElement = $el.document.head.querySelector("script[data-ui5-config]");
-
-				scriptElement?.remove();
-			})
-	})
-
 	it("Calendar type configured", () => {
+		configureCalendarTypes("Islamic", "Gregorian");
+
 		cy.mount(<Calendar></Calendar>);
 
 		cy.get("[ui5-calendar]")
@@ -48,48 +47,21 @@ describe("Calendar general interaction", () => {
 		cy.get("[ui5-calendar]")
 			.should("have.prop", "_secondaryCalendarType", "Gregorian");
 	});
-});
-
-describe("Calendar with secondary calendar type configured globally", () => {
-	before(() => {
-		cy.window()
-			.then($el => {
-				const scriptElement = document.createElement("script");
-				scriptElement.type = "application/json";
-				scriptElement.setAttribute("data-ui5-config", "true");
-				scriptElement.innerHTML = JSON.stringify({
-					"calendarType": "Gregorian",
-					"secondaryCalendarType": "Islamic"
-				});
-
-				return $el.document.head.append(scriptElement);
-			})
-
-		cy.wrap({ resetConfiguration })
-			.invoke("resetConfiguration", true);
-	});
-
-	after(() => {
-		cy.window()
-			.then($el => {
-				const scriptElement = $el.document.head.querySelector("script[data-ui5-config]");
-
-				scriptElement?.remove();
-			})
-
-		cy.wrap({ resetConfiguration })
-			.invoke("resetConfiguration", true);
-	})
 
 	it("Year Picker shows correct range when secondary calendar type is configured globally", () => {
+		configureCalendarTypes("Gregorian", "Islamic");
+
 		cy.mount(<Calendar timestamp={Date.UTC(2024, 5, 1) / 1000}></Calendar>);
 
 		cy.get<Calendar>("[ui5-calendar]")
 			.as("calendar");
 
 		// Secondary type is resolved from the global config, not from an attribute
-		cy.get("@calendar").should("not.have.prop", "secondaryCalendarType");
-		cy.get("@calendar").should("have.prop", "_secondaryCalendarType", "Islamic");
+		cy.get("@calendar")
+			.should("not.have.prop", "secondaryCalendarType");
+		
+		cy.get("@calendar")
+			.should("have.prop", "_secondaryCalendarType", "Islamic");
 
 		cy.get<Calendar>("@calendar")
 			.shadow()
